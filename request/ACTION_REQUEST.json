@@ -1,6 +1,6 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "post-protection-positive-smoke-2026-10-12",
+  "request_id": "record-enforcement-activation-2026-10-12",
   "input_public_lock_sha256": "f75c4fa324843b7b55e9c1557d32af884a34ca15967bce97d54687285a86a25b",
   "input_private_state_sha256": "eb52f80fc04df349996a4df81720391a98e57d380d5643c9f8d71ae670feddc0",
   "requested_action_id": "VERIFY_PINNED_GOVERNANCE_CHAIN_AND_PREPARE_READ_ONLY_GLOBAL_GAP_MAP",
@@ -11,7 +11,8 @@
   "operations": [
     "READ",
     "VERIFY_HASH",
-    "VERIFY_BACKEND"
+    "VERIFY_BACKEND",
+    "REPORT"
   ],
   "target_scope_ids": [],
   "authorization_run_id": null,
