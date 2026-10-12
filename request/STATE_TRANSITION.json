@@ -1,0 +1,12 @@
+{
+  "schema": "GLOBAL_PUBLICATION_PUBLIC_STATE_TRANSITION/1.0.0",
+  "from_generation": 1,
+  "to_generation": 2,
+  "from_public_lock_sha256": "f75c4fa324843b7b55e9c1557d32af884a34ca15967bce97d54687285a86a25b",
+  "to_public_lock_sha256": "9ebf7952318991090fea04801e9636003f6cf15b36db0654c79ddee764740e52",
+  "from_private_execution_state_sha256": "eb52f80fc04df349996a4df81720391a98e57d380d5643c9f8d71ae670feddc0",
+  "to_private_execution_state_sha256": "656bac3fc2c9bc370a3667427b338c3ab64b7c83f7f19829f15db442f3f7f656",
+  "action_id": "BIND_EXTERNAL_AUTHORITY_AND_REFRESH_BOOTSTRAP",
+  "authorization_run_id": "38282330106",
+  "scope": "Bind protected external authority to refreshed Library Bootstrap/Master/Execution State. No renderer/book/IMS execution."
+}

@@ -1,22 +1,20 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "break-glass-auth-artifact-downloader-repair-v2-2026-10-12",
+  "request_id": "bind-external-authority-2026-10-12",
   "input_public_lock_sha256": "f75c4fa324843b7b55e9c1557d32af884a34ca15967bce97d54687285a86a25b",
   "input_private_state_sha256": "eb52f80fc04df349996a4df81720391a98e57d380d5643c9f8d71ae670feddc0",
-  "requested_action_id": "REPAIR_AUTHORIZATION_ARTIFACT_DOWNLOADER",
+  "requested_action_id": "BIND_EXTERNAL_AUTHORITY_AND_REFRESH_BOOTSTRAP",
   "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "MUTATING",
   "project": "GLOBAL",
   "method_id": null,
   "operations": [
-    "GOVERNANCE_UPGRADE"
+    "GOVERNANCE_UPGRADE",
+    "AUTHORITY_UPDATE",
+    "STATE_TRANSITION",
+    "UPDATE_POINTER"
   ],
   "target_scope_ids": [],
-  "authorization_run_id": null,
-  "user_explicit_authorization": true,
-  "break_glass": {
-    "reason": "Trusted validator cannot read its manual-authorization artifact because the current downloader forwards the GitHub bearer token to the cross-domain signed artifact URL and receives HTTP 401.",
-    "scope": "scripts/ci_validate_pr.py only; public lock and private state remain unchanged.",
-    "postcondition": "Restore required publication-authority checks on both active main rulesets before any state transition PR is merged."
-  }
+  "authorization_run_id": "38282330106",
+  "user_explicit_authorization": true
 }
