@@ -1,8 +1,8 @@
 {
-  "schema": "GLOBAL_PUBLICATION_PUBLIC_LOCK/1.0.0",
-  "generation": 1,
-  "previous_public_lock_sha256": null,
-  "private_execution_state_sha256": "eb52f80fc04df349996a4df81720391a98e57d380d5643c9f8d71ae670feddc0",
+  "schema": "GLOBAL_PUBLICATION_PUBLIC_LOCK/1.1.0",
+  "generation": 2,
+  "previous_public_lock_sha256": "f75c4fa324843b7b55e9c1557d32af884a34ca15967bce97d54687285a86a25b",
+  "private_execution_state_sha256": "656bac3fc2c9bc370a3667427b338c3ab64b7c83f7f19829f15db442f3f7f656",
   "current_action": {
     "id": "VERIFY_PINNED_GOVERNANCE_CHAIN_AND_PREPARE_READ_ONLY_GLOBAL_GAP_MAP",
     "mode": "READ_ONLY"
@@ -50,6 +50,19 @@
     "failed_method_retry_denied": true,
     "frozen_or_blocked_project_mutation_denied": true,
     "state_sha_change_invalidates_authorization": true,
-    "chats_may_propose_but_cannot_self_authorize": true
+    "chats_may_propose_but_cannot_self_authorize": true,
+    "external_lock_must_anchor_private_state_sha": true
+  },
+  "external_binding": {
+    "status": "BOUND_TO_LIBRARY_EXECUTION_STATE_V1_1",
+    "activation_commit": "cb579f1b038aeb66fa15bf6d79ad58f0d986591e",
+    "required_status_check": "publication-authority",
+    "primary_ruleset_id": 24932377,
+    "secondary_hardening_ruleset_id": 24939466,
+    "manual_authorization_run_id": "38282330106",
+    "authorized_action_id": "BIND_EXTERNAL_AUTHORITY_AND_REFRESH_BOOTSTRAP",
+    "binding_evidence_sha256": "63ca55a8900630d3727fe06164617022bcfa97e9ca5dba0b4269c28a70c9878d",
+    "bootstrap_sha256": "14b7463a2735256cc408773ca0ce6905f18fbde402042c8b751cccf18129ce64",
+    "master_control_current_sha256": "310de7a11e64d28e5460187ca447710a6bc0d7090fff6000b64802e9fd00200e"
   }
 }
