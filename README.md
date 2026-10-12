@@ -1,0 +1,1 @@
+# global-publication-authority-lock
