@@ -1,0 +1,18 @@
+{
+  "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
+  "request_id": "negative-stale-2026-10-12",
+  "input_public_lock_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "input_private_state_sha256": "eb52f80fc04df349996a4df81720391a98e57d380d5643c9f8d71ae670feddc0",
+  "requested_action_id": "VERIFY_PINNED_GOVERNANCE_CHAIN_AND_PREPARE_READ_ONLY_GLOBAL_GAP_MAP",
+  "action_kind": "EXECUTE",
+  "mode": "READ_ONLY",
+  "project": "GLOBAL",
+  "method_id": null,
+  "operations": [
+    "READ",
+    "VERIFY_HASH"
+  ],
+  "target_scope_ids": [],
+  "authorization_run_id": null,
+  "user_explicit_authorization": true
+}
