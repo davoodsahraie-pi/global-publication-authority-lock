@@ -1,0 +1,55 @@
+{
+  "schema": "GLOBAL_PUBLICATION_PUBLIC_LOCK/1.0.0",
+  "generation": 1,
+  "previous_public_lock_sha256": null,
+  "private_execution_state_sha256": "eb52f80fc04df349996a4df81720391a98e57d380d5643c9f8d71ae670feddc0",
+  "current_action": {
+    "id": "VERIFY_PINNED_GOVERNANCE_CHAIN_AND_PREPARE_READ_ONLY_GLOBAL_GAP_MAP",
+    "mode": "READ_ONLY"
+  },
+  "execution_authorized_now": false,
+  "ledger_hashes": {
+    "immutable_pass": [
+      "a15314e7158a3eb5a1cc8edf91d9a50c45b7477b090b753aac7ea870599b26a7",
+      "96dc6b538b5e2ccf82e1391f1b4c54375e90cee456d43ce48f86bc344143c0b1",
+      "c8b32a4f10d397a0f9df0fcab5c32fe140b176bd64581b8718edea9959abf3fd",
+      "24c9f3a50fcf7a585f476a6997b08c401496a0f7500100081f93c76281245063",
+      "1bbe2c004a5fd85b97f0daa47c403fceb0b720cdb73d23168f56bd77722fcdc4",
+      "2e5970efa33c0ac2f3c25108b2f4a7f7b093d8b4f8a1457159179775cba185c9",
+      "368ab3e7ce94610f76f051727a383c9e894c235e9902a6d539f5733576074663",
+      "5cf262337fa7e1a71a142e867390250cca1fdb2815721e8a95083e18a314e1ee",
+      "a55cdab3699bd7a3ee9a81e7e1c5447cb630c05cf5f1bf624777c8e27c1db089",
+      "900dc4cf79b98b9a5a09698870b6d06b92fa4587ab9f506e3bacf913222906f3"
+    ],
+    "method_fail": [
+      "3309fe999270b54aa235320fd7af2737ac20c03ee3f753e4bbd8f9072e17bbe3",
+      "eef7341e08ef4e13c1fc4ca2310db5eda8ba527a608c1bae660994b38f93c4dd",
+      "fc8747779f914e126c271278073567c1fbdf764bcc198e4c60343f840abdd0e1",
+      "b1143a7d676a7ea9f6c4e78186c022cbe471c975958eae5f219ac6ba91002931",
+      "ee78541ffee690bed680a492e98361fb184ae83d6abb7513fba9c1adb947478d",
+      "c905339494bfe96f028ea5d67c42d3343ee9324c5a0760382337f9a38c3076d0",
+      "ec2268a532e82e0a0bd769d07271acc2c5afc66560f693d1d7e3c9b0e53df446"
+    ],
+    "frozen_project": [
+      "91646f717f6b150ffabc02611e73d060f9d1356498200a2b844105f1e06fb74c",
+      "1aaea4d51f2eb309342a2a94420308df1355aa6e688a0af4afac17bb98c893c4",
+      "b4fec3f317761522cbb11badb3f4fd0a369ee62b48ceaa09487cb97b873ce876",
+      "884d9181975a299a4c82cce712d93806c67317b50cdc6c5ba3afe27269dd5185"
+    ],
+    "blocked_project": [
+      "0cd5b9a118900a80b4befa1da40a53589dd6a15de0ea76c4f56707b1a920c42d",
+      "9e966d3cea9a200b1341b4cb02691e3fed9d810b289c5ae44004427438f5e1f0",
+      "c946fe7b4308dca1e0554645ebfb270ed98a6d3207eca187b0d707c3b2afd074"
+    ]
+  },
+  "policy": {
+    "exact_next_action_only": true,
+    "mutating_action_requires_manual_workflow_authorization": true,
+    "stale_state_denied": true,
+    "immutable_pass_reimplementation_denied": true,
+    "failed_method_retry_denied": true,
+    "frozen_or_blocked_project_mutation_denied": true,
+    "state_sha_change_invalidates_authorization": true,
+    "chats_may_propose_but_cannot_self_authorize": true
+  }
+}
