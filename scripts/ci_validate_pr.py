@@ -40,8 +40,41 @@ def api_json(url,token):
         return json.load(r)
 
 def api_bytes(url,token):
-    req=urllib.request.Request(url,headers={"Authorization":f"Bearer {token}","Accept":"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28","User-Agent":"global-publication-authority-lock"})
-    with urllib.request.urlopen(req,timeout=30) as r:
+    # GitHub's artifact archive endpoint redirects to a short-lived signed
+    # cross-domain storage URL. Authenticate only the GitHub API request.
+    # Never forward the GitHub bearer token to the signed storage host.
+    import urllib.error, urllib.parse
+
+    class _NoRedirect(urllib.request.HTTPRedirectHandler):
+        def redirect_request(self, req, fp, code, msg, headers, newurl):
+            return None
+
+    headers={
+        "Authorization":f"Bearer {token}",
+        "Accept":"application/vnd.github+json",
+        "X-GitHub-Api-Version":"2022-11-28",
+        "User-Agent":"global-publication-authority-lock",
+    }
+    opener=urllib.request.build_opener(_NoRedirect)
+    req=urllib.request.Request(url,headers=headers)
+    try:
+        with opener.open(req,timeout=30) as r:
+            return r.read()
+    except urllib.error.HTTPError as e:
+        if e.code not in (301,302,303,307,308):
+            raise
+        location=e.headers.get("Location")
+        if not location:
+            raise ValueError("artifact redirect missing Location header")
+
+    parsed=urllib.parse.urlparse(location)
+    if parsed.scheme!="https" or not parsed.netloc:
+        raise ValueError("artifact redirect is not a valid HTTPS URL")
+    req2=urllib.request.Request(
+        location,
+        headers={"User-Agent":"global-publication-authority-lock"}
+    )
+    with urllib.request.urlopen(req2,timeout=30) as r:
         return r.read()
 
 def fetch_manual_authorization(run_id):
