@@ -1,0 +1,89 @@
+name: authorize-next-action
+on:
+  workflow_dispatch:
+    inputs:
+      action_kind:
+        description: 'EXECUTE, SET_NEXT_ACTION, or GOVERNANCE_UPGRADE'
+        required: true
+        default: 'SET_NEXT_ACTION'
+        type: choice
+        options:
+          - SET_NEXT_ACTION
+          - EXECUTE
+          - GOVERNANCE_UPGRADE
+      requested_action_id:
+        description: 'Exact action ID to authorize'
+        required: true
+        type: string
+      project:
+        description: 'Project scope'
+        required: true
+        default: 'GLOBAL'
+        type: string
+      operations_json:
+        description: 'JSON array, e.g. ["SET_NEXT_ACTION"]'
+        required: true
+        default: '["SET_NEXT_ACTION"]'
+        type: string
+      target_scope_ids_json:
+        description: 'JSON array, usually []'
+        required: true
+        default: '[]'
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  issue-manual-authorization:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Build authorization bound to exact current lock
+        env:
+          ACTION_KIND: ${{ inputs.action_kind }}
+          ACTION_ID: ${{ inputs.requested_action_id }}
+          PROJECT: ${{ inputs.project }}
+          OPS: ${{ inputs.operations_json }}
+          TARGETS: ${{ inputs.target_scope_ids_json }}
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,pathlib,datetime
+          lock=pathlib.Path("authority/CURRENT.json")
+          actual=hashlib.sha256(lock.read_bytes()).hexdigest()
+          pinned=pathlib.Path("authority/CURRENT.sha256").read_text().split()[0]
+          if actual!=pinned: raise SystemExit("public lock sidecar mismatch")
+          state=json.loads(lock.read_text())
+          ops=json.loads(os.environ["OPS"]); targets=json.loads(os.environ["TARGETS"])
+          if not isinstance(ops,list) or not isinstance(targets,list): raise SystemExit("operations/targets must be arrays")
+          run_id=os.environ["GITHUB_RUN_ID"]
+          obj={
+            "schema":"GLOBAL_PUBLICATION_MANUAL_AUTHORIZATION/1.0.0",
+            "authorization_id":run_id,
+            "public_lock_sha256":actual,
+            "private_execution_state_sha256":state["private_execution_state_sha256"],
+            "requested_action_id":os.environ["ACTION_ID"],
+            "action_kind":os.environ["ACTION_KIND"],
+            "project":os.environ["PROJECT"],
+            "operations":ops,
+            "target_scope_ids":targets,
+            "manual_workflow":True,
+            "github_actor":os.environ["GITHUB_ACTOR"],
+            "github_run_id":run_id,
+            "issued_at_utc":datetime.datetime.now(datetime.timezone.utc).isoformat()
+          }
+          pathlib.Path("authorization.json").write_text(json.dumps(obj,indent=2)+"\n")
+          print(json.dumps(obj,indent=2))
+          PY
+
+      - name: Upload non-forgeable workflow authorization artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: publication-authorization-${{ github.run_id }}
+          path: authorization.json
+          retention-days: 30
+          if-no-files-found: error
