@@ -1,20 +1,20 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "record-enforcement-activation-2026-10-12",
+  "request_id": "bind-external-authority-2026-10-12",
   "input_public_lock_sha256": "f75c4fa324843b7b55e9c1557d32af884a34ca15967bce97d54687285a86a25b",
   "input_private_state_sha256": "eb52f80fc04df349996a4df81720391a98e57d380d5643c9f8d71ae670feddc0",
-  "requested_action_id": "VERIFY_PINNED_GOVERNANCE_CHAIN_AND_PREPARE_READ_ONLY_GLOBAL_GAP_MAP",
-  "action_kind": "EXECUTE",
-  "mode": "READ_ONLY",
+  "requested_action_id": "BIND_EXTERNAL_AUTHORITY_AND_REFRESH_BOOTSTRAP",
+  "action_kind": "GOVERNANCE_UPGRADE",
+  "mode": "MUTATING",
   "project": "GLOBAL",
   "method_id": null,
   "operations": [
-    "READ",
-    "VERIFY_HASH",
-    "VERIFY_BACKEND",
-    "REPORT"
+    "GOVERNANCE_UPGRADE",
+    "AUTHORITY_UPDATE",
+    "STATE_TRANSITION",
+    "UPDATE_POINTER"
   ],
   "target_scope_ids": [],
-  "authorization_run_id": null,
+  "authorization_run_id": "38282330106",
   "user_explicit_authorization": true
 }
