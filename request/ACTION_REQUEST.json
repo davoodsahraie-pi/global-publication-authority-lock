@@ -1,7 +1,7 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "global-renderer-read-only-gap-map-2026-10-13",
-  "input_public_lock_sha256": "9ebf7952318991090fea04801e9636003f6cf15b36db0654c79ddee764740e52",
+  "request_id": "hard-lock-negative-stale-2026-10-13",
+  "input_public_lock_sha256": "f75c4fa324843b7b55e9c1557d32af884a34ca15967bce97d54687285a86a25b",
   "input_private_state_sha256": "656bac3fc2c9bc370a3667427b338c3ab64b7c83f7f19829f15db442f3f7f656",
   "requested_action_id": "VERIFY_PINNED_GOVERNANCE_CHAIN_AND_PREPARE_READ_ONLY_GLOBAL_GAP_MAP",
   "action_kind": "EXECUTE",
@@ -11,9 +11,7 @@
   "operations": [
     "READ",
     "VERIFY_HASH",
-    "VERIFY_BACKEND",
-    "REPORT",
-    "GAP_MAP"
+    "VERIFY_BACKEND"
   ],
   "target_scope_ids": [],
   "authorization_run_id": null,
