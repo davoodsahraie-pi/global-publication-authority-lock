@@ -1,13 +1,13 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_STATE_TRANSITION/1.0.0",
-  "transition_id": "SELECT_GLOBAL_RENDERER_ADDITIVE_INTEGRATION_QUALIFICATION_V1_2026-10-13",
-  "source_public_lock_sha256": "9ebf7952318991090fea04801e9636003f6cf15b36db0654c79ddee764740e52",
-  "target_public_lock_sha256": "5e799acb8f9919e38f6ea901d3cc1e73e3db86ae53d988247538318b43cd0295",
-  "source_private_execution_state_sha256": "656bac3fc2c9bc370a3667427b338c3ab64b7c83f7f19829f15db442f3f7f656",
-  "target_private_execution_state_sha256": "baacdcfe5f9b76519e2b18762816e570dfdd3ee78794e707a943f36eb1469083",
-  "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v1.2_2026-10-13.json",
-  "authorization_run_id": "38348582911",
-  "action_id": "GLOBAL_RENDERER_ADDITIVE_INTEGRATION_QUALIFICATION_V1",
+  "transition_id": "SELECT_MIXED_DIRECTION_V3_ADDITIVE_FIXTURE_2026-10-13",
+  "source_public_lock_sha256": "5e799acb8f9919e38f6ea901d3cc1e73e3db86ae53d988247538318b43cd0295",
+  "target_public_lock_sha256": "338cdcb09c91df098d1508670642330cbd108612c63d3141c452a4d13bca16bf",
+  "source_private_execution_state_sha256": "baacdcfe5f9b76519e2b18762816e570dfdd3ee78794e707a943f36eb1469083",
+  "target_private_execution_state_sha256": "ea2ea80acb8c54c40e1398ff49cea067297fb3ebd9343f5997ce09edd4f3c6db",
+  "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v1.3_2026-10-13.json",
+  "authorization_run_id": "38372864672",
+  "action_id": "REGISTER_MIXED_DIRECTION_V3_ADDITIVE_FIXTURE",
   "action_kind": "GOVERNANCE_UPGRADE",
   "operations": [
     "GOVERNANCE_UPGRADE",
@@ -15,8 +15,9 @@
     "AUTHORITY_UPDATE",
     "STATE_TRANSITION"
   ],
-  "effect": "Select the exact next global renderer action and mark it eligible for a separate fresh execution authorization; this transition does not execute the renderer.",
-  "post_transition_requirement": "Run authorize-next-action again against the new exact public/private hashes with action_kind EXECUTE before any renderer mutation.",
+  "effect": "Select the next additive mixed v3 fixture registration ONLY; preserve all existing N2/Method K immutable PASS and Method C FAIL. No fixture upload/promotion until NEW manual EXECUTE authorization.",
+  "post_transition_requirement": "Fresh authorize-next-action workflow on new public/private SHA for registration action; first transition authorization is stale by design.",
   "no_renderer_execution_in_this_transition": true,
-  "no_project_execution_in_this_transition": true
+  "no_project_execution_in_this_transition": true,
+  "no_fixture_registration_in_this_transition": true
 }
