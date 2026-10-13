@@ -1,21 +1,20 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "global-renderer-additive-integration-v1-execution-2026-10-13",
+  "request_id": "register-mixed-direction-v3-governance-transition-2026-10-13",
   "input_public_lock_sha256": "5e799acb8f9919e38f6ea901d3cc1e73e3db86ae53d988247538318b43cd0295",
   "input_private_state_sha256": "baacdcfe5f9b76519e2b18762816e570dfdd3ee78794e707a943f36eb1469083",
-  "requested_action_id": "GLOBAL_RENDERER_ADDITIVE_INTEGRATION_QUALIFICATION_V1",
-  "action_kind": "EXECUTE",
+  "requested_action_id": "REGISTER_MIXED_DIRECTION_V3_ADDITIVE_FIXTURE",
+  "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "MUTATING",
   "project": "GLOBAL",
   "method_id": null,
   "operations": [
-    "BUILD",
-    "GENERATE_DOCX",
-    "RENDER",
-    "EXPORT_PDF",
-    "QUALIFY"
+    "GOVERNANCE_UPGRADE",
+    "SET_NEXT_ACTION",
+    "AUTHORITY_UPDATE",
+    "STATE_TRANSITION"
   ],
   "target_scope_ids": [],
-  "authorization_run_id": "38349938770",
+  "authorization_run_id": "38372864672",
   "user_explicit_authorization": true
 }
