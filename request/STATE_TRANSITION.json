@@ -1,13 +1,13 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_STATE_TRANSITION/1.0.0",
-  "transition_id": "SELECT_MIXED_DIRECTION_V3_ADDITIVE_FIXTURE_2026-10-13",
-  "source_public_lock_sha256": "5e799acb8f9919e38f6ea901d3cc1e73e3db86ae53d988247538318b43cd0295",
-  "target_public_lock_sha256": "338cdcb09c91df098d1508670642330cbd108612c63d3141c452a4d13bca16bf",
-  "source_private_execution_state_sha256": "baacdcfe5f9b76519e2b18762816e570dfdd3ee78794e707a943f36eb1469083",
-  "target_private_execution_state_sha256": "ea2ea80acb8c54c40e1398ff49cea067297fb3ebd9343f5997ce09edd4f3c6db",
-  "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v1.3_2026-10-13.json",
-  "authorization_run_id": "38372864672",
-  "action_id": "REGISTER_MIXED_DIRECTION_V3_ADDITIVE_FIXTURE",
+  "transition_id": "MIXED_V3_APPEND_ONLY_PASS_TO_INTEGRATED_DEVICE_GATES_2026-10-13",
+  "source_public_lock_sha256": "338cdcb09c91df098d1508670642330cbd108612c63d3141c452a4d13bca16bf",
+  "target_public_lock_sha256": "d3b96d4426067a637cd9729e8984fc4cc777e3235e2fe81df8e5fa12f8727451",
+  "source_private_execution_state_sha256": "ea2ea80acb8c54c40e1398ff49cea067297fb3ebd9343f5997ce09edd4f3c6db",
+  "target_private_execution_state_sha256": "7417b3e16a6f26095a6367ce5b0b392dc4bb7ae3e5c5fe74bb26e63a0904a66e",
+  "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v1.4_2026-10-13.json",
+  "authorization_run_id": "38379016150",
+  "action_id": "GLOBAL_RENDERER_ADDITIVE_INTEGRATION_V1_PENDING_DEVICE_GATES_ONLY",
   "action_kind": "GOVERNANCE_UPGRADE",
   "operations": [
     "GOVERNANCE_UPGRADE",
@@ -15,9 +15,11 @@
     "AUTHORITY_UPDATE",
     "STATE_TRANSITION"
   ],
-  "effect": "Select the next additive mixed v3 fixture registration ONLY; preserve all existing N2/Method K immutable PASS and Method C FAIL. No fixture upload/promotion until NEW manual EXECUTE authorization.",
-  "post_transition_requirement": "Fresh authorize-next-action workflow on new public/private SHA for registration action; first transition authorization is stale by design.",
+  "append_only_scoped_pass_id": "MIXED_DIRECTION_V3_ADDITIVE_SCOPED_WORD_DESKTOP_2026-10-13",
+  "append_only_scoped_pass_hash": "e430134e1c736aa27d7b00eef68f73fc37e61b566dc9d3fe9b5ee411db6c5065",
+  "effect": "Append one Word Desktop-only Mixed v3 scoped PASS, preserve all prior ledgers, select pending device gates of EXISTING Additive V1 file only.",
+  "post_transition_requirement": "Fresh separate EXECUTE authorization bound to newly current public/private SHAs before any device qualification state change.",
   "no_renderer_execution_in_this_transition": true,
   "no_project_execution_in_this_transition": true,
-  "no_fixture_registration_in_this_transition": true
+  "renderer_qualified": false
 }
