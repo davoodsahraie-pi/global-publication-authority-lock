@@ -1,13 +1,13 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_STATE_TRANSITION/1.0.0",
-  "transition_id": "MIXED_V3_APPEND_ONLY_PASS_TO_INTEGRATED_DEVICE_GATES_2026-10-13",
-  "source_public_lock_sha256": "338cdcb09c91df098d1508670642330cbd108612c63d3141c452a4d13bca16bf",
-  "target_public_lock_sha256": "d3b96d4426067a637cd9729e8984fc4cc777e3235e2fe81df8e5fa12f8727451",
-  "source_private_execution_state_sha256": "ea2ea80acb8c54c40e1398ff49cea067297fb3ebd9343f5997ce09edd4f3c6db",
-  "target_private_execution_state_sha256": "7417b3e16a6f26095a6367ce5b0b392dc4bb7ae3e5c5fe74bb26e63a0904a66e",
-  "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v1.4_2026-10-13.json",
-  "authorization_run_id": "38379016150",
-  "action_id": "GLOBAL_RENDERER_ADDITIVE_INTEGRATION_V1_PENDING_DEVICE_GATES_ONLY",
+  "transition_id": "SELECT_GLOBAL_RENDERER_V2_EXACT_INTEGRATION_2026-10-13",
+  "source_public_lock_sha256": "d3b96d4426067a637cd9729e8984fc4cc777e3235e2fe81df8e5fa12f8727451",
+  "target_public_lock_sha256": "3168e4f04f3adc50dd69f964964b31fcb058f9b56934d6f7060b52c5ed856efb",
+  "source_private_execution_state_sha256": "7417b3e16a6f26095a6367ce5b0b392dc4bb7ae3e5c5fe74bb26e63a0904a66e",
+  "target_private_execution_state_sha256": "47598a3ed0bb5e22cd83c0dd8ea93668a6877c1b16b9f98213c842f21d6a0340",
+  "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v1.5_2026-10-13.json",
+  "authorization_run_id": "38413904222",
+  "action_id": "GLOBAL_RENDERER_ADDITIVE_V1_MIXED_V3_EXACT_INTEGRATION_QUALIFICATION_V2",
   "action_kind": "GOVERNANCE_UPGRADE",
   "operations": [
     "GOVERNANCE_UPGRADE",
@@ -15,11 +15,10 @@
     "AUTHORITY_UPDATE",
     "STATE_TRANSITION"
   ],
-  "append_only_scoped_pass_id": "MIXED_DIRECTION_V3_ADDITIVE_SCOPED_WORD_DESKTOP_2026-10-13",
-  "append_only_scoped_pass_hash": "e430134e1c736aa27d7b00eef68f73fc37e61b566dc9d3fe9b5ee411db6c5065",
-  "effect": "Append one Word Desktop-only Mixed v3 scoped PASS, preserve all prior ledgers, select pending device gates of EXISTING Additive V1 file only.",
-  "post_transition_requirement": "Fresh separate EXECUTE authorization bound to newly current public/private SHAs before any device qualification state change.",
+  "effect": "Select exactly one project-independent V2 exact-artifact integration+qualification action, with original Additive V1 and user-approved Mixed v3 as immutable separate inputs. No candidate build or renderer qualification in this transition.",
+  "post_transition_requirement": "After protected merge and Library Current synchronization, require new separate manual EXECUTE authorization bound to new SHA for BUILD, GENERATE_DOCX, RENDER, QUALIFY, EXPORT_PDF.",
   "no_renderer_execution_in_this_transition": true,
   "no_project_execution_in_this_transition": true,
+  "no_v2_build_in_this_transition": true,
   "renderer_qualified": false
 }
