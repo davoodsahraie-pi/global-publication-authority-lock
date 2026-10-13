@@ -1,10 +1,10 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_LOCK/1.2.0",
-  "generation": 5,
-  "previous_public_lock_sha256": "338cdcb09c91df098d1508670642330cbd108612c63d3141c452a4d13bca16bf",
-  "private_execution_state_sha256": "7417b3e16a6f26095a6367ce5b0b392dc4bb7ae3e5c5fe74bb26e63a0904a66e",
+  "generation": 6,
+  "previous_public_lock_sha256": "d3b96d4426067a637cd9729e8984fc4cc777e3235e2fe81df8e5fa12f8727451",
+  "private_execution_state_sha256": "47598a3ed0bb5e22cd83c0dd8ea93668a6877c1b16b9f98213c842f21d6a0340",
   "current_action": {
-    "id": "GLOBAL_RENDERER_ADDITIVE_INTEGRATION_V1_PENDING_DEVICE_GATES_ONLY",
+    "id": "GLOBAL_RENDERER_ADDITIVE_V1_MIXED_V3_EXACT_INTEGRATION_QUALIFICATION_V2",
     "mode": "MUTATING"
   },
   "execution_authorized_now": true,
@@ -65,8 +65,8 @@
     "binding_evidence_sha256": "63ca55a8900630d3727fe06164617022bcfa97e9ca5dba0b4269c28a70c9878d",
     "bootstrap_sha256": "14b7463a2735256cc408773ca0ce6905f18fbde402042c8b751cccf18129ce64",
     "master_control_current_sha256": "310de7a11e64d28e5460187ca447710a6bc0d7090fff6000b64802e9fd00200e",
-    "transition_authorization_run_id": "38379016150",
-    "transition_authorized_action_id": "GLOBAL_RENDERER_ADDITIVE_INTEGRATION_V1_PENDING_DEVICE_GATES_ONLY",
+    "transition_authorization_run_id": "38413904222",
+    "transition_authorized_action_id": "GLOBAL_RENDERER_ADDITIVE_V1_MIXED_V3_EXACT_INTEGRATION_QUALIFICATION_V2",
     "transition_authorized_action_kind": "GOVERNANCE_UPGRADE",
     "transition_authorized_operations": [
       "GOVERNANCE_UPGRADE",
@@ -74,9 +74,9 @@
       "AUTHORITY_UPDATE",
       "STATE_TRANSITION"
     ],
-    "selected_action_contract_path": "reports/MIXED_DIRECTION_V3_APPEND_ONLY_LEDGER_TRANSITION_2026-10-13.md",
-    "previous_private_execution_state_sha256": "ea2ea80acb8c54c40e1398ff49cea067297fb3ebd9343f5997ce09edd4f3c6db",
-    "target_private_execution_state_sha256": "7417b3e16a6f26095a6367ce5b0b392dc4bb7ae3e5c5fe74bb26e63a0904a66e",
+    "selected_action_contract_path": "reports/GLOBAL_RENDERER_V2_EXACT_INTEGRATION_GOVERNANCE_TRANSITION_2026-10-13.md",
+    "previous_private_execution_state_sha256": "7417b3e16a6f26095a6367ce5b0b392dc4bb7ae3e5c5fe74bb26e63a0904a66e",
+    "target_private_execution_state_sha256": "47598a3ed0bb5e22cd83c0dd8ea93668a6877c1b16b9f98213c842f21d6a0340",
     "fresh_execution_authorization_required": true,
     "transition_authorization_is_execution_authorization": false
   }
