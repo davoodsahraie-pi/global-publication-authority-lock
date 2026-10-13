@@ -1,10 +1,10 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_LOCK/1.2.0",
-  "generation": 3,
-  "previous_public_lock_sha256": "9ebf7952318991090fea04801e9636003f6cf15b36db0654c79ddee764740e52",
-  "private_execution_state_sha256": "baacdcfe5f9b76519e2b18762816e570dfdd3ee78794e707a943f36eb1469083",
+  "generation": 4,
+  "previous_public_lock_sha256": "5e799acb8f9919e38f6ea901d3cc1e73e3db86ae53d988247538318b43cd0295",
+  "private_execution_state_sha256": "ea2ea80acb8c54c40e1398ff49cea067297fb3ebd9343f5997ce09edd4f3c6db",
   "current_action": {
-    "id": "GLOBAL_RENDERER_ADDITIVE_INTEGRATION_QUALIFICATION_V1",
+    "id": "REGISTER_MIXED_DIRECTION_V3_ADDITIVE_FIXTURE",
     "mode": "MUTATING"
   },
   "execution_authorized_now": true,
@@ -64,8 +64,8 @@
     "binding_evidence_sha256": "63ca55a8900630d3727fe06164617022bcfa97e9ca5dba0b4269c28a70c9878d",
     "bootstrap_sha256": "14b7463a2735256cc408773ca0ce6905f18fbde402042c8b751cccf18129ce64",
     "master_control_current_sha256": "310de7a11e64d28e5460187ca447710a6bc0d7090fff6000b64802e9fd00200e",
-    "transition_authorization_run_id": "38348582911",
-    "transition_authorized_action_id": "GLOBAL_RENDERER_ADDITIVE_INTEGRATION_QUALIFICATION_V1",
+    "transition_authorization_run_id": "38372864672",
+    "transition_authorized_action_id": "REGISTER_MIXED_DIRECTION_V3_ADDITIVE_FIXTURE",
     "transition_authorized_action_kind": "GOVERNANCE_UPGRADE",
     "transition_authorized_operations": [
       "GOVERNANCE_UPGRADE",
@@ -73,9 +73,9 @@
       "AUTHORITY_UPDATE",
       "STATE_TRANSITION"
     ],
-    "selected_action_contract_path": "reports/GLOBAL_RENDERER_PROPOSED_NEXT_ACTION_CONTRACT_2026-10-13.md",
-    "previous_private_execution_state_sha256": "656bac3fc2c9bc370a3667427b338c3ab64b7c83f7f19829f15db442f3f7f656",
-    "target_private_execution_state_sha256": "baacdcfe5f9b76519e2b18762816e570dfdd3ee78794e707a943f36eb1469083",
+    "selected_action_contract_path": "reports/MIXED_DIRECTION_V3_REGISTRATION_ACTION_CONTRACT_2026-10-13.md",
+    "previous_private_execution_state_sha256": "baacdcfe5f9b76519e2b18762816e570dfdd3ee78794e707a943f36eb1469083",
+    "target_private_execution_state_sha256": "ea2ea80acb8c54c40e1398ff49cea067297fb3ebd9343f5997ce09edd4f3c6db",
     "fresh_execution_authorization_required": true,
     "transition_authorization_is_execution_authorization": false
   }
