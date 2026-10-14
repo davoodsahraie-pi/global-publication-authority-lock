@@ -1,8 +1,8 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "select-global-renderer-v2-g7-single-paragraph-delta-2026-10-14",
-  "input_public_lock_sha256": "3168e4f04f3adc50dd69f964964b31fcb058f9b56934d6f7060b52c5ed856efb",
-  "input_private_state_sha256": "47598a3ed0bb5e22cd83c0dd8ea93668a6877c1b16b9f98213c842f21d6a0340",
+  "request_id": "g7-execution-readiness-only-2026-10-14",
+  "input_public_lock_sha256": "0e2aeecb03a18b007aec8f69d003302e44ebdb1dc43a605db1077814b1641af6",
+  "input_private_state_sha256": "42c7ef3fa476f0742c55517dc6fed69cbdff23a373e7ba90c7e64dab9ee70b1f",
   "requested_action_id": "GLOBAL_RENDERER_V2_G7_SINGLE_PARAGRAPH_KEEP_WITH_NEXT_DELTA_2026_10_14",
   "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "MUTATING",
@@ -10,11 +10,10 @@
   "method_id": null,
   "operations": [
     "GOVERNANCE_UPGRADE",
-    "SET_NEXT_ACTION",
     "AUTHORITY_UPDATE",
     "STATE_TRANSITION"
   ],
   "target_scope_ids": [],
-  "authorization_run_id": "38553672330",
+  "authorization_run_id": "38561983665",
   "user_explicit_authorization": true
 }
