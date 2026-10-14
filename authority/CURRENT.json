@@ -1,13 +1,13 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_LOCK/1.2.0",
-  "generation": 6,
-  "previous_public_lock_sha256": "d3b96d4426067a637cd9729e8984fc4cc777e3235e2fe81df8e5fa12f8727451",
-  "private_execution_state_sha256": "47598a3ed0bb5e22cd83c0dd8ea93668a6877c1b16b9f98213c842f21d6a0340",
+  "generation": 7,
+  "previous_public_lock_sha256": "3168e4f04f3adc50dd69f964964b31fcb058f9b56934d6f7060b52c5ed856efb",
+  "private_execution_state_sha256": "42c7ef3fa476f0742c55517dc6fed69cbdff23a373e7ba90c7e64dab9ee70b1f",
   "current_action": {
-    "id": "GLOBAL_RENDERER_ADDITIVE_V1_MIXED_V3_EXACT_INTEGRATION_QUALIFICATION_V2",
+    "id": "GLOBAL_RENDERER_V2_G7_SINGLE_PARAGRAPH_KEEP_WITH_NEXT_DELTA_2026_10_14",
     "mode": "MUTATING"
   },
-  "execution_authorized_now": true,
+  "execution_authorized_now": false,
   "ledger_hashes": {
     "immutable_pass": [
       "a15314e7158a3eb5a1cc8edf91d9a50c45b7477b090b753aac7ea870599b26a7",
@@ -65,8 +65,8 @@
     "binding_evidence_sha256": "63ca55a8900630d3727fe06164617022bcfa97e9ca5dba0b4269c28a70c9878d",
     "bootstrap_sha256": "14b7463a2735256cc408773ca0ce6905f18fbde402042c8b751cccf18129ce64",
     "master_control_current_sha256": "310de7a11e64d28e5460187ca447710a6bc0d7090fff6000b64802e9fd00200e",
-    "transition_authorization_run_id": "38413904222",
-    "transition_authorized_action_id": "GLOBAL_RENDERER_ADDITIVE_V1_MIXED_V3_EXACT_INTEGRATION_QUALIFICATION_V2",
+    "transition_authorization_run_id": "38553672330",
+    "transition_authorized_action_id": "GLOBAL_RENDERER_V2_G7_SINGLE_PARAGRAPH_KEEP_WITH_NEXT_DELTA_2026_10_14",
     "transition_authorized_action_kind": "GOVERNANCE_UPGRADE",
     "transition_authorized_operations": [
       "GOVERNANCE_UPGRADE",
@@ -74,10 +74,19 @@
       "AUTHORITY_UPDATE",
       "STATE_TRANSITION"
     ],
-    "selected_action_contract_path": "reports/GLOBAL_RENDERER_V2_EXACT_INTEGRATION_GOVERNANCE_TRANSITION_2026-10-13.md",
-    "previous_private_execution_state_sha256": "7417b3e16a6f26095a6367ce5b0b392dc4bb7ae3e5c5fe74bb26e63a0904a66e",
-    "target_private_execution_state_sha256": "47598a3ed0bb5e22cd83c0dd8ea93668a6877c1b16b9f98213c842f21d6a0340",
+    "selected_action_contract_path": "reports/GLOBAL_RENDERER_V2_G7_GOVERNANCE_TRANSITION_2026-10-14.md",
+    "previous_private_execution_state_sha256": "47598a3ed0bb5e22cd83c0dd8ea93668a6877c1b16b9f98213c842f21d6a0340",
+    "target_private_execution_state_sha256": "42c7ef3fa476f0742c55517dc6fed69cbdff23a373e7ba90c7e64dab9ee70b1f",
     "fresh_execution_authorization_required": true,
     "transition_authorization_is_execution_authorization": false
+  },
+  "scoped_v2_evidence": {
+    "original_docx_sha256": "84e1231c75fa63352d3792f64076109f4f4bf56dbb008549f200b6630d375e7b",
+    "original_word_pdf_sha256": "7ebd5d14e64dac3f504a346702f6e536d49f53cff7938845fb7a855ef8a9ab85",
+    "user_word_desktop": "PASS_ORIGINAL_SHA_ONLY",
+    "user_word_mobile": "PASS_ORIGINAL_SHA_ONLY",
+    "independent_regression": "51_PASS_1_FAIL_G7_ORPHAN_HEADING",
+    "qualification": "PENDING",
+    "delta_authorized_for_execution": false
   }
 }
