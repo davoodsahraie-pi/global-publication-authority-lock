@@ -1,13 +1,13 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_STATE_TRANSITION/1.0.0",
-  "transition_id": "SELECT_GLOBAL_RENDERER_V2_EXACT_INTEGRATION_2026-10-13",
-  "source_public_lock_sha256": "d3b96d4426067a637cd9729e8984fc4cc777e3235e2fe81df8e5fa12f8727451",
-  "target_public_lock_sha256": "3168e4f04f3adc50dd69f964964b31fcb058f9b56934d6f7060b52c5ed856efb",
-  "source_private_execution_state_sha256": "7417b3e16a6f26095a6367ce5b0b392dc4bb7ae3e5c5fe74bb26e63a0904a66e",
-  "target_private_execution_state_sha256": "47598a3ed0bb5e22cd83c0dd8ea93668a6877c1b16b9f98213c842f21d6a0340",
-  "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v1.5_2026-10-13.json",
-  "authorization_run_id": "38413904222",
-  "action_id": "GLOBAL_RENDERER_ADDITIVE_V1_MIXED_V3_EXACT_INTEGRATION_QUALIFICATION_V2",
+  "transition_id": "SELECT_G7_SINGLE_PARAGRAPH_DELTA_2026_10_14",
+  "source_public_lock_sha256": "3168e4f04f3adc50dd69f964964b31fcb058f9b56934d6f7060b52c5ed856efb",
+  "target_public_lock_sha256": "0e2aeecb03a18b007aec8f69d003302e44ebdb1dc43a605db1077814b1641af6",
+  "source_private_execution_state_sha256": "47598a3ed0bb5e22cd83c0dd8ea93668a6877c1b16b9f98213c842f21d6a0340",
+  "target_private_execution_state_sha256": "42c7ef3fa476f0742c55517dc6fed69cbdff23a373e7ba90c7e64dab9ee70b1f",
+  "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v1.6_2026-10-14.json",
+  "authorization_run_id": "38553672330",
+  "action_id": "GLOBAL_RENDERER_V2_G7_SINGLE_PARAGRAPH_KEEP_WITH_NEXT_DELTA_2026_10_14",
   "action_kind": "GOVERNANCE_UPGRADE",
   "operations": [
     "GOVERNANCE_UPGRADE",
@@ -15,10 +15,10 @@
     "AUTHORITY_UPDATE",
     "STATE_TRANSITION"
   ],
-  "effect": "Select exactly one project-independent V2 exact-artifact integration+qualification action, with original Additive V1 and user-approved Mixed v3 as immutable separate inputs. No candidate build or renderer qualification in this transition.",
-  "post_transition_requirement": "After protected merge and Library Current synchronization, require new separate manual EXECUTE authorization bound to new SHA for BUILD, GENERATE_DOCX, RENDER, QUALIFY, EXPORT_PDF.",
+  "effect": "Governance selection only: preserve exact user-approved V2 DOCX/PDF and 51/52 scoped regression; select one isolated G.7 paragraph keepNext delta after NEW separate EXECUTE authorization. No patch/render/export or qualification during this transition.",
+  "post_transition_requirement": "Protected-main merge with publication-authority PASS and exact Library CURRENT sha synchronization BEFORE any fresh manual EXECUTE authorization for G7; original V2 remains unchanged.",
   "no_renderer_execution_in_this_transition": true,
   "no_project_execution_in_this_transition": true,
-  "no_v2_build_in_this_transition": true,
+  "no_docx_or_pdf_mutation": true,
   "renderer_qualified": false
 }
