@@ -1,9 +1,9 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "g7-execution-readiness-only-2026-10-14",
-  "input_public_lock_sha256": "0e2aeecb03a18b007aec8f69d003302e44ebdb1dc43a605db1077814b1641af6",
-  "input_private_state_sha256": "42c7ef3fa476f0742c55517dc6fed69cbdff23a373e7ba90c7e64dab9ee70b1f",
-  "requested_action_id": "GLOBAL_RENDERER_V2_G7_SINGLE_PARAGRAPH_KEEP_WITH_NEXT_DELTA_2026_10_14",
+  "request_id": "g7-formal-promotion-gov-transition-2026-10-15",
+  "input_public_lock_sha256": "d07bc1756c64a7102b3cdde56121735cacfd8f3a535e3b771091bf526300ae2b",
+  "input_private_state_sha256": "7710263f972daaa4afea25a7957f742c335f816c46959a3f85902bd543734327",
+  "requested_action_id": "GLOBAL_RENDERER_V2_G7_FORMAL_PROMOTION_2026_10_15",
   "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "MUTATING",
   "project": "GLOBAL",
@@ -14,6 +14,6 @@
     "STATE_TRANSITION"
   ],
   "target_scope_ids": [],
-  "authorization_run_id": "38561983665",
+  "authorization_run_id": "38768600225",
   "user_explicit_authorization": true
 }
