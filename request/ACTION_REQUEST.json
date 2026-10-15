@@ -1,19 +1,19 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "reproducible-renderer-package-recovery-governance-2026-10-15",
-  "input_public_lock_sha256": "b16e6d42cf29a2943c5edd568c3c1234c300e22edef3aaf31936737b95ba04e0",
-  "input_private_state_sha256": "966ea1bc834c0c7f1c2930cac2d386954a3fcb74192892e4621347c6270c34c8",
+  "request_id": "renderer-gen10-assembler-gap-readonly-2026-10-15",
+  "input_public_lock_sha256": "68e2c3e876b42e030d4fd988fcd229cca49ef57bdf211a4ed7e1e691b582a122",
+  "input_private_state_sha256": "097f90d2d2a96f41499e1b329b976ed7e8cfcad84134494240df8afade08cc58",
   "requested_action_id": "GLOBAL_RENDERER_REPRODUCIBLE_PACKAGE_RECOVERY_2026_10_15",
-  "action_kind": "GOVERNANCE_UPGRADE",
+  "action_kind": "EXECUTE",
   "mode": "MUTATING",
   "project": "GLOBAL",
   "method_id": null,
   "operations": [
-    "GOVERNANCE_UPGRADE",
-    "AUTHORITY_UPDATE",
-    "STATE_TRANSITION"
+    "READ",
+    "VERIFY_HASH",
+    "REPORT"
   ],
   "target_scope_ids": [],
-  "authorization_run_id": "38773941487",
+  "authorization_run_id": null,
   "user_explicit_authorization": true
 }
