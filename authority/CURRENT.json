@@ -1,94 +1,115 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_LOCK/1.2.0",
-  "generation": 9,
-  "previous_public_lock_sha256": "d07bc1756c64a7102b3cdde56121735cacfd8f3a535e3b771091bf526300ae2b",
-  "private_execution_state_sha256": "966ea1bc834c0c7f1c2930cac2d386954a3fcb74192892e4621347c6270c34c8",
+  "generation": 10,
+  "previous_public_lock_sha256": "b16e6d42cf29a2943c5edd568c3c1234c300e22edef3aaf31936737b95ba04e0",
+  
+"private_execution_state_sha256": "097f90d2d2a96f41499e1b329b976ed7e8cfcad84134494240df8afade08cc58",
   "current_action": {
-    "id": "GLOBAL_RENDERER_V2_G7_FORMAL_PROMOTION_2026_10_15",
+    "id": "GLOBAL_RENDERER_REPRODUCIBLE_PACKAGE_RECOVERY_2026_10_15",
     "mode": "MUTATING"
-  },
+  
+},
   "execution_authorized_now": true,
   "ledger_hashes": {
     "immutable_pass": [
       "a15314e7158a3eb5a1cc8edf91d9a50c45b7477b090b753aac7ea870599b26a7",
-      "96dc6b538b5e2ccf82e1391f1b4c54375e90cee456d43ce48f86bc344143c0b1",
+      
+"96dc6b538b5e2ccf82e1391f1b4c54375e90cee456d43ce48f86bc344143c0b1",
       "c8b32a4f10d397a0f9df0fcab5c32fe140b176bd64581b8718edea9959abf3fd",
       "24c9f3a50fcf7a585f476a6997b08c401496a0f7500100081f93c76281245063",
       "1bbe2c004a5fd85b97f0daa47c403fceb0b720cdb73d23168f56bd77722fcdc4",
       "2e5970efa33c0ac2f3c25108b2f4a7f7b093d8b4f8a1457159179775cba185c9",
-      "368ab3e7ce94610f76f051727a383c9e894c235e9902a6d539f5733576074663",
+      
+"368ab3e7ce94610f76f051727a383c9e894c235e9902a6d539f5733576074663",
       "5cf262337fa7e1a71a142e867390250cca1fdb2815721e8a95083e18a314e1ee",
       "a55cdab3699bd7a3ee9a81e7e1c5447cb630c05cf5f1bf624777c8e27c1db089",
       "900dc4cf79b98b9a5a09698870b6d06b92fa4587ab9f506e3bacf913222906f3",
       "e430134e1c736aa27d7b00eef68f73fc37e61b566dc9d3fe9b5ee411db6c5065"
     ],
     "method_fail": [
-      "3309fe999270b54aa235320fd7af2737ac20c03ee3f753e4bbd8f9072e17bbe3",
+      
+"3309fe999270b54aa235320fd7af2737ac20c03ee3f753e4bbd8f9072e17bbe3",
       "eef7341e08ef4e13c1fc4ca2310db5eda8ba527a608c1bae660994b38f93c4dd",
       "fc8747779f914e126c271278073567c1fbdf764bcc198e4c60343f840abdd0e1",
       "b1143a7d676a7ea9f6c4e78186c022cbe471c975958eae5f219ac6ba91002931",
       "ee78541ffee690bed680a492e98361fb184ae83d6abb7513fba9c1adb947478d",
-      "c905339494bfe96f028ea5d67c42d3343ee9324c5a0760382337f9a38c3076d0",
+      
+"c905339494bfe96f028ea5d67c42d3343ee9324c5a0760382337f9a38c3076d0",
       "ec2268a532e82e0a0bd769d07271acc2c5afc66560f693d1d7e3c9b0e53df446"
     ],
     "frozen_project": [
-      "91646f717f6b150ffabc02611e73d060f9d1356498200a2b844105f1e06fb74c",
+      
+"91646f717f6b150ffabc02611e73d060f9d1356498200a2b844105f1e06fb74c",
       "1aaea4d51f2eb309342a2a94420308df1355aa6e688a0af4afac17bb98c893c4",
       "b4fec3f317761522cbb11badb3f4fd0a369ee62b48ceaa09487cb97b873ce876",
       "884d9181975a299a4c82cce712d93806c67317b50cdc6c5ba3afe27269dd5185"
     ],
     "blocked_project": [
       "0cd5b9a118900a80b4befa1da40a53589dd6a15de0ea76c4f56707b1a920c42d",
-      "9e966d3cea9a200b1341b4cb02691e3fed9d810b289c5ae44004427438f5e1f0",
+      
+"9e966d3cea9a200b1341b4cb02691e3fed9d810b289c5ae44004427438f5e1f0",
       "c946fe7b4308dca1e0554645ebfb270ed98a6d3207eca187b0d707c3b2afd074"
     ]
   },
   "policy": {
-    "exact_next_action_only": true,
+    
+"exact_next_action_only": true,
     "mutating_action_requires_manual_workflow_authorization": true,
     "stale_state_denied": true,
     "immutable_pass_reimplementation_denied": true,
-    "failed_method_retry_denied": true,
+    
+"failed_method_retry_denied": true,
     "frozen_or_blocked_project_mutation_denied": true,
     "state_sha_change_invalidates_authorization": true,
-    "chats_may_propose_but_cannot_self_authorize": true,
+    "chats_may_propose_but_cannot_self_authorize": 
+true,
     "external_lock_must_anchor_private_state_sha": true
   },
   "external_binding": {
-    "status": "G7_SCOPED_CLOSED_PROMOTION_SELECTED_FRESH_EXECUTE_REQUIRED",
-    "activation_commit": "cb579f1b038aeb66fa15bf6d79ad58f0d986591e",
+    "status": "REPRODUCIBLE_PACKAGE_RECOVERY_SELECTED_GOVERNANCE_ONLY_FRESH_EXECUTE_REQUIRED",
+    "activation_commit": 
+"cb579f1b038aeb66fa15bf6d79ad58f0d986591e",
     "required_status_check": "publication-authority",
     "primary_ruleset_id": 24932377,
     "secondary_hardening_ruleset_id": 24939466,
     "manual_authorization_run_id": "38282330106",
-    "authorized_action_id": "BIND_EXTERNAL_AUTHORITY_AND_REFRESH_BOOTSTRAP",
+    
+"authorized_action_id": "BIND_EXTERNAL_AUTHORITY_AND_REFRESH_BOOTSTRAP",
     "binding_evidence_sha256": "63ca55a8900630d3727fe06164617022bcfa97e9ca5dba0b4269c28a70c9878d",
-    "bootstrap_sha256": "14b7463a2735256cc408773ca0ce6905f18fbde402042c8b751cccf18129ce64",
+    "bootstrap_sha256": 
+"14b7463a2735256cc408773ca0ce6905f18fbde402042c8b751cccf18129ce64",
     "master_control_current_sha256": "310de7a11e64d28e5460187ca447710a6bc0d7090fff6000b64802e9fd00200e",
-    "transition_authorization_run_id": "38768600225",
-    "transition_authorized_action_id": "GLOBAL_RENDERER_V2_G7_FORMAL_PROMOTION_2026_10_15",
+    "transition_authorization_run_id": 
+"38773941487",
+    "transition_authorized_action_id": "GLOBAL_RENDERER_REPRODUCIBLE_PACKAGE_RECOVERY_2026_10_15",
     "transition_authorized_action_kind": "GOVERNANCE_UPGRADE",
-    "transition_authorized_operations": [
+    
+"transition_authorized_operations": [
       "GOVERNANCE_UPGRADE",
       "AUTHORITY_UPDATE",
       "STATE_TRANSITION"
     ],
-    "selected_action_contract_path": "reports/GLOBAL_RENDERER_V2_G7_EXECUTION_READINESS_TRANSITION_2026-10-14.md",
-    "previous_private_execution_state_sha256": "7710263f972daaa4afea25a7957f742c335f816c46959a3f85902bd543734327",
-    "target_private_execution_state_sha256": "966ea1bc834c0c7f1c2930cac2d386954a3fcb74192892e4621347c6270c34c8",
+    "selected_action_contract_path": 
+"reports/GLOBAL_RENDERER_PACKAGE_RECOVERY_TRANSITION_2026-10-15.md",
+    "previous_private_execution_state_sha256": "966ea1bc834c0c7f1c2930cac2d386954a3fcb74192892e4621347c6270c34c8",
+    "target_private_execution_state_sha256": 
+"097f90d2d2a96f41499e1b329b976ed7e8cfcad84134494240df8afade08cc58",
     "fresh_execution_authorization_required": true,
     "transition_authorization_is_execution_authorization": false
   },
-  "scoped_v2_evidence": {
+  "scoped_v2_evidence": 
+{
     "original_docx_sha256": "84e1231c75fa63352d3792f64076109f4f4bf56dbb008549f200b6630d375e7b",
     "original_word_pdf_sha256": "7ebd5d14e64dac3f504a346702f6e536d49f53cff7938845fb7a855ef8a9ab85",
     "user_word_desktop": "PASS_ORIGINAL_SHA_ONLY",
     "user_word_mobile": "PASS_ORIGINAL_SHA_ONLY",
     "independent_regression": "51_PASS_1_FAIL_G7_ORPHAN_HEADING",
-    "qualification": "G7_SCOPED_PASS_POINTER_PENDING",
+    "qualification": 
+"G7_SCOPED_PASS_POINTER_PENDING",
     "delta_authorized_for_execution": false,
     "g7_changed_docx_sha256": "79747670641323251f844f36761eaec3b424d01aeaf3ef8739f7ab19ead5d440",
-    "g7_word_pdf_sha256": "70f63b3a06b901bb17669f9e68e0eae64155029bd650473ac59457fa3dd9d58b",
+    "g7_word_pdf_sha256": 
+"70f63b3a06b901bb17669f9e68e0eae64155029bd650473ac59457fa3dd9d58b",
     "g7_regression": "52_PASS_0_FAIL"
   }
 }
