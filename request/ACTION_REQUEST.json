@@ -1,19 +1,19 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "renderer-gen10-assembler-gap-readonly-2026-10-15",
+  "request_id": "gen11-additive-assembler-selection-2026-10-16",
   "input_public_lock_sha256": "68e2c3e876b42e030d4fd988fcd229cca49ef57bdf211a4ed7e1e691b582a122",
   "input_private_state_sha256": "097f90d2d2a96f41499e1b329b976ed7e8cfcad84134494240df8afade08cc58",
-  "requested_action_id": "GLOBAL_RENDERER_REPRODUCIBLE_PACKAGE_RECOVERY_2026_10_15",
-  "action_kind": "EXECUTE",
+  "requested_action_id": "GLOBAL_RENDERER_ADDITIVE_ASSEMBLER_GAP_2026_10_15",
+  "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "MUTATING",
   "project": "GLOBAL",
   "method_id": null,
   "operations": [
-    "READ",
-    "VERIFY_HASH",
-    "REPORT"
+    "GOVERNANCE_UPGRADE",
+    "AUTHORITY_UPDATE",
+    "STATE_TRANSITION"
   ],
   "target_scope_ids": [],
-  "authorization_run_id": null,
+  "authorization_run_id": "38846255208",
   "user_explicit_authorization": true
 }
