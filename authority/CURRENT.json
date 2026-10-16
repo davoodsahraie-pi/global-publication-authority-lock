@@ -1,13 +1,13 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_LOCK/1.2.0",
-  "generation": 11,
-  "previous_public_lock_sha256": "68e2c3e876b42e030d4fd988fcd229cca49ef57bdf211a4ed7e1e691b582a122",
-  "private_execution_state_sha256": "029fa79b53cf9125bed73409931e1d65bc4d4adb49240f07dd02fc479e80c901",
+  "generation": 12,
+  "previous_public_lock_sha256": "599bf233183ccbe2d87740475a00de4840ede324eac298d7a5b9499b0b6c2302",
+  "private_execution_state_sha256": "8bfb41ebe6428eeb6458a4b760ccd87baaef0732555824ca9d1fac91ee3186f3",
   "current_action": {
-    "id": "GLOBAL_RENDERER_ADDITIVE_ASSEMBLER_GAP_2026_10_15",
-    "mode": "MUTATING"
+    "id": "GLOBAL_RENDERER_N2_PPGES_COMPATIBILITY_ADJUDICATION_2026_10_16",
+    "mode": "READ_ONLY"
   },
-  "execution_authorized_now": true,
+  "execution_authorized_now": false,
   "ledger_hashes": {
     "immutable_pass": [
       "a15314e7158a3eb5a1cc8edf91d9a50c45b7477b090b753aac7ea870599b26a7",
@@ -29,7 +29,8 @@
       "b1143a7d676a7ea9f6c4e78186c022cbe471c975958eae5f219ac6ba91002931",
       "ee78541ffee690bed680a492e98361fb184ae83d6abb7513fba9c1adb947478d",
       "c905339494bfe96f028ea5d67c42d3343ee9324c5a0760382337f9a38c3076d0",
-      "ec2268a532e82e0a0bd769d07271acc2c5afc66560f693d1d7e3c9b0e53df446"
+      "ec2268a532e82e0a0bd769d07271acc2c5afc66560f693d1d7e3c9b0e53df446",
+      "d0598c1b0eb75a4fcd8370acd9e986281d830e65452c64d3e3837046a73fec66"
     ],
     "frozen_project": [
       "91646f717f6b150ffabc02611e73d060f9d1356498200a2b844105f1e06fb74c",
@@ -55,7 +56,7 @@
     "external_lock_must_anchor_private_state_sha": true
   },
   "external_binding": {
-    "status": "ADDITIVE_ASSEMBLER_GAP_SELECTED_GOVERNANCE_ONLY_FRESH_EXECUTE_REQUIRED",
+    "status": "N2_PPGES_READ_ONLY_ADJUDICATION_SELECTED__NO_BUILD_AUTHORITY",
     "activation_commit": "cb579f1b038aeb66fa15bf6d79ad58f0d986591e",
     "required_status_check": "publication-authority",
     "primary_ruleset_id": 24932377,
@@ -65,19 +66,22 @@
     "binding_evidence_sha256": "63ca55a8900630d3727fe06164617022bcfa97e9ca5dba0b4269c28a70c9878d",
     "bootstrap_sha256": "14b7463a2735256cc408773ca0ce6905f18fbde402042c8b751cccf18129ce64",
     "master_control_current_sha256": "310de7a11e64d28e5460187ca447710a6bc0d7090fff6000b64802e9fd00200e",
-    "transition_authorization_run_id": "38846255208",
-    "transition_authorized_action_id": "GLOBAL_RENDERER_ADDITIVE_ASSEMBLER_GAP_2026_10_15",
+    "transition_authorization_run_id": "38852268651",
+    "transition_authorized_action_id": "GLOBAL_RENDERER_N2_PPGES_COMPATIBILITY_ADJUDICATION_2026_10_16",
     "transition_authorized_action_kind": "GOVERNANCE_UPGRADE",
     "transition_authorized_operations": [
       "GOVERNANCE_UPGRADE",
       "AUTHORITY_UPDATE",
       "STATE_TRANSITION"
     ],
-    "selected_action_contract_path": "reports/GLOBAL_RENDERER_GEN11_ADDITIVE_ASSEMBLER_SELECTION_2026-10-16.md",
-    "previous_private_execution_state_sha256": "097f90d2d2a96f41499e1b329b976ed7e8cfcad84134494240df8afade08cc58",
-    "target_private_execution_state_sha256": "029fa79b53cf9125bed73409931e1d65bc4d4adb49240f07dd02fc479e80c901",
+    "selected_action_contract_path": "reports/GLOBAL_RENDERER_GEN12_N2_PPGES_COMPATIBILITY_SELECTION_2026-10-16.md",
+    "previous_private_execution_state_sha256": "029fa79b53cf9125bed73409931e1d65bc4d4adb49240f07dd02fc479e80c901",
+    "target_private_execution_state_sha256": "8bfb41ebe6428eeb6458a4b760ccd87baaef0732555824ca9d1fac91ee3186f3",
     "fresh_execution_authorization_required": true,
-    "transition_authorization_is_execution_authorization": false
+    "transition_authorization_is_execution_authorization": false,
+    "gen11_immutable_fail_digest": "d0598c1b0eb75a4fcd8370acd9e986281d830e65452c64d3e3837046a73fec66",
+    "gen11_immutable_failure_evidence_sha256": "b5045570acc47f71c3f40ae78a176272abc7384f54fb214f6964d2375eb004ef",
+    "gen11_compatibility_triage_sha256": "d2b5beb401aa058e128f8b7997bc7ddd5148a7a04009bccb4d54faf5102aff4d"
   },
   "scoped_v2_evidence": {
     "original_docx_sha256": "84e1231c75fa63352d3792f64076109f4f4bf56dbb008549f200b6630d375e7b",

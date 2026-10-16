@@ -1,9 +1,9 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "gen11-additive-assembler-selection-2026-10-16",
-  "input_public_lock_sha256": "68e2c3e876b42e030d4fd988fcd229cca49ef57bdf211a4ed7e1e691b582a122",
-  "input_private_state_sha256": "097f90d2d2a96f41499e1b329b976ed7e8cfcad84134494240df8afade08cc58",
-  "requested_action_id": "GLOBAL_RENDERER_ADDITIVE_ASSEMBLER_GAP_2026_10_15",
+  "request_id": "gen12-n2-ppges-compatibility-adjudication-governance-2026-10-16",
+  "input_public_lock_sha256": "599bf233183ccbe2d87740475a00de4840ede324eac298d7a5b9499b0b6c2302",
+  "input_private_state_sha256": "029fa79b53cf9125bed73409931e1d65bc4d4adb49240f07dd02fc479e80c901",
+  "requested_action_id": "GLOBAL_RENDERER_N2_PPGES_COMPATIBILITY_ADJUDICATION_2026_10_16",
   "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "MUTATING",
   "project": "GLOBAL",
@@ -14,6 +14,6 @@
     "STATE_TRANSITION"
   ],
   "target_scope_ids": [],
-  "authorization_run_id": "38846255208",
+  "authorization_run_id": "38852268651",
   "user_explicit_authorization": true
 }
