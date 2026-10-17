@@ -1,10 +1,10 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_LOCK/1.2.0",
-  "generation": 13,
-  "previous_public_lock_sha256": "78909c81f69077666fec07894dd9303e5bc72d5ac6707e4aabc779541cc633b4",
-  "private_execution_state_sha256": "4e66a5e1f05ef41ab0652bdff09f714a7889f830a1e8a782cd784c73bc15e5c8",
+  "generation": 14,
+  "previous_public_lock_sha256": "dd745aea0b302f2aa8b7412fc1140d8b22c7ca65d7c0e8b99c72e41b4a550149",
+  "private_execution_state_sha256": "b36aa6b23a73052d789af61d90604d7a1eba184b5e2a189d54a49de8ecf1a4f9",
   "current_action": {
-    "id": "GLOBAL_RENDERER_CANONICAL_PROFILE_CONTRACT_DESIGN_2026_10_16",
+    "id": "GLOBAL_RENDERER_DISTINCT_ASSEMBLER_EXECUTION_GATE_PREPARATION",
     "mode": "READ_ONLY"
   },
   "execution_authorized_now": false,
@@ -56,7 +56,7 @@
     "external_lock_must_anchor_private_state_sha": true
   },
   "external_binding": {
-    "status": "CANONICAL_PROFILE_CONTRACT_READ_ONLY_DESIGN_SELECTED__NO_BUILD_AUTHORITY",
+    "status": "C1_CONTRACT_FORMALLY_ADOPTED_ON_SUCCESSFUL_PROTECTED_MERGE_AND_LIBRARY_SYNC__NO_BUILD_AUTHORITY",
     "activation_commit": "cb579f1b038aeb66fa15bf6d79ad58f0d986591e",
     "required_status_check": "publication-authority",
     "primary_ruleset_id": 24932377,
@@ -66,8 +66,8 @@
     "binding_evidence_sha256": "63ca55a8900630d3727fe06164617022bcfa97e9ca5dba0b4269c28a70c9878d",
     "bootstrap_sha256": "14b7463a2735256cc408773ca0ce6905f18fbde402042c8b751cccf18129ce64",
     "master_control_current_sha256": "310de7a11e64d28e5460187ca447710a6bc0d7090fff6000b64802e9fd00200e",
-    "transition_authorization_run_id": "38856256310",
-    "transition_authorized_action_id": "GLOBAL_RENDERER_CANONICAL_PROFILE_CONTRACT_DESIGN_2026_10_16",
+    "transition_authorization_run_id": "39045364957",
+    "transition_authorized_action_id": "GLOBAL_RENDERER_CANONICAL_PROFILE_CONTRACT_FORMAL_ADOPTION",
     "transition_authorized_action_kind": "GOVERNANCE_UPGRADE",
     "transition_authorized_operations": [
       "GOVERNANCE_UPGRADE",
@@ -75,13 +75,17 @@
       "STATE_TRANSITION"
     ],
     "selected_action_contract_path": "request/STATE_TRANSITION.json",
-    "previous_private_execution_state_sha256": "8bfb41ebe6428eeb6458a4b760ccd87baaef0732555824ca9d1fac91ee3186f3",
-    "target_private_execution_state_sha256": "4e66a5e1f05ef41ab0652bdff09f714a7889f830a1e8a782cd784c73bc15e5c8",
+    "previous_private_execution_state_sha256": "4e66a5e1f05ef41ab0652bdff09f714a7889f830a1e8a782cd784c73bc15e5c8",
+    "target_private_execution_state_sha256": "b36aa6b23a73052d789af61d90604d7a1eba184b5e2a189d54a49de8ecf1a4f9",
     "fresh_execution_authorization_required": true,
     "transition_authorization_is_execution_authorization": false,
     "gen11_immutable_fail_digest": "d0598c1b0eb75a4fcd8370acd9e986281d830e65452c64d3e3837046a73fec66",
     "gen11_immutable_failure_evidence_sha256": "b5045570acc47f71c3f40ae78a176272abc7384f54fb214f6964d2375eb004ef",
-    "gen11_compatibility_triage_sha256": "d2b5beb401aa058e128f8b7997bc7ddd5148a7a04009bccb4d54faf5102aff4d"
+    "gen11_compatibility_triage_sha256": "d2b5beb401aa058e128f8b7997bc7ddd5148a7a04009bccb4d54faf5102aff4d",
+    "c1_contract_sha256": "b215660f571e32c647186eba253c89b5255567c313c068c0898301ab9eb789d3",
+    "c1_contract_library_path": "/GLOBAL-PUBLICATION/Renderer/Contracts/C1/GLOBAL_RENDERER_C1_CANONICAL_CONTRACT_v1.0.0_2026-10-17.json",
+    "next_action_mode": "READ_ONLY",
+    "renderer_qualified": false
   },
   "scoped_v2_evidence": {
     "original_docx_sha256": "84e1231c75fa63352d3792f64076109f4f4bf56dbb008549f200b6630d375e7b",
