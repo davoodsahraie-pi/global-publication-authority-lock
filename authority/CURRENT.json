@@ -1,10 +1,10 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_LOCK/1.2.0",
-  "generation": 12,
-  "previous_public_lock_sha256": "599bf233183ccbe2d87740475a00de4840ede324eac298d7a5b9499b0b6c2302",
-  "private_execution_state_sha256": "8bfb41ebe6428eeb6458a4b760ccd87baaef0732555824ca9d1fac91ee3186f3",
+  "generation": 13,
+  "previous_public_lock_sha256": "78909c81f69077666fec07894dd9303e5bc72d5ac6707e4aabc779541cc633b4",
+  "private_execution_state_sha256": "4e66a5e1f05ef41ab0652bdff09f714a7889f830a1e8a782cd784c73bc15e5c8",
   "current_action": {
-    "id": "GLOBAL_RENDERER_N2_PPGES_COMPATIBILITY_ADJUDICATION_2026_10_16",
+    "id": "GLOBAL_RENDERER_CANONICAL_PROFILE_CONTRACT_DESIGN_2026_10_16",
     "mode": "READ_ONLY"
   },
   "execution_authorized_now": false,
@@ -56,7 +56,7 @@
     "external_lock_must_anchor_private_state_sha": true
   },
   "external_binding": {
-    "status": "N2_PPGES_READ_ONLY_ADJUDICATION_SELECTED__NO_BUILD_AUTHORITY",
+    "status": "CANONICAL_PROFILE_CONTRACT_READ_ONLY_DESIGN_SELECTED__NO_BUILD_AUTHORITY",
     "activation_commit": "cb579f1b038aeb66fa15bf6d79ad58f0d986591e",
     "required_status_check": "publication-authority",
     "primary_ruleset_id": 24932377,
@@ -66,17 +66,17 @@
     "binding_evidence_sha256": "63ca55a8900630d3727fe06164617022bcfa97e9ca5dba0b4269c28a70c9878d",
     "bootstrap_sha256": "14b7463a2735256cc408773ca0ce6905f18fbde402042c8b751cccf18129ce64",
     "master_control_current_sha256": "310de7a11e64d28e5460187ca447710a6bc0d7090fff6000b64802e9fd00200e",
-    "transition_authorization_run_id": "38852268651",
-    "transition_authorized_action_id": "GLOBAL_RENDERER_N2_PPGES_COMPATIBILITY_ADJUDICATION_2026_10_16",
+    "transition_authorization_run_id": "38856256310",
+    "transition_authorized_action_id": "GLOBAL_RENDERER_CANONICAL_PROFILE_CONTRACT_DESIGN_2026_10_16",
     "transition_authorized_action_kind": "GOVERNANCE_UPGRADE",
     "transition_authorized_operations": [
       "GOVERNANCE_UPGRADE",
       "AUTHORITY_UPDATE",
       "STATE_TRANSITION"
     ],
-    "selected_action_contract_path": "reports/GLOBAL_RENDERER_GEN12_N2_PPGES_COMPATIBILITY_SELECTION_2026-10-16.md",
-    "previous_private_execution_state_sha256": "029fa79b53cf9125bed73409931e1d65bc4d4adb49240f07dd02fc479e80c901",
-    "target_private_execution_state_sha256": "8bfb41ebe6428eeb6458a4b760ccd87baaef0732555824ca9d1fac91ee3186f3",
+    "selected_action_contract_path": "request/STATE_TRANSITION.json",
+    "previous_private_execution_state_sha256": "8bfb41ebe6428eeb6458a4b760ccd87baaef0732555824ca9d1fac91ee3186f3",
+    "target_private_execution_state_sha256": "4e66a5e1f05ef41ab0652bdff09f714a7889f830a1e8a782cd784c73bc15e5c8",
     "fresh_execution_authorization_required": true,
     "transition_authorization_is_execution_authorization": false,
     "gen11_immutable_fail_digest": "d0598c1b0eb75a4fcd8370acd9e986281d830e65452c64d3e3837046a73fec66",
