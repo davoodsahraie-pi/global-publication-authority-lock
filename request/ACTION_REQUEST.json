@@ -1,19 +1,19 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "gen12-n2-ppges-rule-adjudication-report-only-2026-10-16",
+  "request_id": "gen13-canonical-output-profile-contract-design-selection-2026-10-16",
   "input_public_lock_sha256": "78909c81f69077666fec07894dd9303e5bc72d5ac6707e4aabc779541cc633b4",
   "input_private_state_sha256": "8bfb41ebe6428eeb6458a4b760ccd87baaef0732555824ca9d1fac91ee3186f3",
-  "requested_action_id": "GLOBAL_RENDERER_N2_PPGES_COMPATIBILITY_ADJUDICATION_2026_10_16",
-  "action_kind": "EXECUTE",
-  "mode": "READ_ONLY",
+  "requested_action_id": "GLOBAL_RENDERER_CANONICAL_PROFILE_CONTRACT_DESIGN_2026_10_16",
+  "action_kind": "GOVERNANCE_UPGRADE",
+  "mode": "MUTATING",
   "project": "GLOBAL",
   "method_id": null,
   "operations": [
-    "READ",
-    "VERIFY_HASH",
-    "REPORT"
+    "GOVERNANCE_UPGRADE",
+    "AUTHORITY_UPDATE",
+    "STATE_TRANSITION"
   ],
   "target_scope_ids": [],
-  "authorization_run_id": null,
+  "authorization_run_id": "38856256310",
   "user_explicit_authorization": true
 }
