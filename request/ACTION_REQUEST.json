@@ -1,9 +1,9 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "gen14-c1-contract-formal-adoption-2026-10-17",
-  "input_public_lock_sha256": "dd745aea0b302f2aa8b7412fc1140d8b22c7ca65d7c0e8b99c72e41b4a550149",
-  "input_private_state_sha256": "4e66a5e1f05ef41ab0652bdff09f714a7889f830a1e8a782cd784c73bc15e5c8",
-  "requested_action_id": "GLOBAL_RENDERER_CANONICAL_PROFILE_CONTRACT_FORMAL_ADOPTION",
+  "request_id": "gen15-c1-distinct-assembler-execution-selection-2026-10-17",
+  "input_public_lock_sha256": "9caea4c9a695ee1b39cabb69ea4fb3a98452de443b19afafdf5008878e1e3d3c",
+  "input_private_state_sha256": "b36aa6b23a73052d789af61d90604d7a1eba184b5e2a189d54a49de8ecf1a4f9",
+  "requested_action_id": "GLOBAL_RENDERER_C1_DISTINCT_SOURCE_TO_DOCX_ASSEMBLER_V1_EXECUTION",
   "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "MUTATING",
   "project": "GLOBAL",
@@ -14,6 +14,6 @@
     "STATE_TRANSITION"
   ],
   "target_scope_ids": [],
-  "authorization_run_id": "39045364957",
+  "authorization_run_id": "39049398336",
   "user_explicit_authorization": true
 }

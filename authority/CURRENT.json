@@ -1,13 +1,13 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_LOCK/1.2.0",
-  "generation": 14,
-  "previous_public_lock_sha256": "dd745aea0b302f2aa8b7412fc1140d8b22c7ca65d7c0e8b99c72e41b4a550149",
-  "private_execution_state_sha256": "b36aa6b23a73052d789af61d90604d7a1eba184b5e2a189d54a49de8ecf1a4f9",
+  "generation": 15,
+  "previous_public_lock_sha256": "9caea4c9a695ee1b39cabb69ea4fb3a98452de443b19afafdf5008878e1e3d3c",
+  "private_execution_state_sha256": "c35593ca6ee16fd327fdaf69abd94aa4f73b3682b501be8090ca6a74bb0556f7",
   "current_action": {
-    "id": "GLOBAL_RENDERER_DISTINCT_ASSEMBLER_EXECUTION_GATE_PREPARATION",
-    "mode": "READ_ONLY"
+    "id": "GLOBAL_RENDERER_C1_DISTINCT_SOURCE_TO_DOCX_ASSEMBLER_V1_EXECUTION",
+    "mode": "MUTATING"
   },
-  "execution_authorized_now": false,
+  "execution_authorized_now": true,
   "ledger_hashes": {
     "immutable_pass": [
       "a15314e7158a3eb5a1cc8edf91d9a50c45b7477b090b753aac7ea870599b26a7",
@@ -56,7 +56,7 @@
     "external_lock_must_anchor_private_state_sha": true
   },
   "external_binding": {
-    "status": "C1_CONTRACT_FORMALLY_ADOPTED_ON_SUCCESSFUL_PROTECTED_MERGE_AND_LIBRARY_SYNC__NO_BUILD_AUTHORITY",
+    "status": "C1_DISTINCT_ASSEMBLER_V1_SELECTED_ONLY__FRESH_EXECUTE_REQUIRED__NO_BUILD_YET",
     "activation_commit": "cb579f1b038aeb66fa15bf6d79ad58f0d986591e",
     "required_status_check": "publication-authority",
     "primary_ruleset_id": 24932377,
@@ -66,8 +66,8 @@
     "binding_evidence_sha256": "63ca55a8900630d3727fe06164617022bcfa97e9ca5dba0b4269c28a70c9878d",
     "bootstrap_sha256": "14b7463a2735256cc408773ca0ce6905f18fbde402042c8b751cccf18129ce64",
     "master_control_current_sha256": "310de7a11e64d28e5460187ca447710a6bc0d7090fff6000b64802e9fd00200e",
-    "transition_authorization_run_id": "39045364957",
-    "transition_authorized_action_id": "GLOBAL_RENDERER_CANONICAL_PROFILE_CONTRACT_FORMAL_ADOPTION",
+    "transition_authorization_run_id": "39049398336",
+    "transition_authorized_action_id": "GLOBAL_RENDERER_C1_DISTINCT_SOURCE_TO_DOCX_ASSEMBLER_V1_EXECUTION",
     "transition_authorized_action_kind": "GOVERNANCE_UPGRADE",
     "transition_authorized_operations": [
       "GOVERNANCE_UPGRADE",
@@ -75,8 +75,8 @@
       "STATE_TRANSITION"
     ],
     "selected_action_contract_path": "request/STATE_TRANSITION.json",
-    "previous_private_execution_state_sha256": "4e66a5e1f05ef41ab0652bdff09f714a7889f830a1e8a782cd784c73bc15e5c8",
-    "target_private_execution_state_sha256": "b36aa6b23a73052d789af61d90604d7a1eba184b5e2a189d54a49de8ecf1a4f9",
+    "previous_private_execution_state_sha256": "b36aa6b23a73052d789af61d90604d7a1eba184b5e2a189d54a49de8ecf1a4f9",
+    "target_private_execution_state_sha256": "c35593ca6ee16fd327fdaf69abd94aa4f73b3682b501be8090ca6a74bb0556f7",
     "fresh_execution_authorization_required": true,
     "transition_authorization_is_execution_authorization": false,
     "gen11_immutable_fail_digest": "d0598c1b0eb75a4fcd8370acd9e986281d830e65452c64d3e3837046a73fec66",
@@ -85,7 +85,19 @@
     "c1_contract_sha256": "b215660f571e32c647186eba253c89b5255567c313c068c0898301ab9eb789d3",
     "c1_contract_library_path": "/GLOBAL-PUBLICATION/Renderer/Contracts/C1/GLOBAL_RENDERER_C1_CANONICAL_CONTRACT_v1.0.0_2026-10-17.json",
     "next_action_mode": "READ_ONLY",
-    "renderer_qualified": false
+    "renderer_qualified": false,
+    "execute_workflow_run_id": null,
+    "execute_authorization_validated": false,
+    "new_method_id": "GEN15_C1_DISTINCT_SOURCE_TO_DOCX_ASSEMBLER_V1_ATTEMPT_01",
+    "new_target_scope_ids": [
+      "GEN15_C1_DISTINCT_ASSEMBLER_V1_NEW_INTEGRATION_ONLY"
+    ],
+    "permitted_ops_after_fresh_execute": [
+      "BUILD",
+      "GENERATE_DOCX",
+      "QUALIFY",
+      "EXPORT_PDF"
+    ]
   },
   "scoped_v2_evidence": {
     "original_docx_sha256": "84e1231c75fa63352d3792f64076109f4f4bf56dbb008549f200b6630d375e7b",
