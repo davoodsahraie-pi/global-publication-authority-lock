@@ -1,9 +1,9 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "gen13-canonical-output-profile-contract-design-selection-2026-10-16",
-  "input_public_lock_sha256": "78909c81f69077666fec07894dd9303e5bc72d5ac6707e4aabc779541cc633b4",
-  "input_private_state_sha256": "8bfb41ebe6428eeb6458a4b760ccd87baaef0732555824ca9d1fac91ee3186f3",
-  "requested_action_id": "GLOBAL_RENDERER_CANONICAL_PROFILE_CONTRACT_DESIGN_2026_10_16",
+  "request_id": "gen14-c1-contract-formal-adoption-2026-10-17",
+  "input_public_lock_sha256": "dd745aea0b302f2aa8b7412fc1140d8b22c7ca65d7c0e8b99c72e41b4a550149",
+  "input_private_state_sha256": "4e66a5e1f05ef41ab0652bdff09f714a7889f830a1e8a782cd784c73bc15e5c8",
+  "requested_action_id": "GLOBAL_RENDERER_CANONICAL_PROFILE_CONTRACT_FORMAL_ADOPTION",
   "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "MUTATING",
   "project": "GLOBAL",
@@ -14,6 +14,6 @@
     "STATE_TRANSITION"
   ],
   "target_scope_ids": [],
-  "authorization_run_id": "38856256310",
+  "authorization_run_id": "39045364957",
   "user_explicit_authorization": true
 }
