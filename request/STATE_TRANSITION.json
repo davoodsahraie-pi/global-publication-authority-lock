@@ -1,26 +1,31 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_STATE_TRANSITION/1.0.0",
-  "transition_id": "GEN16_GEN15_ATTEMPT01_FAIL_CLOSEOUT_2026_10_18",
-  "source_public_lock_sha256": "a50d96b89a02070421084c97622cd371aa9628c6b7a5d8ed6a41027969bfe9de",
-  "target_public_lock_sha256": "c837ba758078046c7f690fe6ccbd50ed1fa1dff784dcfdaaa15f3f87978fb28a",
-  "source_private_execution_state_sha256": "c35593ca6ee16fd327fdaf69abd94aa4f73b3682b501be8090ca6a74bb0556f7",
-  "target_private_execution_state_sha256": "d9b21a346a0da9058c1dcba2fac6d9f0e14be211b2a69acb67a888175cdec5be",
-  "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.5_2026-10-18.json",
-  "authorization_run_id": "39091583506",
-  "action_id": "GLOBAL_RENDERER_GEN15_C1_ATTEMPT_01_FAILURE_CLOSEOUT_AND_DISTINCT_METHOD_DESIGN",
+  "transition_id": "GEN17_C1_TYPED_IR_FRESH_OPC_METHOD_SELECTION_2026_10_18",
+  "source_public_lock_sha256": "c837ba758078046c7f690fe6ccbd50ed1fa1dff784dcfdaaa15f3f87978fb28a",
+  "target_public_lock_sha256": "6bcaf9a90f2264b269f6b0cc477571b1967a88ec87ca559d8ca957da2db8a701",
+  "source_private_execution_state_sha256": "d9b21a346a0da9058c1dcba2fac6d9f0e14be211b2a69acb67a888175cdec5be",
+  "target_private_execution_state_sha256": "393eddfce470784f1d4047ed12facb089f3fe131ff9d0631df1ca854c884b267",
+  "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.6_2026-10-18.json",
+  "authorization_run_id": "39098160712",
+  "action_id": "GLOBAL_RENDERER_C1_TYPED_IR_FRESH_OPC_ASSEMBLER_V1_EXECUTION",
   "action_kind": "GOVERNANCE_UPGRADE",
   "operations": [
     "GOVERNANCE_UPGRADE",
     "AUTHORITY_UPDATE",
     "STATE_TRANSITION"
   ],
-  "closed_failed_method_id": "GEN15_C1_DISTINCT_SOURCE_TO_DOCX_ASSEMBLER_V1_ATTEMPT_01",
-  "appended_immutable_method_fail_digest": "e17a11843c3573e4198ba97c7be49e2717dd4c563bee57b42559be681b54fdc9",
-  "new_method_fail_count": 9,
-  "new_next_action_id": "GLOBAL_RENDERER_POST_GEN15_FAIL_DISTINCT_ASSEMBLER_METHOD_DESIGN",
-  "new_next_action_mode": "READ_ONLY",
-  "no_assembler_execution_in_this_transition": true,
+  "effect": "Select one NEW, nonderived Typed IR and fresh OPC OOXML assembler method under C1. Do not execute, implement, qualify, export PDF, reopen books or promote Renderer during governance selection.",
+  "new_method_id": "C1_TYPED_IR_FRESH_OOXML_PACKAGE_ASSEMBLER_V1_ATTEMPT_01",
+  "new_target_scope_ids": [
+    "GEN17_C1_TYPED_IR_FRESH_OPC_NEW_INTEGRATION_ONLY"
+  ],
+  "method_design_sha256": "3aff37bb6724e31923976f9c866de52c4a633ff23e67f645a6f1cc261d1799ca",
+  "method_design_library_path": "/GLOBAL-PUBLICATION/Renderer/Designs/Gen16-2026-10-18/GEN16_C1_NONDERVIATIVE_TYPED_IR_FRESH_OPC_METHOD_DESIGN_2026-10-18.json",
+  "contract_sha256": "b215660f571e32c647186eba253c89b5255567c313c068c0898301ab9eb789d3",
+  "post_transition_requirement": "Fresh separate owner EXECUTE on Generation 17 SHA with exact selected action, operations [BUILD,GENERATE_DOCX,QUALIFY,EXPORT_PDF], and scope [GEN17_C1_TYPED_IR_FRESH_OPC_NEW_INTEGRATION_ONLY] before any new method run. Within a 60-minute single-attempt hard cap. No retry of GEN15, Gen11, Method C/K.",
+  "transition_authorization_is_execution_authorization": false,
+  "no_renderer_execution_in_this_transition": true,
+  "no_project_execution_in_this_transition": true,
   "no_docx_or_pdf_mutation": true,
-  "renderer_qualified": false,
-  "post_transition_requirement": "New method design READ_ONLY. Distinct future governance selection and fresh owner EXECUTE required for any build."
+  "renderer_qualified": false
 }
