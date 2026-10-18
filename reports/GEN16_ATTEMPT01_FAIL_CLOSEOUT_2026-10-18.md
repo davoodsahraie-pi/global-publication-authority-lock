@@ -1,0 +1,10 @@
+GEN16 Method Fail Closeout
+
+Authorization 39091583506, prior execute 39051749458.
+Failed method: GEN15_C1_DISTINCT_SOURCE_TO_DOCX_ASSEMBLER_V1_ATTEMPT_01
+Failure digest: e17a11843c3573e4198ba97c7be49e2717dd4c563bee57b42559be681b54fdc9
+GEN15 public SHA a50d96b89a02070421084c97622cd371aa9628c6b7a5d8ed6a41027969bfe9de
+GEN16 public SHA c837ba758078046c7f690fe6ccbd50ed1fa1dff784dcfdaaa15f3f87978fb28a
+GEN16 private SHA d9b21a346a0da9058c1dcba2fac6d9f0e14be211b2a69acb67a888175cdec5be
+Evidence path /GLOBAL-PUBLICATION/Renderer/Qualification/Gen15-C1-Attempt01-Failure-2026-10-18/
+Next action GLOBAL_RENDERER_POST_GEN15_FAIL_DISTINCT_ASSEMBLER_METHOD_DESIGN READ_ONLY. All old PASS/FAIL/frozen/blocked append-only. No new Build, DOCX, PDF, or renderer promotion.
