@@ -1,13 +1,13 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_LOCK/1.2.0",
-  "generation": 17,
-  "previous_public_lock_sha256": "c837ba758078046c7f690fe6ccbd50ed1fa1dff784dcfdaaa15f3f87978fb28a",
-  "private_execution_state_sha256": "393eddfce470784f1d4047ed12facb089f3fe131ff9d0631df1ca854c884b267",
+  "generation": 18,
+  "previous_public_lock_sha256": "6bcaf9a90f2264b269f6b0cc477571b1967a88ec87ca559d8ca957da2db8a701",
+  "private_execution_state_sha256": "9db6580cd7e1049fc300d112d71b38c9e76cf48ae2504b10ac6de871dc9c08f0",
   "current_action": {
-    "id": "GLOBAL_RENDERER_C1_TYPED_IR_FRESH_OPC_ASSEMBLER_V1_EXECUTION",
-    "mode": "MUTATING"
+    "id": "GLOBAL_RENDERER_GEN17_C1_TYPED_IR_FRESH_OPC_ATTEMPT01_USER_QA_FAILURE_CLOSEOUT",
+    "mode": "READ_ONLY"
   },
-  "execution_authorized_now": true,
+  "execution_authorized_now": false,
   "ledger_hashes": {
     "immutable_pass": [
       "a15314e7158a3eb5a1cc8edf91d9a50c45b7477b090b753aac7ea870599b26a7",
@@ -31,7 +31,8 @@
       "c905339494bfe96f028ea5d67c42d3343ee9324c5a0760382337f9a38c3076d0",
       "ec2268a532e82e0a0bd769d07271acc2c5afc66560f693d1d7e3c9b0e53df446",
       "d0598c1b0eb75a4fcd8370acd9e986281d830e65452c64d3e3837046a73fec66",
-      "e17a11843c3573e4198ba97c7be49e2717dd4c563bee57b42559be681b54fdc9"
+      "e17a11843c3573e4198ba97c7be49e2717dd4c563bee57b42559be681b54fdc9",
+      "6e7594bcb441d239e571ef78c2ca83f82dc80cf166aea09a5a9a6e69662a6ae8"
     ],
     "frozen_project": [
       "91646f717f6b150ffabc02611e73d060f9d1356498200a2b844105f1e06fb74c",
@@ -57,7 +58,7 @@
     "external_lock_must_anchor_private_state_sha": true
   },
   "external_binding": {
-    "status": "GEN17_C1_TYPED_IR_FRESH_OPC_ASSEMBLER_SELECTED_ONLY__NO_BUILD_UNTIL_NEW_EXECUTE",
+    "status": "GEN17_ATTEMPT01_WORD_MOBILE_FAILURE_CLOSED__GEN18_N2_G7_BEHAVIOR_PARITY_READ_ONLY",
     "activation_commit": "cb579f1b038aeb66fa15bf6d79ad58f0d986591e",
     "required_status_check": "publication-authority",
     "primary_ruleset_id": 24932377,
@@ -67,8 +68,8 @@
     "binding_evidence_sha256": "63ca55a8900630d3727fe06164617022bcfa97e9ca5dba0b4269c28a70c9878d",
     "bootstrap_sha256": "14b7463a2735256cc408773ca0ce6905f18fbde402042c8b751cccf18129ce64",
     "master_control_current_sha256": "310de7a11e64d28e5460187ca447710a6bc0d7090fff6000b64802e9fd00200e",
-    "transition_authorization_run_id": "39098160712",
-    "transition_authorized_action_id": "GLOBAL_RENDERER_C1_TYPED_IR_FRESH_OPC_ASSEMBLER_V1_EXECUTION",
+    "transition_authorization_run_id": "39109574005",
+    "transition_authorized_action_id": "GLOBAL_RENDERER_GEN17_C1_TYPED_IR_FRESH_OPC_ATTEMPT01_USER_QA_FAILURE_CLOSEOUT",
     "transition_authorized_action_kind": "GOVERNANCE_UPGRADE",
     "transition_authorized_operations": [
       "GOVERNANCE_UPGRADE",
@@ -76,8 +77,8 @@
       "STATE_TRANSITION"
     ],
     "selected_action_contract_path": "request/STATE_TRANSITION.json",
-    "previous_private_execution_state_sha256": "d9b21a346a0da9058c1dcba2fac6d9f0e14be211b2a69acb67a888175cdec5be",
-    "target_private_execution_state_sha256": "393eddfce470784f1d4047ed12facb089f3fe131ff9d0631df1ca854c884b267",
+    "previous_private_execution_state_sha256": "393eddfce470784f1d4047ed12facb089f3fe131ff9d0631df1ca854c884b267",
+    "target_private_execution_state_sha256": "9db6580cd7e1049fc300d112d71b38c9e76cf48ae2504b10ac6de871dc9c08f0",
     "fresh_execution_authorization_required": true,
     "transition_authorization_is_execution_authorization": false,
     "gen11_immutable_fail_digest": "d0598c1b0eb75a4fcd8370acd9e986281d830e65452c64d3e3837046a73fec66",
@@ -85,27 +86,29 @@
     "gen11_compatibility_triage_sha256": "d2b5beb401aa058e128f8b7997bc7ddd5148a7a04009bccb4d54faf5102aff4d",
     "c1_contract_sha256": "b215660f571e32c647186eba253c89b5255567c313c068c0898301ab9eb789d3",
     "c1_contract_library_path": "/GLOBAL-PUBLICATION/Renderer/Contracts/C1/GLOBAL_RENDERER_C1_CANONICAL_CONTRACT_v1.0.0_2026-10-17.json",
-    "next_action_mode": "MUTATING",
+    "next_action_mode": "READ_ONLY",
     "renderer_qualified": false,
     "execute_workflow_run_id": null,
     "execute_authorization_validated": false,
-    "new_method_id": "C1_TYPED_IR_FRESH_OOXML_PACKAGE_ASSEMBLER_V1_ATTEMPT_01",
-    "new_target_scope_ids": [
-      "GEN17_C1_TYPED_IR_FRESH_OPC_NEW_INTEGRATION_ONLY"
-    ],
-    "permitted_ops_after_fresh_execute": [
-      "BUILD",
-      "GENERATE_DOCX",
-      "QUALIFY",
-      "EXPORT_PDF"
-    ],
+    "new_method_id": null,
+    "new_target_scope_ids": [],
+    "permitted_ops_after_fresh_execute": [],
     "gen15_failed_method_id": "GEN15_C1_DISTINCT_SOURCE_TO_DOCX_ASSEMBLER_V1_ATTEMPT_01",
     "gen15_failure_digest": "e17a11843c3573e4198ba97c7be49e2717dd4c563bee57b42559be681b54fdc9",
     "gen15_failure_checkpoint_sha256": "d5b1efcfe5e18a3b397dd8d765faee75f1cf4cd0a92e38c628eb6af3bbc07e72",
     "gen15_failure_evidence_sha256": "cea9368bc06f06215f0d07f248b5cbed35690f44f4eff8da5246a509c641970d",
     "gen15_previous_execute_run_id": "39051749458",
     "method_design_sha256": "3aff37bb6724e31923976f9c866de52c4a633ff23e67f645a6f1cc261d1799ca",
-    "method_design_library_path": "/GLOBAL-PUBLICATION/Renderer/Designs/Gen16-2026-10-18/GEN16_C1_NONDERVIATIVE_TYPED_IR_FRESH_OPC_METHOD_DESIGN_2026-10-18.json"
+    "method_design_library_path": "/GLOBAL-PUBLICATION/Renderer/Designs/Gen16-2026-10-18/GEN16_C1_NONDERVIATIVE_TYPED_IR_FRESH_OPC_METHOD_DESIGN_2026-10-18.json",
+    "failed_method_id": "C1_TYPED_IR_FRESH_OOXML_PACKAGE_ASSEMBLER_V1_ATTEMPT_01",
+    "failed_method_digest": "6e7594bcb441d239e571ef78c2ca83f82dc80cf166aea09a5a9a6e69662a6ae8",
+    "gen17_word_mobile_open": "PASS_USER_ATTESTED",
+    "gen17_word_mobile_bidi_punctuation": "FAIL_USER_ATTESTED",
+    "gen17_word_mobile_heading_list": "FAIL_USER_ATTESTED",
+    "gen17_word_mobile_editing": "FAIL_USER_ATTESTED",
+    "gen17_failure_evidence_sha256": "6464343978ca6458d02b988d734a5ad95e061daa962a94286bfadb2c27957a26",
+    "gen17_structural_diff_sha256": "c74e21d52772c184b6146be4ba3f37797089cfb2c8db86be9b2cb9d4a80f44d7",
+    "gen17_docx_sha256": "7118493229ac117f93654b639900b62b9695b4ebc092820cac13ece395a6ca2e"
   },
   "scoped_v2_evidence": {
     "original_docx_sha256": "84e1231c75fa63352d3792f64076109f4f4bf56dbb008549f200b6630d375e7b",

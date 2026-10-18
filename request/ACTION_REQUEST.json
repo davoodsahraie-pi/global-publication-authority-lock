@@ -1,9 +1,9 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "gen17-c1-typed-ir-fresh-opc-method-selection-2026-10-18",
-  "input_public_lock_sha256": "c837ba758078046c7f690fe6ccbd50ed1fa1dff784dcfdaaa15f3f87978fb28a",
-  "input_private_state_sha256": "d9b21a346a0da9058c1dcba2fac6d9f0e14be211b2a69acb67a888175cdec5be",
-  "requested_action_id": "GLOBAL_RENDERER_C1_TYPED_IR_FRESH_OPC_ASSEMBLER_V1_EXECUTION",
+  "request_id": "gen18-close-gen17-word-mobile-failure-2026-10-18",
+  "input_public_lock_sha256": "6bcaf9a90f2264b269f6b0cc477571b1967a88ec87ca559d8ca957da2db8a701",
+  "input_private_state_sha256": "393eddfce470784f1d4047ed12facb089f3fe131ff9d0631df1ca854c884b267",
+  "requested_action_id": "GLOBAL_RENDERER_GEN17_C1_TYPED_IR_FRESH_OPC_ATTEMPT01_USER_QA_FAILURE_CLOSEOUT",
   "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "MUTATING",
   "project": "GLOBAL",
@@ -14,6 +14,6 @@
     "STATE_TRANSITION"
   ],
   "target_scope_ids": [],
-  "authorization_run_id": "39098160712",
+  "authorization_run_id": "39109574005",
   "user_explicit_authorization": true
 }
