@@ -1,13 +1,13 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_LOCK/1.2.0",
-  "generation": 16,
-  "previous_public_lock_sha256": "a50d96b89a02070421084c97622cd371aa9628c6b7a5d8ed6a41027969bfe9de",
-  "private_execution_state_sha256": "d9b21a346a0da9058c1dcba2fac6d9f0e14be211b2a69acb67a888175cdec5be",
+  "generation": 17,
+  "previous_public_lock_sha256": "c837ba758078046c7f690fe6ccbd50ed1fa1dff784dcfdaaa15f3f87978fb28a",
+  "private_execution_state_sha256": "393eddfce470784f1d4047ed12facb089f3fe131ff9d0631df1ca854c884b267",
   "current_action": {
-    "id": "GLOBAL_RENDERER_POST_GEN15_FAIL_DISTINCT_ASSEMBLER_METHOD_DESIGN",
-    "mode": "READ_ONLY"
+    "id": "GLOBAL_RENDERER_C1_TYPED_IR_FRESH_OPC_ASSEMBLER_V1_EXECUTION",
+    "mode": "MUTATING"
   },
-  "execution_authorized_now": false,
+  "execution_authorized_now": true,
   "ledger_hashes": {
     "immutable_pass": [
       "a15314e7158a3eb5a1cc8edf91d9a50c45b7477b090b753aac7ea870599b26a7",
@@ -57,7 +57,7 @@
     "external_lock_must_anchor_private_state_sha": true
   },
   "external_binding": {
-    "status": "GEN15_ATTEMPT01_METHOD_FAIL_CLOSED__GEN16_DISTINCT_METHOD_DESIGN_READ_ONLY",
+    "status": "GEN17_C1_TYPED_IR_FRESH_OPC_ASSEMBLER_SELECTED_ONLY__NO_BUILD_UNTIL_NEW_EXECUTE",
     "activation_commit": "cb579f1b038aeb66fa15bf6d79ad58f0d986591e",
     "required_status_check": "publication-authority",
     "primary_ruleset_id": 24932377,
@@ -67,8 +67,8 @@
     "binding_evidence_sha256": "63ca55a8900630d3727fe06164617022bcfa97e9ca5dba0b4269c28a70c9878d",
     "bootstrap_sha256": "14b7463a2735256cc408773ca0ce6905f18fbde402042c8b751cccf18129ce64",
     "master_control_current_sha256": "310de7a11e64d28e5460187ca447710a6bc0d7090fff6000b64802e9fd00200e",
-    "transition_authorization_run_id": "39091583506",
-    "transition_authorized_action_id": "GLOBAL_RENDERER_GEN15_C1_ATTEMPT_01_FAILURE_CLOSEOUT_AND_DISTINCT_METHOD_DESIGN",
+    "transition_authorization_run_id": "39098160712",
+    "transition_authorized_action_id": "GLOBAL_RENDERER_C1_TYPED_IR_FRESH_OPC_ASSEMBLER_V1_EXECUTION",
     "transition_authorized_action_kind": "GOVERNANCE_UPGRADE",
     "transition_authorized_operations": [
       "GOVERNANCE_UPGRADE",
@@ -76,8 +76,8 @@
       "STATE_TRANSITION"
     ],
     "selected_action_contract_path": "request/STATE_TRANSITION.json",
-    "previous_private_execution_state_sha256": "c35593ca6ee16fd327fdaf69abd94aa4f73b3682b501be8090ca6a74bb0556f7",
-    "target_private_execution_state_sha256": "d9b21a346a0da9058c1dcba2fac6d9f0e14be211b2a69acb67a888175cdec5be",
+    "previous_private_execution_state_sha256": "d9b21a346a0da9058c1dcba2fac6d9f0e14be211b2a69acb67a888175cdec5be",
+    "target_private_execution_state_sha256": "393eddfce470784f1d4047ed12facb089f3fe131ff9d0631df1ca854c884b267",
     "fresh_execution_authorization_required": true,
     "transition_authorization_is_execution_authorization": false,
     "gen11_immutable_fail_digest": "d0598c1b0eb75a4fcd8370acd9e986281d830e65452c64d3e3837046a73fec66",
@@ -85,18 +85,27 @@
     "gen11_compatibility_triage_sha256": "d2b5beb401aa058e128f8b7997bc7ddd5148a7a04009bccb4d54faf5102aff4d",
     "c1_contract_sha256": "b215660f571e32c647186eba253c89b5255567c313c068c0898301ab9eb789d3",
     "c1_contract_library_path": "/GLOBAL-PUBLICATION/Renderer/Contracts/C1/GLOBAL_RENDERER_C1_CANONICAL_CONTRACT_v1.0.0_2026-10-17.json",
-    "next_action_mode": "READ_ONLY",
+    "next_action_mode": "MUTATING",
     "renderer_qualified": false,
     "execute_workflow_run_id": null,
     "execute_authorization_validated": false,
-    "new_method_id": null,
-    "new_target_scope_ids": [],
-    "permitted_ops_after_fresh_execute": [],
+    "new_method_id": "C1_TYPED_IR_FRESH_OOXML_PACKAGE_ASSEMBLER_V1_ATTEMPT_01",
+    "new_target_scope_ids": [
+      "GEN17_C1_TYPED_IR_FRESH_OPC_NEW_INTEGRATION_ONLY"
+    ],
+    "permitted_ops_after_fresh_execute": [
+      "BUILD",
+      "GENERATE_DOCX",
+      "QUALIFY",
+      "EXPORT_PDF"
+    ],
     "gen15_failed_method_id": "GEN15_C1_DISTINCT_SOURCE_TO_DOCX_ASSEMBLER_V1_ATTEMPT_01",
     "gen15_failure_digest": "e17a11843c3573e4198ba97c7be49e2717dd4c563bee57b42559be681b54fdc9",
     "gen15_failure_checkpoint_sha256": "d5b1efcfe5e18a3b397dd8d765faee75f1cf4cd0a92e38c628eb6af3bbc07e72",
     "gen15_failure_evidence_sha256": "cea9368bc06f06215f0d07f248b5cbed35690f44f4eff8da5246a509c641970d",
-    "gen15_previous_execute_run_id": "39051749458"
+    "gen15_previous_execute_run_id": "39051749458",
+    "method_design_sha256": "3aff37bb6724e31923976f9c866de52c4a633ff23e67f645a6f1cc261d1799ca",
+    "method_design_library_path": "/GLOBAL-PUBLICATION/Renderer/Designs/Gen16-2026-10-18/GEN16_C1_NONDERVIATIVE_TYPED_IR_FRESH_OPC_METHOD_DESIGN_2026-10-18.json"
   },
   "scoped_v2_evidence": {
     "original_docx_sha256": "84e1231c75fa63352d3792f64076109f4f4bf56dbb008549f200b6630d375e7b",

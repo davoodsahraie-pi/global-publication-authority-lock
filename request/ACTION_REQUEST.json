@@ -1,9 +1,9 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "gen16-method-failure-closeout-2026-10-18",
-  "input_public_lock_sha256": "a50d96b89a02070421084c97622cd371aa9628c6b7a5d8ed6a41027969bfe9de",
-  "input_private_state_sha256": "c35593ca6ee16fd327fdaf69abd94aa4f73b3682b501be8090ca6a74bb0556f7",
-  "requested_action_id": "GLOBAL_RENDERER_GEN15_C1_ATTEMPT_01_FAILURE_CLOSEOUT_AND_DISTINCT_METHOD_DESIGN",
+  "request_id": "gen17-c1-typed-ir-fresh-opc-method-selection-2026-10-18",
+  "input_public_lock_sha256": "c837ba758078046c7f690fe6ccbd50ed1fa1dff784dcfdaaa15f3f87978fb28a",
+  "input_private_state_sha256": "d9b21a346a0da9058c1dcba2fac6d9f0e14be211b2a69acb67a888175cdec5be",
+  "requested_action_id": "GLOBAL_RENDERER_C1_TYPED_IR_FRESH_OPC_ASSEMBLER_V1_EXECUTION",
   "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "MUTATING",
   "project": "GLOBAL",
@@ -14,6 +14,6 @@
     "STATE_TRANSITION"
   ],
   "target_scope_ids": [],
-  "authorization_run_id": "39091583506",
+  "authorization_run_id": "39098160712",
   "user_explicit_authorization": true
 }
