@@ -1,9 +1,9 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "gen18-close-gen17-word-mobile-failure-2026-10-18",
-  "input_public_lock_sha256": "6bcaf9a90f2264b269f6b0cc477571b1967a88ec87ca559d8ca957da2db8a701",
-  "input_private_state_sha256": "393eddfce470784f1d4047ed12facb089f3fe131ff9d0631df1ca854c884b267",
-  "requested_action_id": "GLOBAL_RENDERER_GEN17_C1_TYPED_IR_FRESH_OPC_ATTEMPT01_USER_QA_FAILURE_CLOSEOUT",
+  "request_id": "gen19-c1-aspose-foss-f0-method-selection-review-2026-10-19",
+  "input_public_lock_sha256": "4610485a770de0e1340630d9bd039e4b9f5010a3bad1f36f637a81df36ba3d94",
+  "input_private_state_sha256": "9db6580cd7e1049fc300d112d71b38c9e76cf48ae2504b10ac6de871dc9c08f0",
+  "requested_action_id": "GLOBAL_RENDERER_GEN19_C1_ASPOSE_FOSS_F0_METHOD_SELECTION_REVIEW",
   "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "MUTATING",
   "project": "GLOBAL",
@@ -14,6 +14,6 @@
     "STATE_TRANSITION"
   ],
   "target_scope_ids": [],
-  "authorization_run_id": "39109574005",
+  "authorization_run_id": "39251736468",
   "user_explicit_authorization": true
 }
