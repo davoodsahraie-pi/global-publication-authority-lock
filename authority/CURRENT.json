@@ -1,13 +1,13 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_LOCK/1.2.0",
-  "generation": 19,
-  "previous_public_lock_sha256": "4610485a770de0e1340630d9bd039e4b9f5010a3bad1f36f637a81df36ba3d94",
-  "private_execution_state_sha256": "17ce3064d0488282036c1ee411d4967986e11a9db41c9888b22cc9f4b7fdafc4",
+  "generation": 20,
+  "previous_public_lock_sha256": "b42b816d4cb5f4b521501bcf211c7f74b82bac38ae97850f4072fe734535da7c",
+  "private_execution_state_sha256": "4eedf6b8e862089d88c615a748b078db9780fdc4f6b836ffb1cf687bd3b0e879",
   "current_action": {
-    "id": "GLOBAL_RENDERER_GEN19_C1_ASPOSE_FOSS_F0_METHOD_SELECTION_REVIEW",
-    "mode": "READ_ONLY"
+    "id": "GLOBAL_RENDERER_DOCX4J_FOSS_REAL_BOOK_QUALIFICATION",
+    "mode": "MUTATING"
   },
-  "execution_authorized_now": false,
+  "execution_authorized_now": true,
   "ledger_hashes": {
     "immutable_pass": [
       "a15314e7158a3eb5a1cc8edf91d9a50c45b7477b090b753aac7ea870599b26a7",
@@ -58,7 +58,7 @@
     "external_lock_must_anchor_private_state_sha": true
   },
   "external_binding": {
-    "status": "GEN19_C1_ASPOSE_FOSS_F0_ENGINE_SELECTION_REVIEW_READ_ONLY_NO_ENGINE_SELECTED",
+    "status": "GEN20_DOCX4J_FOSS_REALBOOK_SELECTED__FRESH_EXECUTE_PENDING",
     "activation_commit": "cb579f1b038aeb66fa15bf6d79ad58f0d986591e",
     "required_status_check": "publication-authority",
     "primary_ruleset_id": 24932377,
@@ -68,8 +68,8 @@
     "binding_evidence_sha256": "63ca55a8900630d3727fe06164617022bcfa97e9ca5dba0b4269c28a70c9878d",
     "bootstrap_sha256": "14b7463a2735256cc408773ca0ce6905f18fbde402042c8b751cccf18129ce64",
     "master_control_current_sha256": "310de7a11e64d28e5460187ca447710a6bc0d7090fff6000b64802e9fd00200e",
-    "transition_authorization_run_id": "39251736468",
-    "transition_authorized_action_id": "GLOBAL_RENDERER_GEN19_C1_ASPOSE_FOSS_F0_METHOD_SELECTION_REVIEW",
+    "transition_authorization_run_id": "39636116900",
+    "transition_authorized_action_id": "GLOBAL_RENDERER_DOCX4J_FOSS_REAL_BOOK_QUALIFICATION",
     "transition_authorized_action_kind": "GOVERNANCE_UPGRADE",
     "transition_authorized_operations": [
       "GOVERNANCE_UPGRADE",
@@ -86,13 +86,20 @@
     "gen11_compatibility_triage_sha256": "d2b5beb401aa058e128f8b7997bc7ddd5148a7a04009bccb4d54faf5102aff4d",
     "c1_contract_sha256": "b215660f571e32c647186eba253c89b5255567c313c068c0898301ab9eb789d3",
     "c1_contract_library_path": "/GLOBAL-PUBLICATION/Renderer/Contracts/C1/GLOBAL_RENDERER_C1_CANONICAL_CONTRACT_v1.0.0_2026-10-17.json",
-    "next_action_mode": "READ_ONLY",
+    "next_action_mode": "MUTATING",
     "renderer_qualified": false,
     "execute_workflow_run_id": null,
     "execute_authorization_validated": false,
-    "new_method_id": null,
-    "new_target_scope_ids": [],
-    "permitted_ops_after_fresh_execute": [],
+    "new_method_id": "DOCX4J_COMMUNITY_17_3_3_PYREF_C1_FRESH_SOURCE_TO_DOCX_PDF_ATTEMPT_01",
+    "new_target_scope_ids": [
+      "GLOBAL_DOCX4J_PYREF_COMPLETE_34SRC_REALBOOK_ONE_ATTEMPT_01"
+    ],
+    "permitted_ops_after_fresh_execute": [
+      "BUILD",
+      "GENERATE_DOCX",
+      "QUALIFY",
+      "EXPORT_PDF"
+    ],
     "gen15_failed_method_id": "GEN15_C1_DISTINCT_SOURCE_TO_DOCX_ASSEMBLER_V1_ATTEMPT_01",
     "gen15_failure_digest": "e17a11843c3573e4198ba97c7be49e2717dd4c563bee57b42559be681b54fdc9",
     "gen15_failure_checkpoint_sha256": "d5b1efcfe5e18a3b397dd8d765faee75f1cf4cd0a92e38c628eb6af3bbc07e72",
@@ -109,10 +116,18 @@
     "gen17_failure_evidence_sha256": "6464343978ca6458d02b988d734a5ad95e061daa962a94286bfadb2c27957a26",
     "gen17_structural_diff_sha256": "c74e21d52772c184b6146be4ba3f37797089cfb2c8db86be9b2cb9d4a80f44d7",
     "gen17_docx_sha256": "7118493229ac117f93654b639900b62b9695b4ebc092820cac13ece395a6ca2e",
-    "selected_next_action": "GLOBAL_RENDERER_GEN19_C1_ASPOSE_FOSS_F0_METHOD_SELECTION_REVIEW",
+    "selected_next_action": "GLOBAL_RENDERER_DOCX4J_FOSS_REAL_BOOK_QUALIFICATION",
     "engine_comparison_review_sha256": "2ceced0a3d94bf7dc243ab3a4b9f6e678f4570dc72f5c9ccb4a828706819d347",
     "engine_comparison_review_library_path": "/GLOBAL-PUBLICATION/Renderer/Reviews/Gen19-2026-10-19/GEN19_C1_ENGINE_F0_COMPARATIVE_REVIEW_READ_ONLY_2026-10-19.json",
-    "standalone_aspose_foss_pdf": "NOT_AVAILABLE"
+    "standalone_aspose_foss_pdf": "NOT_AVAILABLE",
+    "selected_engine": "docx4j Community 17.3.3 + docx4j-export-fo",
+    "canonical_source_sha256": "5fe771e936847fcf6af592cde796a46b91862f0142937afa6224f103a6597834",
+    "canonical_source_count": 34,
+    "governance_authorization_run_id": "39636116900",
+    "governance_transition_source_private_sha256": "17ce3064d0488282036c1ee411d4967986e11a9db41c9888b22cc9f4b7fdafc4",
+    "governance_transition_target_private_sha256": "4eedf6b8e862089d88c615a748b078db9780fdc4f6b836ffb1cf687bd3b0e879",
+    "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.9_2026-10-21.json",
+    "no_paid_license_dependency": true
   },
   "scoped_v2_evidence": {
     "original_docx_sha256": "84e1231c75fa63352d3792f64076109f4f4bf56dbb008549f200b6630d375e7b",
