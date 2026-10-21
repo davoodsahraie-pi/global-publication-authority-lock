@@ -1,9 +1,9 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "gen19-c1-aspose-foss-f0-method-selection-review-2026-10-19",
-  "input_public_lock_sha256": "4610485a770de0e1340630d9bd039e4b9f5010a3bad1f36f637a81df36ba3d94",
-  "input_private_state_sha256": "9db6580cd7e1049fc300d112d71b38c9e76cf48ae2504b10ac6de871dc9c08f0",
-  "requested_action_id": "GLOBAL_RENDERER_GEN19_C1_ASPOSE_FOSS_F0_METHOD_SELECTION_REVIEW",
+  "request_id": "gen20-docx4j-foss-pyref-realbook-selection-2026-10-21",
+  "input_public_lock_sha256": "b42b816d4cb5f4b521501bcf211c7f74b82bac38ae97850f4072fe734535da7c",
+  "input_private_state_sha256": "17ce3064d0488282036c1ee411d4967986e11a9db41c9888b22cc9f4b7fdafc4",
+  "requested_action_id": "GLOBAL_RENDERER_DOCX4J_FOSS_REAL_BOOK_QUALIFICATION",
   "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "MUTATING",
   "project": "GLOBAL",
@@ -14,6 +14,6 @@
     "STATE_TRANSITION"
   ],
   "target_scope_ids": [],
-  "authorization_run_id": "39251736468",
+  "authorization_run_id": "39636116900",
   "user_explicit_authorization": true
 }
