@@ -1,9 +1,9 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "gen20-docx4j-foss-pyref-realbook-selection-2026-10-21",
-  "input_public_lock_sha256": "b42b816d4cb5f4b521501bcf211c7f74b82bac38ae97850f4072fe734535da7c",
-  "input_private_state_sha256": "17ce3064d0488282036c1ee411d4967986e11a9db41c9888b22cc9f4b7fdafc4",
-  "requested_action_id": "GLOBAL_RENDERER_DOCX4J_FOSS_REAL_BOOK_QUALIFICATION",
+  "request_id": "gen21-close-gen20-docx4j-failure-readonly-review-2026-10-22",
+  "input_public_lock_sha256": "db83266599dd15eece3fdd7b02b347b807e8a89310b190a0f25a2840c1d031b6",
+  "input_private_state_sha256": "4eedf6b8e862089d88c615a748b078db9780fdc4f6b836ffb1cf687bd3b0e879",
+  "requested_action_id": "GLOBAL_RENDERER_GEN21_DOCX4J_ATTEMPT01_FAILURE_CLOSEOUT_AND_INDEPENDENT_METHOD_REVIEW",
   "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "MUTATING",
   "project": "GLOBAL",
@@ -14,6 +14,6 @@
     "STATE_TRANSITION"
   ],
   "target_scope_ids": [],
-  "authorization_run_id": "39636116900",
+  "authorization_run_id": "39804384995",
   "user_explicit_authorization": true
 }
