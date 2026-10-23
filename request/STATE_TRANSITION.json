@@ -1,27 +1,30 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_STATE_TRANSITION/1.0.0",
-  "transition_id": "GEN21_GEN20_DOCX4J_ATTEMPT01_IMMUTABLE_FAIL_CLOSEOUT_2026_10_22",
-  "source_public_lock_sha256": "db83266599dd15eece3fdd7b02b347b807e8a89310b190a0f25a2840c1d031b6",
-  "target_public_lock_sha256": "5393e1fb69a6ae9d6e72688eb2365f529feddb8b58196bde91f62a5d713586a1",
-  "source_private_execution_state_sha256": "4eedf6b8e862089d88c615a748b078db9780fdc4f6b836ffb1cf687bd3b0e879",
-  "target_private_execution_state_sha256": "e20aebad9b93630eec805eafe721f44a0fe7204141981f49d963c034cfef1335",
-  "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.10_2026-10-22.json",
-  "authorization_run_id": "39804384995",
-  "action_id": "GLOBAL_RENDERER_GEN21_DOCX4J_ATTEMPT01_FAILURE_CLOSEOUT_AND_INDEPENDENT_METHOD_REVIEW",
+  "transition_id": "DJANGO_R17R9_TWO_PARAGRAPH_LOCAL_DELTA_GOVERNANCE_2026_10_23",
+  "source_public_lock_sha256": "5393e1fb69a6ae9d6e72688eb2365f529feddb8b58196bde91f62a5d713586a1",
+  "target_public_lock_sha256": "b1ecfe0a8856757655c14b9b3e3f79e3e07dd685e98fa319a71849cd5eea923e",
+  "source_private_execution_state_sha256": "e20aebad9b93630eec805eafe721f44a0fe7204141981f49d963c034cfef1335",
+  "target_private_execution_state_sha256": "b2ac4f6002e63d1a6c3f46ac708595abed5f5c746947612e9dd0a0f72f3dc53d",
+  "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.11_2026-10-23.json",
+  "authorization_run_id": "40006913294",
+  "action_id": "DJANGO_R17R9_TWO_PARAGRAPH_LOCAL_DELTA_GOVERNANCE",
+  "selected_next_action_id": "DJANGO_R17R9_TWO_PARAGRAPH_LOCAL_DELTA_EXECUTE",
   "action_kind": "GOVERNANCE_UPGRADE",
+  "project": "Django",
   "operations": [
     "GOVERNANCE_UPGRADE",
     "AUTHORITY_UPDATE",
     "STATE_TRANSITION"
   ],
-  "failed_method_id": "DOCX4J_COMMUNITY_17_3_3_PYREF_C1_FRESH_SOURCE_TO_DOCX_PDF_ATTEMPT_01",
-  "method_fail_digest": "3b546271d8cc1eb5be96fdb34e3d77df6ecc831ab61ac5caee1e30676c666d9f",
-  "failed_docx_sha256": "189c57eb9ed74f850407bbae2918da0af3b53f8ccfe55adff2f586c3664cda3b",
-  "failed_evidence_sha256": "27c05b7be7ffdd680fd5dd6f4301500bedcc9983fb15c0b86d490fefa84dbfec",
-  "failed_evidence_library_path": "/GLOBAL-PUBLICATION/Renderer/Qualification/Gen20-Docx4j-Failure-2026-10-22/GEN20_DOCX4J_FAILURE_CLOSEOUT_READONLY_20261022.zip",
-  "failed_attempt_01": "IMMUTABLE_NO_RETRY",
-  "new_method_selected": false,
-  "renderer_qualified": false,
-  "proposed_next_mode": "READ_ONLY",
-  "effect": "Append-only register the one authorized GEN20 docx4j C1 mixed-script Run-direction hard failure and enter READ_ONLY independent no-paid DOCX/PDF method review. No new renderer selected, no build, no retry, no DOCX/PDF, no pointer promotion. Preserve N2/G7/C1/Grammar/PPGES and all existing PASS/FAIL/frozen/blocked ledgers."
+  "method_id": "DJANGO_R17R9_SCOPED_ORIGINAL_PRESERVING_OOXML_DELTA_V1",
+  "target_scope_ids": [
+    "DJANGO_R17R9_PAGE97_TAG_TOKENS",
+    "DJANGO_R17R9_PAGE775_METHODS_LIST"
+  ],
+  "original_docx_sha256": "4ae8617f49a79b72ab3a5e08c506b9911d6cc2e9d54ede8586aeabf1c7f61463",
+  "original_pdf_sha256": "f5056ba480e42ecb8e4408ec01c27bedf0bc1019dcd21d8d057ee6891ba59629",
+  "global_renderer_qualified": false,
+  "fresh_separate_owner_execute_required": true,
+  "new_build_executed": false,
+  "effect": "Authorize only selection of next Django R17R9 two-paragraph local delta action. No source, Django DOCX/PDF, Golden N2/G7 or renderer promotion changes in governance. A fresh owner EXECUTE on new exact SHA/method/scopes/operations is mandatory for any build or official upload."
 }
