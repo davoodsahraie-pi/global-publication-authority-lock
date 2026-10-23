@@ -1,19 +1,22 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "gen21-close-gen20-docx4j-failure-readonly-review-2026-10-22",
-  "input_public_lock_sha256": "db83266599dd15eece3fdd7b02b347b807e8a89310b190a0f25a2840c1d031b6",
-  "input_private_state_sha256": "4eedf6b8e862089d88c615a748b078db9780fdc4f6b836ffb1cf687bd3b0e879",
-  "requested_action_id": "GLOBAL_RENDERER_GEN21_DOCX4J_ATTEMPT01_FAILURE_CLOSEOUT_AND_INDEPENDENT_METHOD_REVIEW",
+  "request_id": "django-r17r9-two-paragraph-local-delta-governance-2026-10-23",
+  "input_public_lock_sha256": "5393e1fb69a6ae9d6e72688eb2365f529feddb8b58196bde91f62a5d713586a1",
+  "input_private_state_sha256": "e20aebad9b93630eec805eafe721f44a0fe7204141981f49d963c034cfef1335",
+  "requested_action_id": "DJANGO_R17R9_TWO_PARAGRAPH_LOCAL_DELTA_GOVERNANCE",
   "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "MUTATING",
-  "project": "GLOBAL",
-  "method_id": null,
+  "project": "Django",
+  "method_id": "DJANGO_R17R9_SCOPED_ORIGINAL_PRESERVING_OOXML_DELTA_V1",
   "operations": [
     "GOVERNANCE_UPGRADE",
     "AUTHORITY_UPDATE",
     "STATE_TRANSITION"
   ],
-  "target_scope_ids": [],
-  "authorization_run_id": "39804384995",
+  "target_scope_ids": [
+    "DJANGO_R17R9_PAGE97_TAG_TOKENS",
+    "DJANGO_R17R9_PAGE775_METHODS_LIST"
+  ],
+  "authorization_run_id": "40006913294",
   "user_explicit_authorization": true
 }
