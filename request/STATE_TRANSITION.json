@@ -1,30 +1,42 @@
 {
-  "schema": "GLOBAL_PUBLICATION_PUBLIC_STATE_TRANSITION/1.0.0",
-  "transition_id": "DJANGO_R17R9_TWO_PARAGRAPH_LOCAL_DELTA_GOVERNANCE_2026_10_23",
-  "source_public_lock_sha256": "5393e1fb69a6ae9d6e72688eb2365f529feddb8b58196bde91f62a5d713586a1",
-  "target_public_lock_sha256": "b1ecfe0a8856757655c14b9b3e3f79e3e07dd685e98fa319a71849cd5eea923e",
-  "source_private_execution_state_sha256": "e20aebad9b93630eec805eafe721f44a0fe7204141981f49d963c034cfef1335",
-  "target_private_execution_state_sha256": "b2ac4f6002e63d1a6c3f46ac708595abed5f5c746947612e9dd0a0f72f3dc53d",
-  "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.11_2026-10-23.json",
-  "authorization_run_id": "40006913294",
-  "action_id": "DJANGO_R17R9_TWO_PARAGRAPH_LOCAL_DELTA_GOVERNANCE",
-  "selected_next_action_id": "DJANGO_R17R9_TWO_PARAGRAPH_LOCAL_DELTA_EXECUTE",
+  "action_id": "DJANGO_R17R9_EXISTING_GENERATOR_HARDENING_GOVERNANCE",
   "action_kind": "GOVERNANCE_UPGRADE",
-  "project": "Django",
+  "authorization_artifact_id": 12550015669,
+  "authorization_json_sha256": "951e34adecb596f70c35978e7e0a4a0dda5dc75b87483ad2e1b3bf977c78e438",
+  "authorization_run_id": "40067356184",
+  "effect": "Select bounded maintenance of authentic SHA646cf341 Django generator as reusable source-independent candidate package. Preserve original generator, R17R9, Delta01, historical sources, N2/G7, Grammar/C1/PPGES and every historic ledger. Authorize no implementation from this governance run. After protected transition and a new exact owner EXECUTE, allow only the pinned versioned successor, synthetic tests, additive validation, reproducible candidate package, and at most one bounded exact-SHA recovery experiment defined by SOURCE_RECOVERY_SCOPE_v1.json. SOURCE_REBUILD does not permit substitute or editorial source creation. No production book, official artifact upload, qualification promotion or failed-method retry. All scope, phase/time caps and completion gates in ENGINEERING_CONTRACT_v1.json apply.",
+  "engineering_contract_sha256": "3907980ee98f6146a74f03ce9fed30820ad004a89b06b68dff0bdbc5446d4e5b",
+  "fresh_separate_owner_execute_required": true,
+  "global_renderer_qualified": false,
+  "method_id": "DJANGO_R25R7_646CF341_EXISTING_GENERATOR_HARDENING_V1_ATTEMPT_01",
+  "new_build_executed": false,
   "operations": [
     "GOVERNANCE_UPGRADE",
     "AUTHORITY_UPDATE",
     "STATE_TRANSITION"
   ],
-  "method_id": "DJANGO_R17R9_SCOPED_ORIGINAL_PRESERVING_OOXML_DELTA_V1",
-  "target_scope_ids": [
-    "DJANGO_R17R9_PAGE97_TAG_TOKENS",
-    "DJANGO_R17R9_PAGE775_METHODS_LIST"
+  "permitted_ops_after_fresh_execute": [
+    "PATCH",
+    "BUILD",
+    "SOURCE_REBUILD",
+    "GENERATE_DOCX",
+    "QUALIFY",
+    "EXPORT_PDF"
   ],
-  "original_docx_sha256": "4ae8617f49a79b72ab3a5e08c506b9911d6cc2e9d54ede8586aeabf1c7f61463",
-  "original_pdf_sha256": "f5056ba480e42ecb8e4408ec01c27bedf0bc1019dcd21d8d057ee6891ba59629",
-  "global_renderer_qualified": false,
-  "fresh_separate_owner_execute_required": true,
-  "new_build_executed": false,
-  "effect": "Authorize only selection of next Django R17R9 two-paragraph local delta action. No source, Django DOCX/PDF, Golden N2/G7 or renderer promotion changes in governance. A fresh owner EXECUTE on new exact SHA/method/scopes/operations is mandatory for any build or official upload."
+  "project": "GLOBAL",
+  "schema": "GLOBAL_PUBLICATION_PUBLIC_STATE_TRANSITION/1.0.0",
+  "selected_next_action_id": "DJANGO_R17R9_EXISTING_GENERATOR_HARDENING_EXECUTE_V1",
+  "source_private_execution_state_sha256": "b2ac4f6002e63d1a6c3f46ac708595abed5f5c746947612e9dd0a0f72f3dc53d",
+  "source_public_lock_sha256": "b1ecfe0a8856757655c14b9b3e3f79e3e07dd685e98fa319a71849cd5eea923e",
+  "source_recovery_executed": false,
+  "source_recovery_scope_sha256": "1afd8ee926833ced215bfef35744f07c1c7211c632ae5bd514b34a6c11c90fcd",
+  "target_private_execution_state_sha256": "44e08c6d4d29e4c41ca895319dae4fe417ddb9b63d6f9fe0d7216edfb6d5d0e2",
+  "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.12_GH1_2026-10-24.json",
+  "target_public_lock_sha256": "524893ddd12671f4edec497fc1454b10578aa2028d71fbec31e5e77bbebed41a",
+  "target_scope_ids": [
+    "DJANGO_R25R7_GENERATOR_646CF341_SUCCESSOR",
+    "DJANGO_R17R9_C1_INPUT_AND_REGRESSION",
+    "DJANGO_GENERATOR_REPRODUCIBLE_CANDIDATE_PACKAGE"
+  ],
+  "transition_id": "GEN23_GH1_EXISTING_GENERATOR_MAINTENANCE_SELECTION_2026_10_24"
 }

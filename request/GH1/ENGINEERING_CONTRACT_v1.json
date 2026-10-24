@@ -1,0 +1,1196 @@
+{
+  "schema": "DJANGO_EXISTING_GENERATOR_ENGINEERING_CONTRACT/1.0.0",
+  "version": "1.0.0",
+  "package_candidate_version": "0.1.0-dev.1",
+  "status": "PROPOSED_ONLY_NOT_SELECTED_NOT_AUTHORIZED",
+  "project": "GLOBAL",
+  "implementation_base": "DJANGO_PPGES135_GENERATOR_R25R7.py",
+  "implementation_base_sha256": "646cf341c774953baa99da400ee3aa6e992fbbd8d0af95f36144f72c0fa5980c",
+  "method_id": "DJANGO_R25R7_646CF341_EXISTING_GENERATOR_HARDENING_V1_ATTEMPT_01",
+  "execute_action_id": "DJANGO_R17R9_EXISTING_GENERATOR_HARDENING_EXECUTE_V1",
+  "target_scope_ids": [
+    "DJANGO_R25R7_GENERATOR_646CF341_SUCCESSOR",
+    "DJANGO_R17R9_C1_INPUT_AND_REGRESSION",
+    "DJANGO_GENERATOR_REPRODUCIBLE_CANDIDATE_PACKAGE"
+  ],
+  "requested_operations_after_new_execute": [
+    "PATCH",
+    "BUILD",
+    "SOURCE_REBUILD",
+    "GENERATE_DOCX",
+    "QUALIFY",
+    "EXPORT_PDF"
+  ],
+  "basis_pins": [
+    {
+      "path": "audit/APPROVAL_PLAN.md",
+      "sha256": "0939e7ca5737420f83ed7d127b201e41d70611c628908a0887ad011c131b4b9e",
+      "size_bytes": 11242,
+      "purpose": "Unchanged accepted approval basis"
+    },
+    {
+      "path": "audit/behavior_tests.json",
+      "sha256": "f51e91ddef12217c7f178f4dce6f8c3077f843f124d56ad59b685940ec66ce38",
+      "size_bytes": 8448,
+      "purpose": "Frozen 29-test result"
+    },
+    {
+      "path": "audit/rule_matrix_49.json",
+      "sha256": "1841dca7490b40b4bb1f53239839c14cfd52efcc8c5c7e916886559fb463b7d3",
+      "size_bytes": 108372,
+      "purpose": "Frozen 49-rule/98-test design"
+    },
+    {
+      "path": "audit/c1_source_and_roles.json",
+      "sha256": "a8248fcdbb1aa3528847a5fcf3aeb341acb4f8870a97e7250bf8fd0f1cc12d30",
+      "size_bytes": 3583,
+      "purpose": "15-role C1 interface analysis"
+    },
+    {
+      "path": "deliverables/GLOBAL_PUBLICATION_DJANGO_R17R9_READONLY_AUDIT_2026-10-24.zip",
+      "sha256": "89dde3b3d648fedab2c7a9945cda74510076e574d3a5d80c181881ba97124b8a",
+      "size_bytes": 19043978,
+      "purpose": "Fixed audit package"
+    },
+    {
+      "path": "bundle/03_generator/DJANGO_PPGES135_GENERATOR_R25R7.py",
+      "sha256": "646cf341c774953baa99da400ee3aa6e992fbbd8d0af95f36144f72c0fa5980c",
+      "size_bytes": 30407,
+      "purpose": "Only implementation base; original immutable"
+    },
+    {
+      "path": "bundle/02_contracts/PERSIAN_PUBLICATION_GRAMMAR_v1.3.txt",
+      "sha256": "182589531ab1f2b0302fbc567f93510183af20d4682b99318bf6e4efea364213",
+      "size_bytes": 38921,
+      "purpose": "Grammar authority"
+    },
+    {
+      "path": "bundle/02_contracts/GLOBAL_RENDERER_C1_CANONICAL_CONTRACT_v1.0.0_2026-10-17.json",
+      "sha256": "b215660f571e32c647186eba253c89b5255567c313c068c0898301ab9eb789d3",
+      "size_bytes": 70199,
+      "purpose": "C1 authority"
+    },
+    {
+      "path": "bundle/01_authority_snapshot/GLOBAL_PUBLICATION_BOOTSTRAP_CURRENT.txt",
+      "sha256": "14b7463a2735256cc408773ca0ce6905f18fbde402042c8b751cccf18129ce64",
+      "size_bytes": 5113,
+      "purpose": "Bootstrap unchanged"
+    }
+  ],
+  "immutable_references": [
+    {
+      "path": "bundle/03_generator/DJANGO_PPGES135_GENERATOR_R25R2.py",
+      "sha256": "c426ddfcfdeecaaad24b1928e31003080bb600780cac80f42f1069d3a37dfbb6",
+      "size_bytes": 26190,
+      "purpose": "Immutable reference; read-only"
+    },
+    {
+      "path": "bundle/03_generator/DJANGO_PPGES135_GENERATOR_R25R3.py",
+      "sha256": "120e21ff13922a048103fdff1a5014cd57c991856de7abed4d1d10e944cbafe3",
+      "size_bytes": 29858,
+      "purpose": "Immutable reference; read-only"
+    },
+    {
+      "path": "bundle/03_generator/DJANGO_PPGES135_GENERATOR_R25R4.py",
+      "sha256": "bdbc32e4941a89574d3cc3d5ff48bea016f3e67c4c86819c4184cd24b50318e0",
+      "size_bytes": 30180,
+      "purpose": "Immutable reference; read-only"
+    },
+    {
+      "path": "bundle/03_generator/DJANGO_PPGES135_GENERATOR_R25R5.py",
+      "sha256": "496ba61c203adbbc9a3fe12015d6582ca83ce48d32620c66deba31b3c9d6748c",
+      "size_bytes": 29872,
+      "purpose": "Immutable reference; read-only"
+    },
+    {
+      "path": "bundle/03_generator/DJANGO_PPGES135_GENERATOR_R25R6.py",
+      "sha256": "ba0338303e9e11abaaa10d24278102aa383846220a1272ab0cd3357f4a6e21ba",
+      "size_bytes": 30335,
+      "purpose": "Immutable reference; read-only"
+    },
+    {
+      "path": "bundle/03_generator/DJANGO_PPGES135_GENERATOR_R25R7.py",
+      "sha256": "646cf341c774953baa99da400ee3aa6e992fbbd8d0af95f36144f72c0fa5980c",
+      "size_bytes": 30407,
+      "purpose": "Immutable reference; read-only"
+    },
+    {
+      "path": "bundle/04_source_historical_NOT_R17R9/R17R7_SEMANTIC_EDITORIAL_SUCCESSOR.jsonl",
+      "sha256": "6f5e3718864d9f5fd93646b59d542ab2c6acd2dc23d1e52b8fe36e40c0d1fffd",
+      "size_bytes": 7426525,
+      "purpose": "Immutable reference; read-only"
+    },
+    {
+      "path": "bundle/04_source_historical_NOT_R17R9/R17R8_MIXED_INLINE_SEMANTIC_EDITORIAL_SUCCESSOR.jsonl",
+      "sha256": "539cce487c3469a8b0075ced5033bffd70551eab98570a76be0533fb903d6d44",
+      "size_bytes": 6978260,
+      "purpose": "Immutable reference; read-only"
+    },
+    {
+      "path": "bundle/05_django_original/DJANGO_COMPREHENSIVE_REFERENCE_FINAL_R17R9.docx",
+      "sha256": "4ae8617f49a79b72ab3a5e08c506b9911d6cc2e9d54ede8586aeabf1c7f61463",
+      "size_bytes": 1352185,
+      "purpose": "Immutable reference; read-only"
+    },
+    {
+      "path": "bundle/05_django_original/DJANGO_COMPREHENSIVE_REFERENCE_FINAL_R17R9.pdf",
+      "sha256": "f5056ba480e42ecb8e4408ec01c27bedf0bc1019dcd21d8d057ee6891ba59629",
+      "size_bytes": 21106839,
+      "purpose": "Immutable reference; read-only"
+    },
+    {
+      "path": "bundle/05_django_original/DJANGO_COMPREHENSIVE_REFERENCE_FINAL_R17R9_QA.json",
+      "sha256": "0d64c2e67e5957e098fbf1c1a1bc477d1558a7b1cb489a14ae2d88b79cc50d5d",
+      "size_bytes": 1035,
+      "purpose": "Immutable reference; read-only"
+    },
+    {
+      "path": "bundle/06_django_delta01/DJANGO_COMPREHENSIVE_REFERENCE_R17R9_TWO_PARAGRAPH_DELTA01.docx",
+      "sha256": "f38e5dc194023b64dbc2e46b1da92a6f3fadc7460fc3aba0db63b5d23474de38",
+      "size_bytes": 1352202,
+      "purpose": "Immutable reference; read-only"
+    },
+    {
+      "path": "bundle/06_django_delta01/DJANGO_COMPREHENSIVE_REFERENCE_R17R9_TWO_PARAGRAPH_DELTA01.pdf",
+      "sha256": "c50c77d7cabdc44f5d65f48ab86129571b46662c650342950c7c0e6e5aecd9bb",
+      "size_bytes": 21106586,
+      "purpose": "Immutable reference; read-only"
+    },
+    {
+      "path": "bundle/06_django_delta01/DJANGO_R17R9_DELTA01_QA.json",
+      "sha256": "7466f80a22bc292972d711ff765e47dc7861b503b95969f0880bb7ed13e0c485",
+      "size_bytes": 3479,
+      "purpose": "Immutable reference; read-only"
+    },
+    {
+      "path": "bundle/06_django_delta01/DJANGO_R17R9_DELTA01_SOURCE_EDIT_MANIFEST.json",
+      "sha256": "deefdc468a0cf3746e5875d65fbdb5c66f47f548ac13f92f1338778325229cfd",
+      "size_bytes": 1810,
+      "purpose": "Immutable reference; read-only"
+    },
+    {
+      "path": "bundle/06_django_delta01/DJANGO_R17R9_DELTA01_WORD_MOBILE_OWNER_ATTESTATION_2026-10-23.json",
+      "sha256": "843646d746d05c3ed143e3752ea24dc450a2a278d04f43850994b9a785775650",
+      "size_bytes": 2600,
+      "purpose": "Immutable reference; read-only"
+    },
+    {
+      "path": "bundle/07_n2_scoped/METHOD_K_N2_SELECTIVE_PRIMITIVE_QUALIFICATION_v1.zip",
+      "sha256": "01ed48b33abf10e8a9fea4f687b2fe47e7430ae5e8367e3b646549c248172f01",
+      "size_bytes": 160678,
+      "purpose": "Immutable reference; read-only"
+    },
+    {
+      "path": "bundle/07_n2_scoped/N2_RECONSTRUCTED_FROM_V2.docx",
+      "sha256": "2681d2d016192b97335328841493f81a016bed492469db61f2ac4fe61aba8f29",
+      "size_bytes": 23900,
+      "purpose": "Immutable reference; read-only"
+    },
+    {
+      "path": "bundle/08_g7_scoped/GLOBAL_RENDERER_V2_G7_KEEP_WITH_NEXT_SCOPED_DELTA_CANDIDATE.docx",
+      "sha256": "79747670641323251f844f36761eaec3b424d01aeaf3ef8739f7ab19ead5d440",
+      "size_bytes": 28199,
+      "purpose": "Immutable reference; read-only"
+    },
+    {
+      "path": "bundle/08_g7_scoped/GLOBAL_RENDERER_V2_G7_KEEP_WITH_NEXT_SCOPED_DELTA_CANDIDATE.pdf",
+      "sha256": "70f63b3a06b901bb17669f9e68e0eae64155029bd650473ac59457fa3dd9d58b",
+      "size_bytes": 713808,
+      "purpose": "Immutable reference; read-only"
+    },
+    {
+      "path": "n2_original/WORD_NATIVE_GOLDEN_N2_BASE.docx",
+      "sha256": "39cb19843350f5e9dc00d4f3435dae3b981767f60c10ec6606ed449258b88156",
+      "size_bytes": 26083,
+      "purpose": "Immutable reference; read-only"
+    },
+    {
+      "path": "n2_original/WORD_NATIVE_GOLDEN_N2_BASE.docx.openai-download-4a916d7b08934b4583948058894e0e5c",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0,
+      "purpose": "Immutable reference; read-only"
+    },
+    {
+      "path": "n2_original/WORD_NATIVE_GOLDEN_N2_BASE.pdf",
+      "sha256": "178af0e8d5e9558480dc3500fdf2d516f4d258019c403e2eba3c758c4ae096e8",
+      "size_bytes": 519945,
+      "purpose": "Immutable reference; read-only"
+    },
+    {
+      "path": "n2_original/WORD_NATIVE_GOLDEN_N2_BASE.pdf.openai-download-9f5b9ae6b80842fe8ba67bcb00619e74",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0,
+      "purpose": "Immutable reference; read-only"
+    }
+  ],
+  "all_other_dependencies": "All pins and complete references in frozen handoff and audit remain mandatory, including PPGES v1.3.5, C1 direct dependencies and Gen12 adjudication; no dependency substitution.",
+  "phases": [
+    {
+      "id": "S0",
+      "scope": "Exact source recovery",
+      "limit_active_minutes": 30,
+      "operations": [
+        "SOURCE_REBUILD"
+      ],
+      "acceptance": "SOURCE_RECOVERY_SCOPE_v1.json exact-SHA gate; at most 8 declared candidates, one experiment; mismatch stops this scope, never substitutes another source"
+    },
+    {
+      "id": "E1",
+      "scope": "C1 boundary and inline fixes in successor of authentic generator",
+      "limit_active_minutes": 60,
+      "operations": [
+        "PATCH",
+        "BUILD"
+      ],
+      "retain": "load_records/publication_text/role_for/render_mixed/render_ordinary/set_run and assembly architecture",
+      "acceptance": "Source fidelity + codepoint/owner/evidence tests; T01-T19,T29; preserve T09,T10,T12-T16; explicit INLINE_CODE vs TECHLIT; ambiguity fails closed"
+    },
+    {
+      "id": "E2",
+      "scope": "All 15 roles, structure and transitions",
+      "limit_active_minutes": 60,
+      "operations": [
+        "PATCH",
+        "BUILD",
+        "GENERATE_DOCX"
+      ],
+      "retain": "add_heading/Numbering/add_list/add_code/add_geometry/add_table/emit",
+      "acceptance": "T17-T24,T26,T27; role matrix, hierarchical headings, native list nesting/restart/order, typed table grid, layout/data distinction, captions, decisions, genuine RTL geometry, G7 anti-orphan and N2 semantic invariants on independent synthetic inputs"
+    },
+    {
+      "id": "E3",
+      "scope": "Validation orchestration and rule-complete evidence",
+      "limit_active_minutes": 60,
+      "operations": [
+        "PATCH",
+        "BUILD",
+        "GENERATE_DOCX",
+        "QUALIFY"
+      ],
+      "retain": "load_ppges/main plus unchanged pinned PPGES",
+      "acceptance": "T25,T28; all 49 rules have positive/negative executable cases and whole-file census; additive checks cover validator gaps without hiding raw findings"
+    },
+    {
+      "id": "E4",
+      "scope": "Reproducible candidate packaging",
+      "limit_active_minutes": 60,
+      "operations": [
+        "PATCH",
+        "BUILD",
+        "GENERATE_DOCX",
+        "QUALIFY"
+      ],
+      "acceptance": "Versioned CLI/package, lock dependencies/fonts/template/environment, two clean builds, archive/metadata policy, license and asset inventory, provenance and declared deterministic equality; no historically identical DOCX/PDF claim"
+    },
+    {
+      "id": "Q1",
+      "scope": "One integrated candidate qualification attempt",
+      "limit_active_minutes": 60,
+      "max_method_attempts": 1,
+      "operations": [
+        "GENERATE_DOCX",
+        "QUALIFY",
+        "EXPORT_PDF"
+      ],
+      "preconditions": "Freeze candidate source + code + dependency SHAs only after engineering tests pass; all device/export prerequisites available",
+      "acceptance": "Same integrated DOCX SHA: real Word Desktop, Word Mobile, prescribed Word-exported PDF, all applicable 49-rule sweeps and N2/G7 behavior; historical PASS is reference-only",
+      "stop": "Any confirmed formal METHOD_FAIL, scope violation or cap exhaustion stops the attempt. No second hour, renaming, or patch retry after qualification failure."
+    }
+  ],
+  "max_active_minutes_total": 330,
+  "time_boundary": "New proposed bounded maintenance budget: S0 30 + four engineering increments 60 each + Q1 60. No automatic extension; formal METHOD_FAIL ends method. Engineering test feedback before frozen Q1 is permitted, never retry of any historic failed method.",
+  "lineage": "Patch authentic pre-existing generator in an isolated successor; preserve python-docx/OOXML assembly functions. No fresh renderer, fresh-OPC assembler, N2 exemplar clone, failed method code or project-specific content overrides.",
+  "source_recovery_scope_file": "SOURCE_RECOVERY_SCOPE_v1.json",
+  "source_sha256": "360ee8a7db0cfead8576b68b768bfa9e0f4038fd9f2892102e801541abc272d5",
+  "source_absence_policy": "S0 failure blocks full-book source/fidelity claims; synthetic E1-E4 may continue within valid authorization. Missing source cannot be marked resolved by tests or by an adapter.",
+  "roles": [
+    "PERSIAN_BODY",
+    "FULLY_ENGLISH_BODY",
+    "HEADING",
+    "PERSIAN_LIST_ITEM",
+    "DISPLAY_TITLE",
+    "CAPTION_OR_VISUAL_TITLE",
+    "CODE",
+    "CODE_OUTPUT",
+    "GEOMETRY_SENSITIVE_LTR",
+    "GEOMETRY_SENSITIVE_RTL",
+    "TABLE_HEADER",
+    "TABLE_PERSIAN_CELL",
+    "TABLE_ENGLISH_CELL",
+    "TABLE_MIXED_COLUMN_CELL",
+    "DECISION_BLOCK"
+  ],
+  "rule_coverage": [
+    {
+      "rule_id": "AUTH-001",
+      "required_cases": [
+        "DJANGO-R17R9-AUTH-001-POS",
+        "DJANGO-R17R9-AUTH-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#AUTH-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "AUTH-002",
+      "required_cases": [
+        "DJANGO-R17R9-AUTH-002-POS",
+        "DJANGO-R17R9-AUTH-002-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#AUTH-002",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "DEFECT-001",
+      "required_cases": [
+        "DJANGO-R17R9-DEFECT-001-POS",
+        "DJANGO-R17R9-DEFECT-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#DEFECT-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "LANG-001",
+      "required_cases": [
+        "DJANGO-R17R9-LANG-001-POS",
+        "DJANGO-R17R9-LANG-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#LANG-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "BODY-001",
+      "required_cases": [
+        "DJANGO-R17R9-BODY-001-POS",
+        "DJANGO-R17R9-BODY-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#BODY-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "BODY-002",
+      "required_cases": [
+        "DJANGO-R17R9-BODY-002-POS",
+        "DJANGO-R17R9-BODY-002-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#BODY-002",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "HEAD-001",
+      "required_cases": [
+        "DJANGO-R17R9-HEAD-001-POS",
+        "DJANGO-R17R9-HEAD-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#HEAD-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "HEAD-002",
+      "required_cases": [
+        "DJANGO-R17R9-HEAD-002-POS",
+        "DJANGO-R17R9-HEAD-002-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#HEAD-002",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "HEAD-003",
+      "required_cases": [
+        "DJANGO-R17R9-HEAD-003-POS",
+        "DJANGO-R17R9-HEAD-003-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#HEAD-003",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "LIST-001",
+      "required_cases": [
+        "DJANGO-R17R9-LIST-001-POS",
+        "DJANGO-R17R9-LIST-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#LIST-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "LIST-002",
+      "required_cases": [
+        "DJANGO-R17R9-LIST-002-POS",
+        "DJANGO-R17R9-LIST-002-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#LIST-002",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "PUNCT-001",
+      "required_cases": [
+        "DJANGO-R17R9-PUNCT-001-POS",
+        "DJANGO-R17R9-PUNCT-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#PUNCT-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "PUNCT-002",
+      "required_cases": [
+        "DJANGO-R17R9-PUNCT-002-POS",
+        "DJANGO-R17R9-PUNCT-002-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#PUNCT-002",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "QUOTE-001",
+      "required_cases": [
+        "DJANGO-R17R9-QUOTE-001-POS",
+        "DJANGO-R17R9-QUOTE-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#QUOTE-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "ENGSEQ-001",
+      "required_cases": [
+        "DJANGO-R17R9-ENGSEQ-001-POS",
+        "DJANGO-R17R9-ENGSEQ-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#ENGSEQ-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "ENGSEQ-002",
+      "required_cases": [
+        "DJANGO-R17R9-ENGSEQ-002-POS",
+        "DJANGO-R17R9-ENGSEQ-002-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#ENGSEQ-002",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "ENGSEQ-003",
+      "required_cases": [
+        "DJANGO-R17R9-ENGSEQ-003-POS",
+        "DJANGO-R17R9-ENGSEQ-003-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#ENGSEQ-003",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "BIDI-INLINE-001",
+      "required_cases": [
+        "DJANGO-R17R9-BIDI-INLINE-001-POS",
+        "DJANGO-R17R9-BIDI-INLINE-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#BIDI-INLINE-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "TECHLIT-001",
+      "required_cases": [
+        "DJANGO-R17R9-TECHLIT-001-POS",
+        "DJANGO-R17R9-TECHLIT-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#TECHLIT-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "TECHLIT-002",
+      "required_cases": [
+        "DJANGO-R17R9-TECHLIT-002-POS",
+        "DJANGO-R17R9-TECHLIT-002-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#TECHLIT-002",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "ORDER-LOGICAL-001",
+      "required_cases": [
+        "DJANGO-R17R9-ORDER-LOGICAL-001-POS",
+        "DJANGO-R17R9-ORDER-LOGICAL-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#ORDER-LOGICAL-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "ORDER-RENDER-001",
+      "required_cases": [
+        "DJANGO-R17R9-ORDER-RENDER-001-POS",
+        "DJANGO-R17R9-ORDER-RENDER-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#ORDER-RENDER-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "TABLE-001",
+      "required_cases": [
+        "DJANGO-R17R9-TABLE-001-POS",
+        "DJANGO-R17R9-TABLE-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#TABLE-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "TABLE-002",
+      "required_cases": [
+        "DJANGO-R17R9-TABLE-002-POS",
+        "DJANGO-R17R9-TABLE-002-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#TABLE-002",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "TABLE-003",
+      "required_cases": [
+        "DJANGO-R17R9-TABLE-003-POS",
+        "DJANGO-R17R9-TABLE-003-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#TABLE-003",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "TITLE-001",
+      "required_cases": [
+        "DJANGO-R17R9-TITLE-001-POS",
+        "DJANGO-R17R9-TITLE-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#TITLE-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "TITLE-002",
+      "required_cases": [
+        "DJANGO-R17R9-TITLE-002-POS",
+        "DJANGO-R17R9-TITLE-002-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#TITLE-002",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "CAPTION-001",
+      "required_cases": [
+        "DJANGO-R17R9-CAPTION-001-POS",
+        "DJANGO-R17R9-CAPTION-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#CAPTION-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "CODE-001",
+      "required_cases": [
+        "DJANGO-R17R9-CODE-001-POS",
+        "DJANGO-R17R9-CODE-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#CODE-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "CODE-002",
+      "required_cases": [
+        "DJANGO-R17R9-CODE-002-POS",
+        "DJANGO-R17R9-CODE-002-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#CODE-002",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "GEO-001",
+      "required_cases": [
+        "DJANGO-R17R9-GEO-001-POS",
+        "DJANGO-R17R9-GEO-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#GEO-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "GEO-002",
+      "required_cases": [
+        "DJANGO-R17R9-GEO-002-POS",
+        "DJANGO-R17R9-GEO-002-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#GEO-002",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "GEO-003",
+      "required_cases": [
+        "DJANGO-R17R9-GEO-003-POS",
+        "DJANGO-R17R9-GEO-003-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#GEO-003",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "GEO-004",
+      "required_cases": [
+        "DJANGO-R17R9-GEO-004-POS",
+        "DJANGO-R17R9-GEO-004-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#GEO-004",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "FONT-001",
+      "required_cases": [
+        "DJANGO-R17R9-FONT-001-POS",
+        "DJANGO-R17R9-FONT-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#FONT-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "FONT-002",
+      "required_cases": [
+        "DJANGO-R17R9-FONT-002-POS",
+        "DJANGO-R17R9-FONT-002-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#FONT-002",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "HIER-001",
+      "required_cases": [
+        "DJANGO-R17R9-HIER-001-POS",
+        "DJANGO-R17R9-HIER-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#HIER-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "PAGE-001",
+      "required_cases": [
+        "DJANGO-R17R9-PAGE-001-POS",
+        "DJANGO-R17R9-PAGE-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#PAGE-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "DOCX-001",
+      "required_cases": [
+        "DJANGO-R17R9-DOCX-001-POS",
+        "DJANGO-R17R9-DOCX-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#DOCX-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "REBUILD-001",
+      "required_cases": [
+        "DJANGO-R17R9-REBUILD-001-POS",
+        "DJANGO-R17R9-REBUILD-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#REBUILD-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "QA-SEP-001",
+      "required_cases": [
+        "DJANGO-R17R9-QA-SEP-001-POS",
+        "DJANGO-R17R9-QA-SEP-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#QA-SEP-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "SWEEP-001",
+      "required_cases": [
+        "DJANGO-R17R9-SWEEP-001-POS",
+        "DJANGO-R17R9-SWEEP-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#SWEEP-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "REG-001",
+      "required_cases": [
+        "DJANGO-R17R9-REG-001-POS",
+        "DJANGO-R17R9-REG-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#REG-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "FAILPAT-001",
+      "required_cases": [
+        "DJANGO-R17R9-FAILPAT-001-POS",
+        "DJANGO-R17R9-FAILPAT-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#FAILPAT-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "FINAL-001",
+      "required_cases": [
+        "DJANGO-R17R9-FINAL-001-POS",
+        "DJANGO-R17R9-FINAL-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#FINAL-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "REPORT-001",
+      "required_cases": [
+        "DJANGO-R17R9-REPORT-001-POS",
+        "DJANGO-R17R9-REPORT-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#REPORT-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "CORE-001",
+      "required_cases": [
+        "DJANGO-R17R9-CORE-001-POS",
+        "DJANGO-R17R9-CORE-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#CORE-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "DECISION-001",
+      "required_cases": [
+        "DJANGO-R17R9-DECISION-001-POS",
+        "DJANGO-R17R9-DECISION-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#DECISION-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    },
+    {
+      "rule_id": "ROLE-ISO-001",
+      "required_cases": [
+        "DJANGO-R17R9-ROLE-ISO-001-POS",
+        "DJANGO-R17R9-ROLE-ISO-001-NEG"
+      ],
+      "design_reference": "audit/rule_matrix_49.json#ROLE-ISO-001",
+      "execution": "NOT_RUN_IN_THIS_PREPARATION",
+      "mandatory_evidence": [
+        "applicability with reason",
+        "candidate count",
+        "source and artifact locators",
+        "automated outcome",
+        "device/export outcome where required"
+      ]
+    }
+  ],
+  "baseline_regressions": [
+    "T01",
+    "T02",
+    "T03",
+    "T04",
+    "T05",
+    "T06",
+    "T07",
+    "T08",
+    "T09",
+    "T10",
+    "T11",
+    "T12",
+    "T13",
+    "T14",
+    "T15",
+    "T16",
+    "T17",
+    "T18",
+    "T19",
+    "T20",
+    "T21",
+    "T22",
+    "T23",
+    "T24",
+    "T25",
+    "T26",
+    "T27",
+    "T28",
+    "T29"
+  ],
+  "integration_cases": [
+    "I01 source hash external bytes, duplicate IDs and monotonic source order",
+    "I02 codepoint half-open spans, NFC/NFD without rewriting, ZWNJ, emoji, boundaries/gaps/overlaps",
+    "I03 owner/evidence resolution, A/B/C class proof, D blocks, no canonical renderer LRM",
+    "I04 all 15 roles and asset/caption relationships; unknown role rejected",
+    "I05 Decision/Heading/List/Body and Code/Body, Table/Heading, Geometry/Caption property isolation",
+    "I06 long English phrases, adjacent islands, numbers, suffixes and natural wraps",
+    "I07 heading literal numbers versus native list markers; nesting/restart/continuation",
+    "I08 escaped or inline-code pipes, empty/ragged cells, homogeneous/mixed columns and layout tables",
+    "I09 code whitespace, tabs, blank/final lines and Persian comments",
+    "I10 source-authored G7 boundary keepNext; immutable G7 not regenerated",
+    "I11 source-applicable ToC, bookmarks, hyperlink destinations, assets; no unsupported N/A",
+    "I12 PPGES positive/negative sentinels and complementary cell/font/role checks",
+    "I13 preserve unresolved PPGES applicability conflicts; no silent waiver",
+    "I14 same-SHA real Desktop/Mobile/Word-PDF evidence",
+    "I15 exact-source full-book regression DESIGN ONLY until separate production authority"
+  ],
+  "qualification_result_domains": [
+    "PASS",
+    "FAIL",
+    "BLOCKED",
+    "NOT_RUN",
+    "N/A_WITH_EVIDENCE"
+  ],
+  "prohibited_operations": [
+    "PROMOTE",
+    "UPLOAD_OFFICIAL",
+    "UPDATE_POINTER",
+    "WRITE_CURRENT",
+    "REIMPLEMENT",
+    "REQUALIFY",
+    "DELETE",
+    "MOVE",
+    "RENAME"
+  ],
+  "prohibited_scope": [
+    "Original generator/source/artifact changes",
+    "N2/G7/Delta01 regeneration or edits",
+    "Grammar/C1/PPGES changes or local waivers",
+    "Failed-method retry or derived continuation",
+    "Frozen/blocked project execution",
+    "Production book rebuild or official publication",
+    "Renderer CURRENT/QUALIFIED pointer change"
+  ],
+  "completion": {
+    "code_complete": "Actual patched successor + all executable tests + clean-run package, not a report; every applicable automated gate passes or explicitly blocks completion",
+    "compliance_complete": "All required device/export gates pass on same artifact, exact source disposition resolved, no unresolved findings, complete rule coverage",
+    "public_ready": "License/dependency/asset inventory and repeatable verification complete; publishing or promotion still requires separate scope",
+    "not_equivalent": [
+      "18 failures fixed",
+      "29 tests pass",
+      "Static OOXML pass",
+      "Historical N2/G7 attestations",
+      "Prepared plan or report"
+    ]
+  }
+}

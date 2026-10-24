@@ -1,22 +1,24 @@
 {
-  "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "django-r17r9-two-paragraph-local-delta-governance-2026-10-23",
-  "input_public_lock_sha256": "5393e1fb69a6ae9d6e72688eb2365f529feddb8b58196bde91f62a5d713586a1",
-  "input_private_state_sha256": "e20aebad9b93630eec805eafe721f44a0fe7204141981f49d963c034cfef1335",
-  "requested_action_id": "DJANGO_R17R9_TWO_PARAGRAPH_LOCAL_DELTA_GOVERNANCE",
   "action_kind": "GOVERNANCE_UPGRADE",
+  "authorization_run_id": "40067356184",
+  "engineering_contract_sha256": "3907980ee98f6146a74f03ce9fed30820ad004a89b06b68dff0bdbc5446d4e5b",
+  "input_private_state_sha256": "b2ac4f6002e63d1a6c3f46ac708595abed5f5c746947612e9dd0a0f72f3dc53d",
+  "input_public_lock_sha256": "b1ecfe0a8856757655c14b9b3e3f79e3e07dd685e98fa319a71849cd5eea923e",
+  "method_id": "DJANGO_R25R7_646CF341_EXISTING_GENERATOR_HARDENING_V1_ATTEMPT_01",
   "mode": "MUTATING",
-  "project": "Django",
-  "method_id": "DJANGO_R17R9_SCOPED_ORIGINAL_PRESERVING_OOXML_DELTA_V1",
   "operations": [
     "GOVERNANCE_UPGRADE",
     "AUTHORITY_UPDATE",
     "STATE_TRANSITION"
   ],
+  "project": "GLOBAL",
+  "proposal_status": "OWNER_GOVERNANCE_ARTIFACT_VERIFIED_SELECTION_ONLY",
+  "requested_action_id": "DJANGO_R17R9_EXISTING_GENERATOR_HARDENING_GOVERNANCE",
+  "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
   "target_scope_ids": [
-    "DJANGO_R17R9_PAGE97_TAG_TOKENS",
-    "DJANGO_R17R9_PAGE775_METHODS_LIST"
+    "DJANGO_R25R7_GENERATOR_646CF341_SUCCESSOR",
+    "DJANGO_R17R9_C1_INPUT_AND_REGRESSION",
+    "DJANGO_GENERATOR_REPRODUCIBLE_CANDIDATE_PACKAGE"
   ],
-  "authorization_run_id": "40006913294",
   "user_explicit_authorization": true
 }
