@@ -1,9 +1,9 @@
 {
   "current_action": {
-    "id": "DJANGO_GH1_APPVERSION_METADATA_SUCCESSOR_EXECUTE",
-    "mode": "MUTATING"
+    "id": "GLOBAL_PUBLICATION_PLATFORM_ALTERNATIVE_FIRST_REALBOOK_SCOPING_READ_ONLY",
+    "mode": "READ_ONLY"
   },
-  "execution_authorized_now": true,
+  "execution_authorized_now": false,
   "external_binding": {
     "activation_commit": "cb579f1b038aeb66fa15bf6d79ad58f0d986591e",
     "authorized_action_id": "BIND_EXTERNAL_AUTHORITY_AND_REFRESH_BOOTSTRAP",
@@ -50,7 +50,7 @@
     "gen20_failed_docx_sha256": "189c57eb9ed74f850407bbae2918da0af3b53f8ccfe55adff2f586c3664cda3b",
     "gen20_failure_evidence_library_path": "/GLOBAL-PUBLICATION/Renderer/Qualification/Gen20-Docx4j-Failure-2026-10-22/GEN20_DOCX4J_FAILURE_CLOSEOUT_READONLY_20261022.zip",
     "gen20_failure_evidence_sha256": "27c05b7be7ffdd680fd5dd6f4301500bedcc9983fb15c0b86d490fefa84dbfec",
-    "governance_authorization_run_id": "40198081310",
+    "governance_authorization_run_id": "40225060791",
     "governance_transition_source_private_sha256": "44e08c6d4d29e4c41ca895319dae4fe417ddb9b63d6f9fe0d7216edfb6d5d0e2",
     "governance_transition_target_private_sha256": "0115892594c99844319d6070ff42e2589dddc97714c77736611061c9bfb86988",
     "manual_authorization_run_id": "38282330106",
@@ -58,27 +58,20 @@
     "method_design_library_path": "/GLOBAL-PUBLICATION/Renderer/Designs/Gen16-2026-10-18/GEN16_C1_NONDERVIATIVE_TYPED_IR_FRESH_OPC_METHOD_DESIGN_2026-10-18.json",
     "method_design_sha256": "3aff37bb6724e31923976f9c866de52c4a633ff23e67f645a6f1cc261d1799ca",
     "new_case_diagnostic_tests": 22,
-    "new_method_id": "DJANGO_GH1_APPVERSION_METADATA_CORRECTION_SUCCESSOR_V1_ATTEMPT_01",
-    "new_target_scope_ids": [
-      "GH1_APPVERSION_METADATA_SCOPED_SUCCESSOR"
-    ],
-    "next_action_mode": "MUTATING",
+    "new_method_id": null,
+    "new_target_scope_ids": [],
+    "next_action_mode": "READ_ONLY",
     "no_paid_license_dependency": true,
     "official_upload_authorized": false,
     "original_docx_sha256": "4ae8617f49a79b72ab3a5e08c506b9911d6cc2e9d54ede8586aeabf1c7f61463",
     "original_pdf_sha256": "f5056ba480e42ecb8e4408ec01c27bedf0bc1019dcd21d8d057ee6891ba59629",
     "owner_word_mobile_only": true,
     "paid_access_authorized": false,
-    "permitted_ops_after_fresh_execute": [
-      "PATCH",
-      "BUILD",
-      "GENERATE_DOCX",
-      "QUALIFY"
-    ],
+    "permitted_ops_after_fresh_execute": [],
     "ppges_adjudication_repository_path": "request/GH1/PPGES_ADOPTION_v2.json",
     "ppges_adjudication_sha256": "070937c71849224941434cae047eb2cc6d7e499c8b6990726f1e33e741839b0f",
     "previous_execute_workflow_run_id": "39746720524",
-    "previous_private_execution_state_sha256": "0115892594c99844319d6070ff42e2589dddc97714c77736611061c9bfb86988",
+    "previous_private_execution_state_sha256": "1359a25fdb52195a209f41db7dc4188b64f7aca7b1766e9e89e5c42d0a9da590",
     "previous_selected_engine": "docx4j Community 17.3.3 + docx4j-export-fo",
     "primary_ruleset_id": 24932377,
     "production_book_authorized": false,
@@ -92,17 +85,17 @@
     "secondary_hardening_ruleset_id": 24939466,
     "selected_action_contract_path": "request/STATE_TRANSITION.json",
     "selected_engine": "Existing authentic DJANGO_PPGES135_GENERATOR_R25R7.py successor; AppVersion metadata fix only, not a new renderer",
-    "selected_next_action": "DJANGO_GH1_APPVERSION_METADATA_SUCCESSOR_EXECUTE",
+    "selected_next_action": "GLOBAL_PUBLICATION_PLATFORM_ALTERNATIVE_FIRST_REALBOOK_SCOPING_READ_ONLY",
     "source_recovery_scope_repository_path": "request/GH1/SOURCE_RECOVERY_SCOPE_v1.json",
     "source_recovery_scope_sha256": "1afd8ee926833ced215bfef35744f07c1c7211c632ae5bd514b34a6c11c90fcd",
     "standalone_aspose_foss_pdf": "NOT_AVAILABLE",
-    "status": "GEN25_GH1_APPVERSION_Q1_OPEN_FAIL_CLOSED_SCOPED_SUCCESSOR_SELECTED_FRESH_EXECUTE_PENDING",
+    "status": "GEN26_PLATFORM_ALTERNATIVE_C1_PROFILE_V1_ADOPTED__SCOPING_READ_ONLY__NO_RENDERER_QUALIFICATION",
     "successful_engineering_tests": 144,
-    "target_private_execution_state_sha256": "1359a25fdb52195a209f41db7dc4188b64f7aca7b1766e9e89e5c42d0a9da590",
-    "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.14_GH1_APPVERSION_2026-10-25.json",
+    "target_private_execution_state_sha256": "406f86877f76cb173708f95372be8e216cd3583160fc420339805e6b845be4b1",
+    "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.15_PLATFORM_ALTERNATIVE_POLICY_2026-10-25.json",
     "transition_authorization_is_execution_authorization": false,
-    "transition_authorization_run_id": "40198081310",
-    "transition_authorized_action_id": "DJANGO_GH1_APPVERSION_Q1_CLOSEOUT_AND_SCOPED_SUCCESSOR_GOVERNANCE",
+    "transition_authorization_run_id": "40225060791",
+    "transition_authorized_action_id": "GLOBAL_PUBLICATION_PLATFORM_ALTERNATIVE_QUALIFICATION_GOVERNANCE_V1",
     "transition_authorized_action_kind": "GOVERNANCE_UPGRADE",
     "transition_authorized_operations": [
       "GOVERNANCE_UPGRADE",
@@ -114,9 +107,17 @@
     "q1_failure_evidence_zip_sha256": "f2c428381afc240871e9c01f6762a39ff86d9b6f564e368285b34774c5bf8be5",
     "q1_original_docx_sha256": "864ca43a5d0e1898d486a81201b1cb98a15b7e486cf956c726cfda630fc43c26",
     "q1_original_package_sha256": "1bc73d68a68949b27f02508164d38781ac7397a9d0d9cb612fe0f4f11d874f15",
-    "q1_diagnostic_open_status": "PASS_DIAGNOSTIC_COPY_ONLY_NO_INHERITANCE"
+    "q1_diagnostic_open_status": "PASS_DIAGNOSTIC_COPY_ONLY_NO_INHERITANCE",
+    "platform_alternative_policy_proposal_sha256": "26c8c3e4d654af330913cab5bdf3ca5de8f0a250dfc4d3201a23bc008b55077e",
+    "c1_profile_supplement_sha256": "0c5a4c03ca3f98d905af8cae9b3cce1ea1390753ad114b2df5ae7e4a052a1109",
+    "c1_profile_supplement_repository_path": "request/QUALIFICATION_PROFILE_C1_SUPPLEMENT_v1.json",
+    "original_gen25_successor_selected_action": "DJANGO_GH1_APPVERSION_METADATA_SUCCESSOR_EXECUTE",
+    "original_gen25_successor_selected_method": "DJANGO_GH1_APPVERSION_METADATA_CORRECTION_SUCCESSOR_V1_ATTEMPT_01",
+    "original_gen25_successor_selected_scope_ids": [
+      "GH1_APPVERSION_METADATA_SCOPED_SUCCESSOR"
+    ]
   },
-  "generation": 25,
+  "generation": 26,
   "gh1_execution_rule": "GEN24 registers completed GEN23 engineering and selects staged same-SHA Q1. execution_authorized_now is eligibility only; fresh owner EXECUTE on this exact current lock/state/action/two scopes/QUALIFY+EXPORT_PDF remains mandatory. Historical EXECUTE and governance do not authorize future device execution.",
   "ledger_hashes": {
     "blocked_project": [
@@ -343,8 +344,8 @@
       "STATE_TRANSITION"
     ]
   },
-  "previous_public_lock_sha256": "c72f384a65dfb08b28dd4eb0e04f6b635256251f84defc412249d72197762555",
-  "private_execution_state_sha256": "1359a25fdb52195a209f41db7dc4188b64f7aca7b1766e9e89e5c42d0a9da590",
+  "previous_public_lock_sha256": "ab88b1f573fb1be70a3315ae031427ecbeb8acad0499f14b9d832ee5ebf7b691",
+  "private_execution_state_sha256": "406f86877f76cb173708f95372be8e216cd3583160fc420339805e6b845be4b1",
   "schema": "GLOBAL_PUBLICATION_PUBLIC_LOCK/1.2.0",
   "scoped_v2_evidence": {
     "delta_authorized_for_execution": false,
@@ -357,5 +358,22 @@
     "qualification": "G7_SCOPED_PASS_POINTER_PENDING",
     "user_word_desktop": "PASS_ORIGINAL_SHA_ONLY",
     "user_word_mobile": "PASS_ORIGINAL_SHA_ONLY"
+  },
+  "qualification_policy": {
+    "id": "PLATFORM_ALTERNATIVE_DOCX_QUALIFICATION_V1",
+    "status": "ADOPTED_CONTRACT_ONLY_PENDING_REAL_ARTIFACT_QUALIFICATION",
+    "policy_proposal_sha256": "26c8c3e4d654af330913cab5bdf3ca5de8f0a250dfc4d3201a23bc008b55077e",
+    "c1_profile_supplement_sha256": "0c5a4c03ca3f98d905af8cae9b3cce1ea1390753ad114b2df5ae7e4a052a1109",
+    "original_c1_sha256": "b215660f571e32c647186eba253c89b5255567c313c068c0898301ab9eb789d3",
+    "explicit_profiles": [
+      "WORD_MOBILE_ONLY",
+      "WORD_DESKTOP_ONLY",
+      "WORD_MOBILE_AND_DESKTOP"
+    ],
+    "untested_platform_is_not_pass": true,
+    "original_full_C1_device_requirements_unchanged": true,
+    "independent_PDF_is_separate_certificate": true,
+    "full_real_book_required_for_book_publication": true,
+    "renderer_qualified": false
   }
 }
