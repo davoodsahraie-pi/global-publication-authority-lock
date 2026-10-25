@@ -1,9 +1,9 @@
 {
   "current_action": {
-    "id": "GLOBAL_PUBLICATION_PLATFORM_ALTERNATIVE_FIRST_REALBOOK_SCOPING_READ_ONLY",
-    "mode": "READ_ONLY"
+    "id": "GLOBAL_PUBLICATION_DJANGO_DELTA01_EXISTING_ARTIFACT_QUALIFICATION_EXECUTE",
+    "mode": "MUTATING"
   },
-  "execution_authorized_now": false,
+  "execution_authorized_now": true,
   "external_binding": {
     "activation_commit": "cb579f1b038aeb66fa15bf6d79ad58f0d986591e",
     "authorized_action_id": "BIND_EXTERNAL_AUTHORITY_AND_REFRESH_BOOTSTRAP",
@@ -50,7 +50,7 @@
     "gen20_failed_docx_sha256": "189c57eb9ed74f850407bbae2918da0af3b53f8ccfe55adff2f586c3664cda3b",
     "gen20_failure_evidence_library_path": "/GLOBAL-PUBLICATION/Renderer/Qualification/Gen20-Docx4j-Failure-2026-10-22/GEN20_DOCX4J_FAILURE_CLOSEOUT_READONLY_20261022.zip",
     "gen20_failure_evidence_sha256": "27c05b7be7ffdd680fd5dd6f4301500bedcc9983fb15c0b86d490fefa84dbfec",
-    "governance_authorization_run_id": "40225060791",
+    "governance_authorization_run_id": 40230093970,
     "governance_transition_source_private_sha256": "44e08c6d4d29e4c41ca895319dae4fe417ddb9b63d6f9fe0d7216edfb6d5d0e2",
     "governance_transition_target_private_sha256": "0115892594c99844319d6070ff42e2589dddc97714c77736611061c9bfb86988",
     "manual_authorization_run_id": "38282330106",
@@ -58,20 +58,34 @@
     "method_design_library_path": "/GLOBAL-PUBLICATION/Renderer/Designs/Gen16-2026-10-18/GEN16_C1_NONDERVIATIVE_TYPED_IR_FRESH_OPC_METHOD_DESIGN_2026-10-18.json",
     "method_design_sha256": "3aff37bb6724e31923976f9c866de52c4a633ff23e67f645a6f1cc261d1799ca",
     "new_case_diagnostic_tests": 22,
-    "new_method_id": null,
-    "new_target_scope_ids": [],
-    "next_action_mode": "READ_ONLY",
+    "new_method_id": "DJANGO_DELTA01_EXISTING_ARTIFACT_QUALIFICATION_ONLY_V1",
+    "new_target_scope_ids": [
+      "DJANGO_R17R9_SOURCE_SHA256_360ee8a7db0cfead8576b68b768bfa9e0f4038fd9f2892102e801541abc272d5",
+      "DJANGO_DELTA01_DOCX_SHA256_f38e5dc194023b64dbc2e46b1da92a6f3fadc7460fc3aba0db63b5d23474de38",
+      "DJANGO_DELTA01_PDF_SHA256_c50c77d7cabdc44f5d65f48ab86129571b46662c650342950c7c0e6e5aecd9bb",
+      "WORD_MOBILE_ONLY_NO_WORD_DESKTOP_CLAIM",
+      "EXISTING_PDF_QUALIFICATION_NO_REEXPORT",
+      "FULL_C1_PPGES_49_RULES_AND_15_ROLES"
+    ],
+    "next_action_mode": "MUTATING",
     "no_paid_license_dependency": true,
     "official_upload_authorized": false,
     "original_docx_sha256": "4ae8617f49a79b72ab3a5e08c506b9911d6cc2e9d54ede8586aeabf1c7f61463",
     "original_pdf_sha256": "f5056ba480e42ecb8e4408ec01c27bedf0bc1019dcd21d8d057ee6891ba59629",
     "owner_word_mobile_only": true,
     "paid_access_authorized": false,
-    "permitted_ops_after_fresh_execute": [],
+    "permitted_ops_after_fresh_execute": [
+      "READ",
+      "VERIFY_HASH",
+      "READ_ONLY_ANALYSIS",
+      "GAP_MAP",
+      "REPORT",
+      "QUALIFY"
+    ],
     "ppges_adjudication_repository_path": "request/GH1/PPGES_ADOPTION_v2.json",
     "ppges_adjudication_sha256": "070937c71849224941434cae047eb2cc6d7e499c8b6990726f1e33e741839b0f",
     "previous_execute_workflow_run_id": "39746720524",
-    "previous_private_execution_state_sha256": "1359a25fdb52195a209f41db7dc4188b64f7aca7b1766e9e89e5c42d0a9da590",
+    "previous_private_execution_state_sha256": "406f86877f76cb173708f95372be8e216cd3583160fc420339805e6b845be4b1",
     "previous_selected_engine": "docx4j Community 17.3.3 + docx4j-export-fo",
     "primary_ruleset_id": 24932377,
     "production_book_authorized": false,
@@ -85,17 +99,17 @@
     "secondary_hardening_ruleset_id": 24939466,
     "selected_action_contract_path": "request/STATE_TRANSITION.json",
     "selected_engine": "Existing authentic DJANGO_PPGES135_GENERATOR_R25R7.py successor; AppVersion metadata fix only, not a new renderer",
-    "selected_next_action": "GLOBAL_PUBLICATION_PLATFORM_ALTERNATIVE_FIRST_REALBOOK_SCOPING_READ_ONLY",
+    "selected_next_action": "GLOBAL_PUBLICATION_DJANGO_DELTA01_EXISTING_ARTIFACT_QUALIFICATION_EXECUTE",
     "source_recovery_scope_repository_path": "request/GH1/SOURCE_RECOVERY_SCOPE_v1.json",
     "source_recovery_scope_sha256": "1afd8ee926833ced215bfef35744f07c1c7211c632ae5bd514b34a6c11c90fcd",
     "standalone_aspose_foss_pdf": "NOT_AVAILABLE",
-    "status": "GEN26_PLATFORM_ALTERNATIVE_C1_PROFILE_V1_ADOPTED__SCOPING_READ_ONLY__NO_RENDERER_QUALIFICATION",
+    "status": "GEN27_DJANGO_DELTA01_SCOPE_SELECTED_FRESH_EXECUTE_REQUIRED_NO_RENDERER_QUALIFICATION",
     "successful_engineering_tests": 144,
-    "target_private_execution_state_sha256": "406f86877f76cb173708f95372be8e216cd3583160fc420339805e6b845be4b1",
-    "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.15_PLATFORM_ALTERNATIVE_POLICY_2026-10-25.json",
+    "target_private_execution_state_sha256": "9e73615d8ba5b863ea3bd6ccb083bfde9709d7007e5ece7cf422519aefdb8eab",
+    "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.16_DJANGO_DELTA01_SCOPE_2026-10-25.json",
     "transition_authorization_is_execution_authorization": false,
-    "transition_authorization_run_id": "40225060791",
-    "transition_authorized_action_id": "GLOBAL_PUBLICATION_PLATFORM_ALTERNATIVE_QUALIFICATION_GOVERNANCE_V1",
+    "transition_authorization_run_id": 40230093970,
+    "transition_authorized_action_id": "GLOBAL_PUBLICATION_DJANGO_DELTA01_MOBILE_PDF_SCOPE_SELECTION_GOVERNANCE_V1",
     "transition_authorized_action_kind": "GOVERNANCE_UPGRADE",
     "transition_authorized_operations": [
       "GOVERNANCE_UPGRADE",
@@ -117,7 +131,7 @@
       "GH1_APPVERSION_METADATA_SCOPED_SUCCESSOR"
     ]
   },
-  "generation": 26,
+  "generation": 27,
   "gh1_execution_rule": "GEN24 registers completed GEN23 engineering and selects staged same-SHA Q1. execution_authorized_now is eligibility only; fresh owner EXECUTE on this exact current lock/state/action/two scopes/QUALIFY+EXPORT_PDF remains mandatory. Historical EXECUTE and governance do not authorize future device execution.",
   "ledger_hashes": {
     "blocked_project": [
@@ -344,8 +358,8 @@
       "STATE_TRANSITION"
     ]
   },
-  "previous_public_lock_sha256": "ab88b1f573fb1be70a3315ae031427ecbeb8acad0499f14b9d832ee5ebf7b691",
-  "private_execution_state_sha256": "406f86877f76cb173708f95372be8e216cd3583160fc420339805e6b845be4b1",
+  "previous_public_lock_sha256": "b4792a49e28268819faa56f5a4d08bae6c006635ee3210e9eacdb237b6657431",
+  "private_execution_state_sha256": "9e73615d8ba5b863ea3bd6ccb083bfde9709d7007e5ece7cf422519aefdb8eab",
   "schema": "GLOBAL_PUBLICATION_PUBLIC_LOCK/1.2.0",
   "scoped_v2_evidence": {
     "delta_authorized_for_execution": false,
@@ -374,6 +388,13 @@
     "original_full_C1_device_requirements_unchanged": true,
     "independent_PDF_is_separate_certificate": true,
     "full_real_book_required_for_book_publication": true,
-    "renderer_qualified": false
+    "renderer_qualified": false,
+    "selected_first_realbook": "DJANGO_R17R9_DELTA01",
+    "selected_source_sha256": "360ee8a7db0cfead8576b68b768bfa9e0f4038fd9f2892102e801541abc272d5",
+    "selected_docx_sha256": "f38e5dc194023b64dbc2e46b1da92a6f3fadc7460fc3aba0db63b5d23474de38",
+    "selected_independent_pdf_sha256": "c50c77d7cabdc44f5d65f48ab86129571b46662c650342950c7c0e6e5aecd9bb",
+    "selected_word_profile": "WORD_MOBILE_ONLY",
+    "independent_pdf_engine_candidate": "LIBREOFFICE_WRITER_25_2_3_2_PREEXISTING_EXPORT_NOT_YET_QUALIFIED",
+    "selected_qualification_status": "SELECTED_ONLY_EXECUTE_NOT_AUTHORIZED"
   }
 }
