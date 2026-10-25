@@ -1,9 +1,9 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "gen26-platform-alternative-qualification-policy-c1-device-gate-supplement-2026-10-25",
-  "input_public_lock_sha256": "ab88b1f573fb1be70a3315ae031427ecbeb8acad0499f14b9d832ee5ebf7b691",
-  "input_private_state_sha256": "1359a25fdb52195a209f41db7dc4188b64f7aca7b1766e9e89e5c42d0a9da590",
-  "requested_action_id": "GLOBAL_PUBLICATION_PLATFORM_ALTERNATIVE_QUALIFICATION_GOVERNANCE_V1",
+  "request_id": "gen27-django-delta01-existing-book-mobile-pdf-scope-selection-2026-10-25",
+  "input_public_lock_sha256": "b4792a49e28268819faa56f5a4d08bae6c006635ee3210e9eacdb237b6657431",
+  "input_private_state_sha256": "406f86877f76cb173708f95372be8e216cd3583160fc420339805e6b845be4b1",
+  "requested_action_id": "GLOBAL_PUBLICATION_DJANGO_DELTA01_MOBILE_PDF_SCOPE_SELECTION_GOVERNANCE_V1",
   "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "MUTATING",
   "project": "GLOBAL",
@@ -13,11 +13,13 @@
     "STATE_TRANSITION"
   ],
   "target_scope_ids": [
-    "PLATFORM_ALTERNATIVE_DOCX_QUALIFICATION_V1",
-    "C1_PROFILE_SPECIFIC_DEVICE_GATE_SUPPLEMENT_V1",
-    "INDEPENDENT_PDF_QUALIFICATION_V1",
-    "POLICY_SHA256_26c8c3e4d654af330913cab5bdf3ca5de8f0a250dfc4d3201a23bc008b55077e"
+    "DJANGO_R17R9_SOURCE_SHA256_360ee8a7db0cfead8576b68b768bfa9e0f4038fd9f2892102e801541abc272d5",
+    "DJANGO_DELTA01_DOCX_SHA256_f38e5dc194023b64dbc2e46b1da92a6f3fadc7460fc3aba0db63b5d23474de38",
+    "DJANGO_DELTA01_PDF_SHA256_c50c77d7cabdc44f5d65f48ab86129571b46662c650342950c7c0e6e5aecd9bb",
+    "WORD_MOBILE_ONLY_NO_WORD_DESKTOP_CLAIM",
+    "EXISTING_PDF_QUALIFICATION_NO_REEXPORT",
+    "FULL_C1_PPGES_49_RULES_AND_15_ROLES"
   ],
-  "authorization_run_id": "40225060791",
+  "authorization_run_id": "40230093970",
   "user_explicit_authorization": true
 }
