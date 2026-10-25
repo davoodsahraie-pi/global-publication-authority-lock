@@ -1,25 +1,22 @@
 {
+  "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
+  "request_id": "gen25-gh1-q1-appversion-rootcause-closeout-successor-2026-10-25",
+  "input_public_lock_sha256": "c72f384a65dfb08b28dd4eb0e04f6b635256251f84defc412249d72197762555",
+  "input_private_state_sha256": "0115892594c99844319d6070ff42e2589dddc97714c77736611061c9bfb86988",
+  "requested_action_id": "DJANGO_GH1_APPVERSION_Q1_CLOSEOUT_AND_SCOPED_SUCCESSOR_GOVERNANCE",
   "action_kind": "GOVERNANCE_UPGRADE",
-  "authorization_run_id": 40159033072,
-  "draft_only": false,
-  "input_private_state_sha256": "44e08c6d4d29e4c41ca895319dae4fe417ddb9b63d6f9fe0d7216edfb6d5d0e2",
-  "input_public_lock_sha256": "524893ddd12671f4edec497fc1454b10578aa2028d71fbec31e5e77bbebed41a",
-  "method_id": "DJANGO_R25R7_646CF341_EXISTING_GENERATOR_HARDENING_V1_ATTEMPT_01",
   "mode": "MUTATING",
+  "project": "GLOBAL",
+  "method_id": "DJANGO_GH1_APPVERSION_METADATA_CORRECTION_SUCCESSOR_V1_ATTEMPT_01",
   "operations": [
     "GOVERNANCE_UPGRADE",
     "AUTHORITY_UPDATE",
     "STATE_TRANSITION"
   ],
-  "project": "GLOBAL",
-  "requested_action_id": "DJANGO_GH1_MOBILE_FIRST_GOVERNANCE_V2",
-  "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "status": "ACTUAL_OWNER_GOVERNANCE_AUTHORIZATION_VERIFIED",
   "target_scope_ids": [
-    "GH1_ENGINEERING_CHECKPOINT_REGISTRATION",
-    "GH1_PPGES_EVIDENCE_ADOPTION",
-    "GH1_STAGED_SAME_SHA_WORD_QUALIFICATION",
-    "GH1_Q1_CONTRACT_SHA256_1fdae967b961a63c54e6fa06e82891f5094d36769660db19f3cc2121da784c6a"
+    "GH1_Q1_FROZEN_OPEN_FAIL_CLOSEOUT",
+    "GH1_APPVERSION_METADATA_SCOPED_SUCCESSOR"
   ],
+  "authorization_run_id": "40198081310",
   "user_explicit_authorization": true
 }
