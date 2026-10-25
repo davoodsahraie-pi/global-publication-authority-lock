@@ -1,0 +1,203 @@
+{
+  "schema": "GH1_STAGED_SAME_SHA_CONTINUATION_CONTRACT/2",
+  "version": "2.0.0",
+  "status": "PROPOSED_NOT_AUTHORIZED_NOT_SELECTED",
+  "project": "GLOBAL",
+  "governance_action_id": "DJANGO_GH1_MOBILE_FIRST_GOVERNANCE_V2",
+  "source_authority": {
+    "generation": 23,
+    "public_lock_sha256": "524893ddd12671f4edec497fc1454b10578aa2028d71fbec31e5e77bbebed41a",
+    "private_execution_state_sha256": "44e08c6d4d29e4c41ca895319dae4fe417ddb9b63d6f9fe0d7216edfb6d5d0e2",
+    "bootstrap_sha256": "14b7463a2735256cc408773ca0ce6905f18fbde402042c8b751cccf18129ce64",
+    "commit": "e74bc8243dd090526bd423b4bfad4e65e176cd96"
+  },
+  "governance_operations": [
+    "GOVERNANCE_UPGRADE",
+    "AUTHORITY_UPDATE",
+    "STATE_TRANSITION"
+  ],
+  "governance_scope_ids": [
+    "GH1_ENGINEERING_CHECKPOINT_REGISTRATION",
+    "GH1_PPGES_EVIDENCE_ADOPTION",
+    "GH1_STAGED_SAME_SHA_WORD_QUALIFICATION"
+  ],
+  "authorization_binding": "Add GH1_Q1_CONTRACT_SHA256_<exact serialized file SHA256> to workflow target_scope_ids_json. No self hash or fabricated future approval is stored here.",
+  "superseded_proposal": {
+    "id": "DJANGO_GH1_CHECKPOINT_Q1_READINESS_GOVERNANCE_V1",
+    "contract_sha256": "f40ca9bbce8f9bc4c985c206d61993ffa45609be0c7fa5c19a7be17247a46481",
+    "status": "WITHDRAWN_PROPOSAL_ONLY_KEEP_HISTORICAL_BYTES",
+    "reason": "Owner has only Word Mobile; do not require owner Windows/PowerShell or all platforms simultaneously."
+  },
+  "method_id": "DJANGO_R25R7_646CF341_EXISTING_GENERATOR_HARDENING_V1_ATTEMPT_01",
+  "original_engineering_contract_sha256": "3907980ee98f6146a74f03ce9fed30820ad004a89b06b68dff0bdbc5446d4e5b",
+  "adoption_pins": {
+    "mobile_continuation_v2/CHECKPOINT_REGISTRATION_v2_PROPOSED.json": "97bda1cdd0be65cad9c1fc0bd0eb2c4a04889d6207961ee0683745599ad1707f",
+    "mobile_continuation_v2/PPGES_ADOPTION_v2_PROPOSED.json": "855526a8fc4ff0a82cd2f6ae71c1070dc1129e08ea5aae5a0fccd5a35753bd28",
+    "mobile_continuation_v2/verify_ppges_cases.py": "3f6c0925cae39628c7d605a3d72aa29dd54458ca18b9bf932699308493d99867",
+    "mobile_continuation_v2/test_ppges_cases.py": "5b6bdc229407e6a5deb7ee501772b097ea3ffbf23a15a2ed74b459733f4febf0",
+    "mobile_continuation_v2/NEW_CASE_TEST_RESULTS.json": "ca7a7cd18bca731a613b7d4e8fda3867df53e65506d986fb35c6448493cba0c9",
+    "mobile_continuation_v2/PPGES_CASE_EVIDENCE.json": "aa6d898ef65eee3772f56677aa3cd0b3c3be80047662bdf88b0c8e76e43a43e0",
+    "mobile_continuation_v2/VALIDATION_WORK_LOG.json": "9e303325ae323af8829bbda54622fe429b23838a0f9749a029f453848f85856f",
+    "mobile_continuation_v2/FONT_ASSESSMENT_v2.json": "03c83178746bf16dfbdd8632b281aac2d3a208d0c4b9a5abd497ad14851ddf52",
+    "mobile_continuation_v2/BUILD_LOCK_v2.json": "485da8a34dd95362f6fb6ae24b35531bd76bf32f083defee47a7d1dab0b461f1",
+    "mobile_continuation_v2/QA_INDEX_v2.json": "321ad96f238839e36026ae6d8f7ab81afe6f08ef3dde3d65259150943e2c2ab4",
+    "mobile_continuation_v2/RECEIPT_TEMPLATES_v2.json": "780f51ede2d9a75c6141352543cb7f44df3f18a7de4376d9068e68607ab7594f",
+    "mobile_continuation_v2/MOBILE_QA_PROTOCOL_FA.md": "6a0839090eaac8bed1d9b3ab2133d50960166c652ca53a5e8f96d01f8bbb368f",
+    "mobile_continuation_v2/EXTERNAL_EXECUTOR_PROTOCOL.md": "b76dbcd24dacf00f481bbcb200207241ae204dd5cafa1c589da73fb43b5377c9",
+    "mobile_continuation_v2/REMOTE_DESKTOP_OPTIONS.json": "2b77831cbb86fba22085042a273cecfb9958bf4a101666cfa6125dee3c8e750e",
+    "qualification_gap/AUTHORIZATION_PROOF.json": "e46e448d6616de54b021866012e19c4c459b9cf7bbdb56b3c54399397d3ace11",
+    "qualification_gap/DECISION_B_EVIDENCE_PROPOSED.json": "3c6e06f7b7a51b7160f6e30c1f8b1b439a2f8cc7e4b73b1e40dd58b71290a852",
+    "qualification_gap/BUILD_DEPENDENCY_FILE_PINS.json": "722b36217e9ef829843f8e4458edc800d7e88e628497a9d7cb9eac2e2e8dcbc4",
+    "qualification_gap/BUILD_PIN_VERIFICATION.json": "2690ec5153e9b0dd19685fa0b719db971e2da00f942ec09df899c06bfa8924ed"
+  },
+  "frozen_identity": {
+    "package_sha256": "1bc73d68a68949b27f02508164d38781ac7397a9d0d9cb612fe0f4f11d874f15",
+    "docx_sha256": "864ca43a5d0e1898d486a81201b1cb98a15b7e486cf956c726cfda630fc43c26",
+    "docx_size_bytes": 37362,
+    "exact_R17R9_source_sha256": "360ee8a7db0cfead8576b68b768bfa9e0f4038fd9f2892102e801541abc272d5",
+    "source_records": 21529,
+    "original_generator_sha256": "646cf341c774953baa99da400ee3aa6e992fbbd8d0af95f36144f72c0fa5980c"
+  },
+  "purpose": "Register actual engineering/source/EXECUTE checkpoint, adopt two narrowly bound case-evidence dispositions without editing PPGES, and permit independent staged gates on the SAME frozen DOCX. No new renderer/method, Package rebuild, successful-test replay, budget extension or public promotion.",
+  "governance_change_set": {
+    "target_public_generation": 24,
+    "target_private_version": "2.13.0",
+    "target_sha256": null,
+    "target_sha_rule": "Compute exact new State bytes only after verifying the actual owner authorization; then bind public CURRENT to that SHA. Never invent target SHAs or backdate execution.",
+    "public_changes": {
+      "previous_public_lock_sha256": "524893ddd12671f4edec497fc1454b10578aa2028d71fbec31e5e77bbebed41a",
+      "current_action": {
+        "id": "DJANGO_GH1_STAGED_SAME_SHA_Q1_EXECUTE_V2",
+        "mode": "MUTATING"
+      },
+      "execution_authorized_now": true,
+      "external_binding.execute_authorization_validated": true,
+      "external_binding.execute_workflow_run_id": "40068276067",
+      "external_binding.canonical_source_status": "RECOVERED_EXACT_BYTES_SHA_MATCH",
+      "external_binding.canonical_source_sha256": "360ee8a7db0cfead8576b68b768bfa9e0f4038fd9f2892102e801541abc272d5",
+      "external_binding.status": "GH1_ENGINEERING_REGISTERED_STAGED_Q1_SELECTED_FRESH_EXECUTE_REQUIRED",
+      "external_binding.fresh_execution_authorization_required": true,
+      "external_binding.renderer_qualified": false,
+      "new_binding_fields": "Exact v2 contract/evidence SHA plus ACTUAL new governance run/artifact identity. Historical EXECUTE validity is distinct from future execution eligibility."
+    },
+    "private_changes": {
+      "gh1_engineering_checkpoint": "Adopt CHECKPOINT_REGISTRATION_v2_PROPOSED.json with original checkpoint and new E3 work log retained.",
+      "global_renderer_status.canonical_book_source_status": "RECOVERED_EXACT_BYTES_SHA_MATCH",
+      "global_renderer_status.new_method_selected_not_executed": false,
+      "global_renderer_status.new_method_status": "EXISTING_GENERATOR_CHECKPOINT_COMPLETE_STAGED_Q1_PENDING",
+      "global_renderer_status.renderer_qualified": false,
+      "global_renderer_status.pointer": "QUALIFICATION_PENDING",
+      "gh1_selection.generator_patched": true,
+      "gh1_selection.source_recovery_executed": true,
+      "EXACT_NEXT_ACTION.id": "DJANGO_GH1_STAGED_SAME_SHA_Q1_EXECUTE_V2",
+      "EXACT_NEXT_ACTION.method_id": "DJANGO_R25R7_646CF341_EXISTING_GENERATOR_HARDENING_V1_ATTEMPT_01",
+      "EXACT_NEXT_ACTION.status": "STAGED_Q1_SELECTED_FRESH_OWNER_EXECUTE_REQUIRED",
+      "EXACT_NEXT_ACTION.requested_fresh_execute_operations": [
+        "QUALIFY",
+        "EXPORT_PDF"
+      ],
+      "EXACT_NEXT_ACTION.scope_ids": [
+        "GH1_PPGES_EVIDENCE_ADOPTION",
+        "GH1_STAGED_SAME_SHA_WORD_QUALIFICATION"
+      ],
+      "EXACT_NEXT_ACTION.separate_EXECUTE_authorization_present": false,
+      "EXACT_NEXT_ACTION.source_status": "RECOVERED_EXACT_BYTES_SHA_MATCH",
+      "external_governance_binding.execute_workflow_run_id": 40068276067,
+      "gh1_staged_q1": "Adopt the exact independent gate schedule, same-SHA custody, receipt rules and unchanged cumulative budget in this contract.",
+      "gh1_ppges_adjudication": "Adopt PPGES_ADOPTION_v2_PROPOSED.json as separate case evidence; no raw report or canonical rule/component changes.",
+      "version_history": "Archive complete old CURRENT and relevant pre-transition action/binding objects. Do not reset historical ledgers or overwrite checkpoint artifacts."
+    },
+    "public_repo_write_allowlist": [
+      "authority/CURRENT.json",
+      "authority/CURRENT.sha256",
+      "request/ACTION_REQUEST.json",
+      "request/STATE_TRANSITION.json",
+      "request/GH1/Q1_CONTINUATION_CONTRACT_v2.json",
+      "request/GH1/CHECKPOINT_REGISTRATION_v2.json",
+      "request/GH1/PPGES_ADOPTION_v2.json",
+      "request/GH1/Q1_EVIDENCE_PINS_v2.json"
+    ],
+    "private_state_write_allowlist": [
+      "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_CURRENT.json",
+      "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_CURRENT.sha256",
+      "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.13_GH1_STAGED_Q1_2026-10-25.json"
+    ],
+    "retention": "Preserve immutable_pass/method_fail/frozen_project/blocked_project ledger sets, all originals, previous State, old proposal and all old evidence. No global Renderer/Master/PPGES pointer, Bootstrap, ruleset, workflow or trusted gate change.",
+    "application_order": "Verify actual owner GOVERNANCE_UPGRADE artifact and exact current SHAs; prepare successor State and public transition; require protected CI/merge under unchanged gates. Archive prior State before replacing Current. Until public lock/private State and sidecars match, all execution remains blocked. A governance approval itself authorizes no device Q1."
+  },
+  "followup_execution": {
+    "id": "DJANGO_GH1_STAGED_SAME_SHA_Q1_EXECUTE_V2",
+    "project": "GLOBAL",
+    "operations": [
+      "QUALIFY",
+      "EXPORT_PDF"
+    ],
+    "scope_ids": [
+      "GH1_PPGES_EVIDENCE_ADOPTION",
+      "GH1_STAGED_SAME_SHA_WORD_QUALIFICATION"
+    ],
+    "fresh_manual_EXECUTE_required_after_merge": true,
+    "when": "After protected governance adoption, recheck live new public/private SHAs, then request one exact EXECUTE. Desktop readiness is not required for an available independent Mobile gate.",
+    "authorized_scope": "Observe and qualify existing frozen input only; collect append-only attributable actual evidence and actual Word Desktop PDF. Use adopted diagnostic case evidence without modifying the frozen Package.",
+    "budget": {
+      "same_existing_Q1": true,
+      "max_formal_attempts": 1,
+      "attempts_consumed": 0,
+      "max_active_minutes_cumulative": 60,
+      "max_new_engineering_budget": 0,
+      "phase_accounting": "Existing E3 additive checks charged 2.49 minutes, total 11.87 of original 60. Q1 not started.",
+      "staging": "An individual gate starts only with its own prerequisites and valid EXECUTE. Unavailable gates remain PENDING; completed gate evidence is preserved. Inactive access waits never reset attempt/time or permit a retry.",
+      "stop": "Confirmed formal METHOD_FAIL, scope violation or cap exhaustion stops the attempt. No repair/retry under this action."
+    }
+  },
+  "gate_schedule": {
+    "replace_only_this_precondition": "Original Q1 requires all device/export prerequisites available before any device attempt. Allow stage-specific prerequisites on one frozen SHA instead; final acceptance still requires all applicable gates.",
+    "independent_gates": [
+      "SOURCE_AND_C1_EVIDENCE",
+      "SEMANTIC_EDITORIAL_STRUCTURAL_EVIDENCE",
+      "FORMALLY_ADOPTED_TWO_CASE_PPGES_EVIDENCE",
+      "BUILD_LOCK_AND_CACHED_REGRESSION",
+      "WORD_MOBILE_ACTUAL",
+      "FONT_EFFECTIVE_MOBILE",
+      "WORD_DESKTOP_ACTUAL",
+      "FONT_EFFECTIVE_DESKTOP",
+      "WORD_DESKTOP_EXPORTED_PDF"
+    ],
+    "pass_rule": "An actual independent PASS may be recorded only for its evidenced scope. Missing Desktop may not block an evidenced Mobile gate; it also may not turn any unobserved Mobile/font/ToC/G7 behavior into PASS.",
+    "final_rule": "All required same-SHA device/export observations, effective findings resolution and whole-file applicable rule/role coverage are necessary for a final candidate decision. Raw PPGES findings and unchanged Package block remain explicit. Global renderer promotion and public release stay separate."
+  },
+  "artifact_policy": {
+    "only_qualification_docx_sha256": "864ca43a5d0e1898d486a81201b1cb98a15b7e486cf956c726cfda630fc43c26",
+    "new_docx_generation": false,
+    "font_embedding_or_field_save": false,
+    "rebuilds": false,
+    "owner_personal_computer_tasks": false,
+    "editing_check": "Only a disposable copy for prescribed editing observation; preserve exact input/output hashes. Never replace frozen candidate or inherit its evidence to edited output.",
+    "if_fields_or_fonts_require_saved_derivative": "Record blocking reason. This contract grants no artifact mutation or new SHA. Any future derivative requires a separate bounded proposal and cannot inherit platform PASS from this SHA.",
+    "known_dependency": "The existing ToC field has zero cached result runs. Keep actual display/navigation pending until observed. Any G7/page coverage limitation must remain explicit."
+  },
+  "external_access": {
+    "actual_desktop_requirement": true,
+    "remote_windows_word_desktop_allowed_in_principle": true,
+    "existing_licensed_executor_allowed_in_principle": true,
+    "computer_from_owner_required": false,
+    "costs_trials_hiring_or_third_party_messages_authorized": false,
+    "available_host_or_executor": null,
+    "unavailable_desktop_result": "PENDING_DESKTOP_AND_WORD_EXPORTED_PDF_NEVER_FAKE_PASS"
+  },
+  "prohibited": [
+    "Protected original/source/generator/Package/rule changes",
+    "New renderer or failed-method retry",
+    "144-test replay",
+    "New candidate/production book generation",
+    "Canonical PPGES edit/disable or arbitrary waiver",
+    "Word Online/LibreOffice/mobile PDF as Word Desktop PASS",
+    "Unverified font fallback as PASS",
+    "Public publishing or renderer promotion",
+    "Budget/account/session/cost assumed from this proposal"
+  ],
+  "owner_actions_now": [
+    "One exact GOVERNANCE_UPGRADE workflow dispatch from protected main using OWNER_WORKFLOW_INPUTS_v2.json"
+  ],
+  "owner_actions_later": "Only exact fresh EXECUTE after actual protected transition, then phone-only observations when requested. No PC, PowerShell, local Desktop or remote-PC operation."
+}

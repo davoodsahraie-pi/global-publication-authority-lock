@@ -1,0 +1,73 @@
+{
+  "canonical_component_changes": 0,
+  "canonical_rule_changes": 0,
+  "case_disposition": "MECHANICALLY_ADJUDICATED_FOR_EXACT_PINNED_INPUTS_ONLY",
+  "cases": [
+    {
+      "block_id": "block_14",
+      "generator_defect_demonstrated": false,
+      "paragraph": 15,
+      "proposed_resolution": "Accept the pinned explicit C1 RTL geometry + source evidence + exact OOXML preservation as mechanical support. Retain mandatory real visual topology observation on each required platform.",
+      "requires_rule_change": false,
+      "root_cause": "DOCX validator collapses explicit LTR/RTL geometry roles and enforces LTR unconditionally; source validator lacks RTL geometry role requirements.",
+      "rule": "GEO-002",
+      "source_recovery_defect_demonstrated": false,
+      "source_span": [
+        267,
+        294
+      ]
+    },
+    {
+      "block_id": "block_9",
+      "generator_integration_gap": "Annotation/evidence intake and enforcement, not demonstrated DOCX serialization damage.",
+      "label_span": [
+        155,
+        166
+      ],
+      "paragraph": 10,
+      "proposed_resolution": "Adopt only exact pinned external B_PROPER_NAME_OR_TITLE evidence with reason, source/C1/artifact binding and one exact segment including colon. No general Decision B whitelist.",
+      "requires_rule_change": false,
+      "root_cause": "Synthetic C1 annotation omits structured English-sequence class; generator/C1 preflight does not enforce it for DECISION_LABEL. DOCX validator recognizes Decision A but cannot consume the C1 evidence for Decision B.",
+      "rule": "ENGSEQ-001",
+      "source_recovery_defect_demonstrated": false,
+      "source_span": [
+        155,
+        186
+      ]
+    }
+  ],
+  "continuation_contract_sha256": "1fdae967b961a63c54e6fa06e82891f5094d36769660db19f3cc2121da784c6a",
+  "docx_sha256": "864ca43a5d0e1898d486a81201b1cb98a15b7e486cf956c726cfda630fc43c26",
+  "effective_condition": "Only when these exact bytes are on protected main and public/private Current SHAs match; branch preparation alone is not effective.",
+  "evidence_files": {
+    "mobile_continuation_v2/NEW_CASE_TEST_RESULTS.json": "ca7a7cd18bca731a613b7d4e8fda3867df53e65506d986fb35c6448493cba0c9",
+    "mobile_continuation_v2/PPGES_CASE_EVIDENCE.json": "aa6d898ef65eee3772f56677aa3cd0b3c3be80047662bdf88b0c8e76e43a43e0",
+    "mobile_continuation_v2/test_ppges_cases.py": "5b6bdc229407e6a5deb7ee501772b097ea3ffbf23a15a2ed74b459733f4febf0",
+    "mobile_continuation_v2/verify_ppges_cases.py": "3f6c0925cae39628c7d605a3d72aa29dd54458ca18b9bf932699308493d99867",
+    "qualification_gap/DECISION_B_EVIDENCE_PROPOSED.json": "3c6e06f7b7a51b7160f6e30c1f8b1b439a2f8cc7e4b73b1e40dd58b71290a852",
+    "qualification_gap/FAILED_CASE_DIAGNOSTIC.json": "698a59b8a2a33072e6d784781f47fa4ffd650ce2d235d1540f47d94d67f89e84",
+    "qualification_gap/PPGES_CONFLICT_DISPOSITION_PROPOSED.json": "d71134cd27b75b7ca2179dc800e980212806f7b59072d570b822df299b081f58"
+  },
+  "generator_package_changes": 0,
+  "governance_run_id": 40159033072,
+  "not_allowed": [
+    "Blanket suppression",
+    "Canonical validator/rule edit",
+    "Unverified semantic reclassification",
+    "Inferring visual topology from OOXML",
+    "Relabeling raw report as PASS"
+  ],
+  "package_qualification_function": "Preserved unchanged; it still blocks on raw findings. This proposal never represents the frozen Package function as returning QUALIFIED. An Authority-owned final evidence decision must state this raw/adjudicated distinction explicitly.",
+  "proposal_sha256": "855526a8fc4ff0a82cd2f6ae71c1070dc1129e08ea5aae5a0fccd5a35753bd28",
+  "qualification_pass": false,
+  "raw_findings_retained": {
+    "docx_unresolved": 1,
+    "docx_violations": 1,
+    "raw_ppges_pass": false,
+    "source_unresolved": 1
+  },
+  "raw_ppges_pass": false,
+  "schema": "GH1_FORMAL_TWO_CASE_EVIDENCE_ADOPTION/2",
+  "status": "ADOPTED_MECHANICAL_EVIDENCE_ONLY_BY_GEN24",
+  "visual_and_semantic_limits": "Real platform topology/font/line-wrap observations remain mandatory. Semantic adoption is restricted to the exact bound Decision B label evidence; no general phrase whitelist."
+}
