@@ -1,22 +1,23 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "gen25-gh1-q1-appversion-rootcause-closeout-successor-2026-10-25",
-  "input_public_lock_sha256": "c72f384a65dfb08b28dd4eb0e04f6b635256251f84defc412249d72197762555",
-  "input_private_state_sha256": "0115892594c99844319d6070ff42e2589dddc97714c77736611061c9bfb86988",
-  "requested_action_id": "DJANGO_GH1_APPVERSION_Q1_CLOSEOUT_AND_SCOPED_SUCCESSOR_GOVERNANCE",
+  "request_id": "gen26-platform-alternative-qualification-policy-c1-device-gate-supplement-2026-10-25",
+  "input_public_lock_sha256": "ab88b1f573fb1be70a3315ae031427ecbeb8acad0499f14b9d832ee5ebf7b691",
+  "input_private_state_sha256": "1359a25fdb52195a209f41db7dc4188b64f7aca7b1766e9e89e5c42d0a9da590",
+  "requested_action_id": "GLOBAL_PUBLICATION_PLATFORM_ALTERNATIVE_QUALIFICATION_GOVERNANCE_V1",
   "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "MUTATING",
   "project": "GLOBAL",
-  "method_id": "DJANGO_GH1_APPVERSION_METADATA_CORRECTION_SUCCESSOR_V1_ATTEMPT_01",
   "operations": [
     "GOVERNANCE_UPGRADE",
     "AUTHORITY_UPDATE",
     "STATE_TRANSITION"
   ],
   "target_scope_ids": [
-    "GH1_Q1_FROZEN_OPEN_FAIL_CLOSEOUT",
-    "GH1_APPVERSION_METADATA_SCOPED_SUCCESSOR"
+    "PLATFORM_ALTERNATIVE_DOCX_QUALIFICATION_V1",
+    "C1_PROFILE_SPECIFIC_DEVICE_GATE_SUPPLEMENT_V1",
+    "INDEPENDENT_PDF_QUALIFICATION_V1",
+    "POLICY_SHA256_26c8c3e4d654af330913cab5bdf3ca5de8f0a250dfc4d3201a23bc008b55077e"
   ],
-  "authorization_run_id": "40198081310",
+  "authorization_run_id": "40225060791",
   "user_explicit_authorization": true
 }
