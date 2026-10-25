@@ -1,6 +1,6 @@
 {
   "current_action": {
-    "id": "DJANGO_GH1_STAGED_SAME_SHA_Q1_EXECUTE_V2",
+    "id": "DJANGO_GH1_APPVERSION_METADATA_SUCCESSOR_EXECUTE",
     "mode": "MUTATING"
   },
   "execution_authorized_now": true,
@@ -25,8 +25,8 @@
     "engineering_contract_repository_path": "request/GH1/ENGINEERING_CONTRACT_v1.json",
     "engineering_contract_sha256": "3907980ee98f6146a74f03ce9fed30820ad004a89b06b68dff0bdbc5446d4e5b",
     "execute_authorization_scope": "HISTORICAL_COMPLETED_GEN23_ENGINEERING_ONLY",
-    "execute_authorization_validated": true,
-    "execute_workflow_run_id": "40068276067",
+    "execute_authorization_validated": false,
+    "execute_workflow_run_id": null,
     "failed_method_digest": "3b546271d8cc1eb5be96fdb34e3d77df6ecc831ab61ac5caee1e30676c666d9f",
     "failed_method_id": "DOCX4J_COMMUNITY_17_3_3_PYREF_C1_FRESH_SOURCE_TO_DOCX_PDF_ATTEMPT_01",
     "fresh_execution_authorization_required": true,
@@ -50,7 +50,7 @@
     "gen20_failed_docx_sha256": "189c57eb9ed74f850407bbae2918da0af3b53f8ccfe55adff2f586c3664cda3b",
     "gen20_failure_evidence_library_path": "/GLOBAL-PUBLICATION/Renderer/Qualification/Gen20-Docx4j-Failure-2026-10-22/GEN20_DOCX4J_FAILURE_CLOSEOUT_READONLY_20261022.zip",
     "gen20_failure_evidence_sha256": "27c05b7be7ffdd680fd5dd6f4301500bedcc9983fb15c0b86d490fefa84dbfec",
-    "governance_authorization_run_id": "40159033072",
+    "governance_authorization_run_id": "40198081310",
     "governance_transition_source_private_sha256": "44e08c6d4d29e4c41ca895319dae4fe417ddb9b63d6f9fe0d7216edfb6d5d0e2",
     "governance_transition_target_private_sha256": "0115892594c99844319d6070ff42e2589dddc97714c77736611061c9bfb86988",
     "manual_authorization_run_id": "38282330106",
@@ -58,10 +58,9 @@
     "method_design_library_path": "/GLOBAL-PUBLICATION/Renderer/Designs/Gen16-2026-10-18/GEN16_C1_NONDERVIATIVE_TYPED_IR_FRESH_OPC_METHOD_DESIGN_2026-10-18.json",
     "method_design_sha256": "3aff37bb6724e31923976f9c866de52c4a633ff23e67f645a6f1cc261d1799ca",
     "new_case_diagnostic_tests": 22,
-    "new_method_id": "DJANGO_R25R7_646CF341_EXISTING_GENERATOR_HARDENING_V1_ATTEMPT_01",
+    "new_method_id": "DJANGO_GH1_APPVERSION_METADATA_CORRECTION_SUCCESSOR_V1_ATTEMPT_01",
     "new_target_scope_ids": [
-      "GH1_PPGES_EVIDENCE_ADOPTION",
-      "GH1_STAGED_SAME_SHA_WORD_QUALIFICATION"
+      "GH1_APPVERSION_METADATA_SCOPED_SUCCESSOR"
     ],
     "next_action_mode": "MUTATING",
     "no_paid_license_dependency": true,
@@ -71,45 +70,53 @@
     "owner_word_mobile_only": true,
     "paid_access_authorized": false,
     "permitted_ops_after_fresh_execute": [
-      "QUALIFY",
-      "EXPORT_PDF"
+      "PATCH",
+      "BUILD",
+      "GENERATE_DOCX",
+      "QUALIFY"
     ],
     "ppges_adjudication_repository_path": "request/GH1/PPGES_ADOPTION_v2.json",
     "ppges_adjudication_sha256": "070937c71849224941434cae047eb2cc6d7e499c8b6990726f1e33e741839b0f",
     "previous_execute_workflow_run_id": "39746720524",
-    "previous_private_execution_state_sha256": "44e08c6d4d29e4c41ca895319dae4fe417ddb9b63d6f9fe0d7216edfb6d5d0e2",
+    "previous_private_execution_state_sha256": "0115892594c99844319d6070ff42e2589dddc97714c77736611061c9bfb86988",
     "previous_selected_engine": "docx4j Community 17.3.3 + docx4j-export-fo",
     "primary_ruleset_id": 24932377,
     "production_book_authorized": false,
     "project_local_method_id": null,
     "project_local_scope": null,
     "q1_evidence_pins_sha256": "11518796e35757454d64751831bad03248f1a16fc91ba2a0db0a451c1ff70226",
-    "qualification_attempts_consumed": 0,
+    "qualification_attempts_consumed": 1,
     "raw_ppges_pass": false,
     "renderer_qualified": false,
     "required_status_check": "publication-authority",
     "secondary_hardening_ruleset_id": 24939466,
     "selected_action_contract_path": "request/STATE_TRANSITION.json",
-    "selected_engine": "Existing authentic DJANGO_PPGES135_GENERATOR_R25R7.py python-docx/OOXML successor; not a new engine",
-    "selected_next_action": "DJANGO_GH1_STAGED_SAME_SHA_Q1_EXECUTE_V2",
+    "selected_engine": "Existing authentic DJANGO_PPGES135_GENERATOR_R25R7.py successor; AppVersion metadata fix only, not a new renderer",
+    "selected_next_action": "DJANGO_GH1_APPVERSION_METADATA_SUCCESSOR_EXECUTE",
     "source_recovery_scope_repository_path": "request/GH1/SOURCE_RECOVERY_SCOPE_v1.json",
     "source_recovery_scope_sha256": "1afd8ee926833ced215bfef35744f07c1c7211c632ae5bd514b34a6c11c90fcd",
     "standalone_aspose_foss_pdf": "NOT_AVAILABLE",
-    "status": "GEN24_GH1_ENGINEERING_REGISTERED_STAGED_Q1_FRESH_EXECUTE_PENDING",
+    "status": "GEN25_GH1_APPVERSION_Q1_OPEN_FAIL_CLOSED_SCOPED_SUCCESSOR_SELECTED_FRESH_EXECUTE_PENDING",
     "successful_engineering_tests": 144,
-    "target_private_execution_state_sha256": "0115892594c99844319d6070ff42e2589dddc97714c77736611061c9bfb86988",
-    "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.13_GH1_STAGED_Q1_2026-10-25.json",
+    "target_private_execution_state_sha256": "1359a25fdb52195a209f41db7dc4188b64f7aca7b1766e9e89e5c42d0a9da590",
+    "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.14_GH1_APPVERSION_2026-10-25.json",
     "transition_authorization_is_execution_authorization": false,
-    "transition_authorization_run_id": "40159033072",
-    "transition_authorized_action_id": "DJANGO_GH1_MOBILE_FIRST_GOVERNANCE_V2",
+    "transition_authorization_run_id": "40198081310",
+    "transition_authorized_action_id": "DJANGO_GH1_APPVERSION_Q1_CLOSEOUT_AND_SCOPED_SUCCESSOR_GOVERNANCE",
     "transition_authorized_action_kind": "GOVERNANCE_UPGRADE",
     "transition_authorized_operations": [
       "GOVERNANCE_UPGRADE",
       "AUTHORITY_UPDATE",
       "STATE_TRANSITION"
-    ]
+    ],
+    "q1_original_open_status": "FAIL_WORD_MOBILE_OPEN_OWNER_ATTESTED",
+    "q1_original_method_id": "DJANGO_R25R7_646CF341_EXISTING_GENERATOR_HARDENING_V1_ATTEMPT_01",
+    "q1_failure_evidence_zip_sha256": "f2c428381afc240871e9c01f6762a39ff86d9b6f564e368285b34774c5bf8be5",
+    "q1_original_docx_sha256": "864ca43a5d0e1898d486a81201b1cb98a15b7e486cf956c726cfda630fc43c26",
+    "q1_original_package_sha256": "1bc73d68a68949b27f02508164d38781ac7397a9d0d9cb612fe0f4f11d874f15",
+    "q1_diagnostic_open_status": "PASS_DIAGNOSTIC_COPY_ONLY_NO_INHERITANCE"
   },
-  "generation": 24,
+  "generation": 25,
   "gh1_execution_rule": "GEN24 registers completed GEN23 engineering and selects staged same-SHA Q1. execution_authorized_now is eligibility only; fresh owner EXECUTE on this exact current lock/state/action/two scopes/QUALIFY+EXPORT_PDF remains mandatory. Historical EXECUTE and governance do not authorize future device execution.",
   "ledger_hashes": {
     "blocked_project": [
@@ -147,7 +154,8 @@
       "d0598c1b0eb75a4fcd8370acd9e986281d830e65452c64d3e3837046a73fec66",
       "e17a11843c3573e4198ba97c7be49e2717dd4c563bee57b42559be681b54fdc9",
       "6e7594bcb441d239e571ef78c2ca83f82dc80cf166aea09a5a9a6e69662a6ae8",
-      "3b546271d8cc1eb5be96fdb34e3d77df6ecc831ab61ac5caee1e30676c666d9f"
+      "3b546271d8cc1eb5be96fdb34e3d77df6ecc831ab61ac5caee1e30676c666d9f",
+      "2b35be02b020cc7a1c0a25c7caf02663d76e9414cd992aa109866f424e89ea6d"
     ]
   },
   "policy": {
@@ -335,8 +343,8 @@
       "STATE_TRANSITION"
     ]
   },
-  "previous_public_lock_sha256": "524893ddd12671f4edec497fc1454b10578aa2028d71fbec31e5e77bbebed41a",
-  "private_execution_state_sha256": "0115892594c99844319d6070ff42e2589dddc97714c77736611061c9bfb86988",
+  "previous_public_lock_sha256": "c72f384a65dfb08b28dd4eb0e04f6b635256251f84defc412249d72197762555",
+  "private_execution_state_sha256": "1359a25fdb52195a209f41db7dc4188b64f7aca7b1766e9e89e5c42d0a9da590",
   "schema": "GLOBAL_PUBLICATION_PUBLIC_LOCK/1.2.0",
   "scoped_v2_evidence": {
     "delta_authorized_for_execution": false,
