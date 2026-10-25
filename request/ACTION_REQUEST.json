@@ -1,9 +1,9 @@
 {
   "action_kind": "GOVERNANCE_UPGRADE",
-  "authorization_run_id": "40067356184",
-  "engineering_contract_sha256": "3907980ee98f6146a74f03ce9fed30820ad004a89b06b68dff0bdbc5446d4e5b",
-  "input_private_state_sha256": "b2ac4f6002e63d1a6c3f46ac708595abed5f5c746947612e9dd0a0f72f3dc53d",
-  "input_public_lock_sha256": "b1ecfe0a8856757655c14b9b3e3f79e3e07dd685e98fa319a71849cd5eea923e",
+  "authorization_run_id": 40159033072,
+  "draft_only": false,
+  "input_private_state_sha256": "44e08c6d4d29e4c41ca895319dae4fe417ddb9b63d6f9fe0d7216edfb6d5d0e2",
+  "input_public_lock_sha256": "524893ddd12671f4edec497fc1454b10578aa2028d71fbec31e5e77bbebed41a",
   "method_id": "DJANGO_R25R7_646CF341_EXISTING_GENERATOR_HARDENING_V1_ATTEMPT_01",
   "mode": "MUTATING",
   "operations": [
@@ -12,13 +12,14 @@
     "STATE_TRANSITION"
   ],
   "project": "GLOBAL",
-  "proposal_status": "OWNER_GOVERNANCE_ARTIFACT_VERIFIED_SELECTION_ONLY",
-  "requested_action_id": "DJANGO_R17R9_EXISTING_GENERATOR_HARDENING_GOVERNANCE",
+  "requested_action_id": "DJANGO_GH1_MOBILE_FIRST_GOVERNANCE_V2",
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
+  "status": "ACTUAL_OWNER_GOVERNANCE_AUTHORIZATION_VERIFIED",
   "target_scope_ids": [
-    "DJANGO_R25R7_GENERATOR_646CF341_SUCCESSOR",
-    "DJANGO_R17R9_C1_INPUT_AND_REGRESSION",
-    "DJANGO_GENERATOR_REPRODUCIBLE_CANDIDATE_PACKAGE"
+    "GH1_ENGINEERING_CHECKPOINT_REGISTRATION",
+    "GH1_PPGES_EVIDENCE_ADOPTION",
+    "GH1_STAGED_SAME_SHA_WORD_QUALIFICATION",
+    "GH1_Q1_CONTRACT_SHA256_1fdae967b961a63c54e6fa06e82891f5094d36769660db19f3cc2121da784c6a"
   ],
   "user_explicit_authorization": true
 }

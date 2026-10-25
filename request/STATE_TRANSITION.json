@@ -1,11 +1,14 @@
 {
-  "action_id": "DJANGO_R17R9_EXISTING_GENERATOR_HARDENING_GOVERNANCE",
+  "action_id": "DJANGO_GH1_MOBILE_FIRST_GOVERNANCE_V2",
   "action_kind": "GOVERNANCE_UPGRADE",
-  "authorization_artifact_id": 12550015669,
-  "authorization_json_sha256": "951e34adecb596f70c35978e7e0a4a0dda5dc75b87483ad2e1b3bf977c78e438",
-  "authorization_run_id": "40067356184",
-  "effect": "Select bounded maintenance of authentic SHA646cf341 Django generator as reusable source-independent candidate package. Preserve original generator, R17R9, Delta01, historical sources, N2/G7, Grammar/C1/PPGES and every historic ledger. Authorize no implementation from this governance run. After protected transition and a new exact owner EXECUTE, allow only the pinned versioned successor, synthetic tests, additive validation, reproducible candidate package, and at most one bounded exact-SHA recovery experiment defined by SOURCE_RECOVERY_SCOPE_v1.json. SOURCE_REBUILD does not permit substitute or editorial source creation. No production book, official artifact upload, qualification promotion or failed-method retry. All scope, phase/time caps and completion gates in ENGINEERING_CONTRACT_v1.json apply.",
-  "engineering_contract_sha256": "3907980ee98f6146a74f03ce9fed30820ad004a89b06b68dff0bdbc5446d4e5b",
+  "authorization_artifact_id": 12585549140,
+  "authorization_artifact_zip_sha256": "73f537c083a6a76c0f55b66afb788761ee4f6559812d88e03575481a277feddc",
+  "authorization_json_sha256": "aea801b576622e4c5aae511b439be8e7e8c93e36920c60db90757c1406ddad33",
+  "authorization_run_id": 40159033072,
+  "continuation_contract_sha256": "1fdae967b961a63c54e6fa06e82891f5094d36769660db19f3cc2121da784c6a",
+  "draft_only": false,
+  "effect": "Register actual engineering/source/EXECUTE checkpoint, adopt two narrowly bound case-evidence dispositions without editing PPGES, and permit independent staged gates on the SAME frozen DOCX. No new renderer/method, Package rebuild, successful-test replay, budget extension or public promotion.",
+  "effective_condition": "Protected main merge and exact matching private Current required",
   "fresh_separate_owner_execute_required": true,
   "global_renderer_qualified": false,
   "method_id": "DJANGO_R25R7_646CF341_EXISTING_GENERATOR_HARDENING_V1_ATTEMPT_01",
@@ -16,27 +19,24 @@
     "STATE_TRANSITION"
   ],
   "permitted_ops_after_fresh_execute": [
-    "PATCH",
-    "BUILD",
-    "SOURCE_REBUILD",
-    "GENERATE_DOCX",
     "QUALIFY",
     "EXPORT_PDF"
   ],
   "project": "GLOBAL",
   "schema": "GLOBAL_PUBLICATION_PUBLIC_STATE_TRANSITION/1.0.0",
-  "selected_next_action_id": "DJANGO_R17R9_EXISTING_GENERATOR_HARDENING_EXECUTE_V1",
-  "source_private_execution_state_sha256": "b2ac4f6002e63d1a6c3f46ac708595abed5f5c746947612e9dd0a0f72f3dc53d",
-  "source_public_lock_sha256": "b1ecfe0a8856757655c14b9b3e3f79e3e07dd685e98fa319a71849cd5eea923e",
-  "source_recovery_executed": false,
-  "source_recovery_scope_sha256": "1afd8ee926833ced215bfef35744f07c1c7211c632ae5bd514b34a6c11c90fcd",
-  "target_private_execution_state_sha256": "44e08c6d4d29e4c41ca895319dae4fe417ddb9b63d6f9fe0d7216edfb6d5d0e2",
-  "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.12_GH1_2026-10-24.json",
-  "target_public_lock_sha256": "524893ddd12671f4edec497fc1454b10578aa2028d71fbec31e5e77bbebed41a",
+  "selected_next_action_id": "DJANGO_GH1_STAGED_SAME_SHA_Q1_EXECUTE_V2",
+  "source_private_execution_state_sha256": "44e08c6d4d29e4c41ca895319dae4fe417ddb9b63d6f9fe0d7216edfb6d5d0e2",
+  "source_public_lock_sha256": "524893ddd12671f4edec497fc1454b10578aa2028d71fbec31e5e77bbebed41a",
+  "status": "AUTHORIZED_GEN24_TRANSITION",
+  "target_private_execution_state_sha256": "0115892594c99844319d6070ff42e2589dddc97714c77736611061c9bfb86988",
+  "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.13_GH1_STAGED_Q1_2026-10-25.json",
+  "target_public_lock_sha256": "c72f384a65dfb08b28dd4eb0e04f6b635256251f84defc412249d72197762555",
   "target_scope_ids": [
-    "DJANGO_R25R7_GENERATOR_646CF341_SUCCESSOR",
-    "DJANGO_R17R9_C1_INPUT_AND_REGRESSION",
-    "DJANGO_GENERATOR_REPRODUCIBLE_CANDIDATE_PACKAGE"
+    "GH1_ENGINEERING_CHECKPOINT_REGISTRATION",
+    "GH1_PPGES_EVIDENCE_ADOPTION",
+    "GH1_STAGED_SAME_SHA_WORD_QUALIFICATION",
+    "GH1_Q1_CONTRACT_SHA256_1fdae967b961a63c54e6fa06e82891f5094d36769660db19f3cc2121da784c6a"
   ],
-  "transition_id": "GEN23_GH1_EXISTING_GENERATOR_MAINTENANCE_SELECTION_2026_10_24"
+  "transition_id": "GEN24_GH1_STAGED_SAME_SHA_Q1_2026_10_25",
+  "unfilled_fields_reason": null
 }
