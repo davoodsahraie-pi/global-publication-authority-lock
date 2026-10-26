@@ -1,6 +1,6 @@
 {
   "current_action": {
-    "id": "GLOBAL_PUBLICATION_DJANGO_DELTA01_EXISTING_ARTIFACT_QUALIFICATION_EXECUTE",
+    "id": "GLOBAL_PUBLICATION_DJANGO_C1_SEMANTIC_SUCCESSOR_PILOT_EXECUTE",
     "mode": "MUTATING"
   },
   "execution_authorized_now": true,
@@ -50,7 +50,7 @@
     "gen20_failed_docx_sha256": "189c57eb9ed74f850407bbae2918da0af3b53f8ccfe55adff2f586c3664cda3b",
     "gen20_failure_evidence_library_path": "/GLOBAL-PUBLICATION/Renderer/Qualification/Gen20-Docx4j-Failure-2026-10-22/GEN20_DOCX4J_FAILURE_CLOSEOUT_READONLY_20261022.zip",
     "gen20_failure_evidence_sha256": "27c05b7be7ffdd680fd5dd6f4301500bedcc9983fb15c0b86d490fefa84dbfec",
-    "governance_authorization_run_id": 40230093970,
+    "governance_authorization_run_id": 40260522501,
     "governance_transition_source_private_sha256": "44e08c6d4d29e4c41ca895319dae4fe417ddb9b63d6f9fe0d7216edfb6d5d0e2",
     "governance_transition_target_private_sha256": "0115892594c99844319d6070ff42e2589dddc97714c77736611061c9bfb86988",
     "manual_authorization_run_id": "38282330106",
@@ -58,14 +58,17 @@
     "method_design_library_path": "/GLOBAL-PUBLICATION/Renderer/Designs/Gen16-2026-10-18/GEN16_C1_NONDERVIATIVE_TYPED_IR_FRESH_OPC_METHOD_DESIGN_2026-10-18.json",
     "method_design_sha256": "3aff37bb6724e31923976f9c866de52c4a633ff23e67f645a6f1cc261d1799ca",
     "new_case_diagnostic_tests": 22,
-    "new_method_id": "DJANGO_DELTA01_EXISTING_ARTIFACT_QUALIFICATION_ONLY_V1",
+    "new_method_id": "DJANGO_C1_SOURCE_ROLE_FIRST_MINIMAL_SUCCESSOR_V1_ATTEMPT_01",
     "new_target_scope_ids": [
       "DJANGO_R17R9_SOURCE_SHA256_360ee8a7db0cfead8576b68b768bfa9e0f4038fd9f2892102e801541abc272d5",
+      "DJANGO_R25R7_GENERATOR_FORENSIC_SHA256_646cf341c774953baa99da400ee3aa6e992fbbd8d0af95f36144f72c0fa5980c",
       "DJANGO_DELTA01_DOCX_SHA256_f38e5dc194023b64dbc2e46b1da92a6f3fadc7460fc3aba0db63b5d23474de38",
       "DJANGO_DELTA01_PDF_SHA256_c50c77d7cabdc44f5d65f48ab86129571b46662c650342950c7c0e6e5aecd9bb",
-      "WORD_MOBILE_ONLY_NO_WORD_DESKTOP_CLAIM",
-      "EXISTING_PDF_QUALIFICATION_NO_REEXPORT",
-      "FULL_C1_PPGES_49_RULES_AND_15_ROLES"
+      "SIX_PROVEN_PERSIAN_BODY_ROLE_BYPASS_AND_TWO_ROLE_ADJUDICATIONS",
+      "FOUR_FIXED_WIDTH_SEMANTIC_TABLES_AND_29_RAW_TABLE_RULE_FINDINGS",
+      "FULL_49_RULE_15_ROLE_SEMANTIC_SOURCE_OOXML_REGRESSION",
+      "WORD_MOBILE_ONLY_AND_INDEPENDENT_PDF_NO_WORD_DESKTOP_GATE",
+      "PRESERVE_ALL_EXISTING_ARTIFACTS_NO_FAILED_METHOD_RETRY"
     ],
     "next_action_mode": "MUTATING",
     "no_paid_license_dependency": true,
@@ -80,12 +83,13 @@
       "READ_ONLY_ANALYSIS",
       "GAP_MAP",
       "REPORT",
+      "GENERATE_DOCX",
       "QUALIFY"
     ],
     "ppges_adjudication_repository_path": "request/GH1/PPGES_ADOPTION_v2.json",
     "ppges_adjudication_sha256": "070937c71849224941434cae047eb2cc6d7e499c8b6990726f1e33e741839b0f",
     "previous_execute_workflow_run_id": "39746720524",
-    "previous_private_execution_state_sha256": "406f86877f76cb173708f95372be8e216cd3583160fc420339805e6b845be4b1",
+    "previous_private_execution_state_sha256": "9e73615d8ba5b863ea3bd6ccb083bfde9709d7007e5ece7cf422519aefdb8eab",
     "previous_selected_engine": "docx4j Community 17.3.3 + docx4j-export-fo",
     "primary_ruleset_id": 24932377,
     "production_book_authorized": false,
@@ -99,17 +103,17 @@
     "secondary_hardening_ruleset_id": 24939466,
     "selected_action_contract_path": "request/STATE_TRANSITION.json",
     "selected_engine": "Existing authentic DJANGO_PPGES135_GENERATOR_R25R7.py successor; AppVersion metadata fix only, not a new renderer",
-    "selected_next_action": "GLOBAL_PUBLICATION_DJANGO_DELTA01_EXISTING_ARTIFACT_QUALIFICATION_EXECUTE",
+    "selected_next_action": "GLOBAL_PUBLICATION_DJANGO_C1_SEMANTIC_SUCCESSOR_PILOT_EXECUTE",
     "source_recovery_scope_repository_path": "request/GH1/SOURCE_RECOVERY_SCOPE_v1.json",
     "source_recovery_scope_sha256": "1afd8ee926833ced215bfef35744f07c1c7211c632ae5bd514b34a6c11c90fcd",
     "standalone_aspose_foss_pdf": "NOT_AVAILABLE",
-    "status": "GEN27_DJANGO_DELTA01_SCOPE_SELECTED_FRESH_EXECUTE_REQUIRED_NO_RENDERER_QUALIFICATION",
+    "status": "GEN28_DJANGO_C1_SEMANTIC_SCOPE_SELECTED_FRESH_EXECUTE_REQUIRED",
     "successful_engineering_tests": 144,
-    "target_private_execution_state_sha256": "9e73615d8ba5b863ea3bd6ccb083bfde9709d7007e5ece7cf422519aefdb8eab",
-    "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.16_DJANGO_DELTA01_SCOPE_2026-10-25.json",
+    "target_private_execution_state_sha256": "c4c19407cdeae50dd7d82dca8020c66d136136e661d1008b71cbe32a947169ea",
+    "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.17_DJANGO_C1_SEMANTIC_SCOPE_2026-10-26.json",
     "transition_authorization_is_execution_authorization": false,
-    "transition_authorization_run_id": 40230093970,
-    "transition_authorized_action_id": "GLOBAL_PUBLICATION_DJANGO_DELTA01_MOBILE_PDF_SCOPE_SELECTION_GOVERNANCE_V1",
+    "transition_authorization_run_id": 40260522501,
+    "transition_authorized_action_id": "GLOBAL_PUBLICATION_DJANGO_C1_SEMANTIC_REMEDIATION_SCOPE_GOVERNANCE_V1",
     "transition_authorized_action_kind": "GOVERNANCE_UPGRADE",
     "transition_authorized_operations": [
       "GOVERNANCE_UPGRADE",
@@ -129,9 +133,16 @@
     "original_gen25_successor_selected_method": "DJANGO_GH1_APPVERSION_METADATA_CORRECTION_SUCCESSOR_V1_ATTEMPT_01",
     "original_gen25_successor_selected_scope_ids": [
       "GH1_APPVERSION_METADATA_SCOPED_SUCCESSOR"
-    ]
+    ],
+    "new_method_status": "ELIGIBILITY_REQUIRED_NO_EXECUTION",
+    "remediation_contract_sha256": "e3708b573acfcfddb0d22915b783ae67e200f01137641c63a8578407ffb31859",
+    "regression_spec_sha256": "b211bd17550de6615936715721df25f10497af85ae8e47c4d02298e5ad03074f",
+    "no_original_generator_edit": true,
+    "no_failed_method_derivation": true,
+    "pdf_independent_qualification_pending": true,
+    "word_mobile_new_sha_pending": true
   },
-  "generation": 27,
+  "generation": 28,
   "gh1_execution_rule": "GEN24 registers completed GEN23 engineering and selects staged same-SHA Q1. execution_authorized_now is eligibility only; fresh owner EXECUTE on this exact current lock/state/action/two scopes/QUALIFY+EXPORT_PDF remains mandatory. Historical EXECUTE and governance do not authorize future device execution.",
   "ledger_hashes": {
     "blocked_project": [
@@ -358,8 +369,8 @@
       "STATE_TRANSITION"
     ]
   },
-  "previous_public_lock_sha256": "b4792a49e28268819faa56f5a4d08bae6c006635ee3210e9eacdb237b6657431",
-  "private_execution_state_sha256": "9e73615d8ba5b863ea3bd6ccb083bfde9709d7007e5ece7cf422519aefdb8eab",
+  "previous_public_lock_sha256": "a8922d6c0f08bdce7f3d4073f709b89720580f6f15b1abf4c4bb8bc57332cb2c",
+  "private_execution_state_sha256": "c4c19407cdeae50dd7d82dca8020c66d136136e661d1008b71cbe32a947169ea",
   "schema": "GLOBAL_PUBLICATION_PUBLIC_LOCK/1.2.0",
   "scoped_v2_evidence": {
     "delta_authorized_for_execution": false,
@@ -395,6 +406,48 @@
     "selected_independent_pdf_sha256": "c50c77d7cabdc44f5d65f48ab86129571b46662c650342950c7c0e6e5aecd9bb",
     "selected_word_profile": "WORD_MOBILE_ONLY",
     "independent_pdf_engine_candidate": "LIBREOFFICE_WRITER_25_2_3_2_PREEXISTING_EXPORT_NOT_YET_QUALIFIED",
-    "selected_qualification_status": "SELECTED_ONLY_EXECUTE_NOT_AUTHORIZED"
+    "selected_qualification_status": "EXISTING_DELTA01_C1_FAIL_NO_NEW_SHA_QUALIFIED",
+    "semantic_successor_status": "GOVERNANCE_SELECTED_ONLY_FRESH_EXECUTE_REQUIRED_METHOD_ELIGIBILITY_PENDING"
+  },
+  "semantic_remediation_scope": {
+    "status": "SCOPE_SELECTED_ONLY",
+    "governance_authorization_run_id": 40260522501,
+    "canonical_source_sha256": "360ee8a7db0cfead8576b68b768bfa9e0f4038fd9f2892102e801541abc272d5",
+    "original_generator_forensic_sha256": "646cf341c774953baa99da400ee3aa6e992fbbd8d0af95f36144f72c0fa5980c",
+    "immutable_docx_sha256": "f38e5dc194023b64dbc2e46b1da92a6f3fadc7460fc3aba0db63b5d23474de38",
+    "immutable_pdf_sha256": "c50c77d7cabdc44f5d65f48ab86129571b46662c650342950c7c0e6e5aecd9bb",
+    "semantic_contract_sha256": "e3708b573acfcfddb0d22915b783ae67e200f01137641c63a8578407ffb31859",
+    "regression_spec_sha256": "b211bd17550de6615936715721df25f10497af85ae8e47c4d02298e5ad03074f",
+    "six_source_role_overrides": [
+      12837,
+      12839,
+      12841,
+      14334,
+      15151,
+      15153
+    ],
+    "role_adjudications": [
+      "6978->6978:PERSIAN_BODY",
+      "17477->17479:PERSIAN_BODY_WITH_INLINE_LTR_TECHLIT"
+    ],
+    "fixed_tables_source_ids": [
+      189,
+      4889,
+      21021,
+      21415
+    ],
+    "source_record_count": 21529,
+    "rule_count": 49,
+    "semantic_role_count": 15,
+    "source_block_id_crosswalk_required": true,
+    "new_candidate_sha256": null,
+    "new_method_candidate_id": "DJANGO_C1_SOURCE_ROLE_FIRST_MINIMAL_SUCCESSOR_V1_ATTEMPT_01",
+    "method_eligibility_not_yet_proved": true,
+    "fresh_execute_required": true,
+    "independent_pdf_export_separate_authorization_required": true,
+    "word_profile": "WORD_MOBILE_ONLY",
+    "no_word_desktop_required": true,
+    "no_original_mutation": true,
+    "renderer_qualified": false
   }
 }
