@@ -1,6 +1,6 @@
 {
   "current_action": {
-    "id": "GLOBAL_PUBLICATION_DJANGO_C1_SEMANTIC_SUCCESSOR_PILOT_EXECUTE",
+    "id": "GLOBAL_PUBLICATION_GEN28_INDEPENDENT_METHOD_BOOTSTRAP_STATIC_ELIGIBILITY_EXECUTE",
     "mode": "MUTATING"
   },
   "execution_authorized_now": true,
@@ -50,25 +50,21 @@
     "gen20_failed_docx_sha256": "189c57eb9ed74f850407bbae2918da0af3b53f8ccfe55adff2f586c3664cda3b",
     "gen20_failure_evidence_library_path": "/GLOBAL-PUBLICATION/Renderer/Qualification/Gen20-Docx4j-Failure-2026-10-22/GEN20_DOCX4J_FAILURE_CLOSEOUT_READONLY_20261022.zip",
     "gen20_failure_evidence_sha256": "27c05b7be7ffdd680fd5dd6f4301500bedcc9983fb15c0b86d490fefa84dbfec",
-    "governance_authorization_run_id": 40260522501,
-    "governance_transition_source_private_sha256": "44e08c6d4d29e4c41ca895319dae4fe417ddb9b63d6f9fe0d7216edfb6d5d0e2",
-    "governance_transition_target_private_sha256": "0115892594c99844319d6070ff42e2589dddc97714c77736611061c9bfb86988",
+    "governance_authorization_run_id": 40322649155,
+    "governance_transition_source_private_sha256": "c4c19407cdeae50dd7d82dca8020c66d136136e661d1008b71cbe32a947169ea",
+    "governance_transition_target_private_sha256": "11116abe6e14fe8c140bd8476b22ac95beb4338338619ba384cb5ed4300c23e6",
     "manual_authorization_run_id": "38282330106",
     "master_control_current_sha256": "310de7a11e64d28e5460187ca447710a6bc0d7090fff6000b64802e9fd00200e",
     "method_design_library_path": "/GLOBAL-PUBLICATION/Renderer/Designs/Gen16-2026-10-18/GEN16_C1_NONDERVIATIVE_TYPED_IR_FRESH_OPC_METHOD_DESIGN_2026-10-18.json",
     "method_design_sha256": "3aff37bb6724e31923976f9c866de52c4a633ff23e67f645a6f1cc261d1799ca",
     "new_case_diagnostic_tests": 22,
-    "new_method_id": "DJANGO_C1_SOURCE_ROLE_FIRST_MINIMAL_SUCCESSOR_V1_ATTEMPT_01",
+    "new_method_id": "GEN29_DJANGO_C1_INDEPENDENT_SOURCE_ROLE_FIRST_STATIC_ONLY_ATTEMPT_01",
     "new_target_scope_ids": [
-      "DJANGO_R17R9_SOURCE_SHA256_360ee8a7db0cfead8576b68b768bfa9e0f4038fd9f2892102e801541abc272d5",
-      "DJANGO_R25R7_GENERATOR_FORENSIC_SHA256_646cf341c774953baa99da400ee3aa6e992fbbd8d0af95f36144f72c0fa5980c",
-      "DJANGO_DELTA01_DOCX_SHA256_f38e5dc194023b64dbc2e46b1da92a6f3fadc7460fc3aba0db63b5d23474de38",
-      "DJANGO_DELTA01_PDF_SHA256_c50c77d7cabdc44f5d65f48ab86129571b46662c650342950c7c0e6e5aecd9bb",
-      "SIX_PROVEN_PERSIAN_BODY_ROLE_BYPASS_AND_TWO_ROLE_ADJUDICATIONS",
-      "FOUR_FIXED_WIDTH_SEMANTIC_TABLES_AND_29_RAW_TABLE_RULE_FINDINGS",
-      "FULL_49_RULE_15_ROLE_SEMANTIC_SOURCE_OOXML_REGRESSION",
-      "WORD_MOBILE_ONLY_AND_INDEPENDENT_PDF_NO_WORD_DESKTOP_GATE",
-      "PRESERVE_ALL_EXISTING_ARTIFACTS_NO_FAILED_METHOD_RETRY"
+      "GEN28_INDEPENDENT_METHOD_BOOTSTRAP_STATIC_ONLY_60_MINUTE_SINGLE_ATTEMPT",
+      "GEN28_TABLE_189_SOURCE_ROLE_GEOMETRY_SENSITIVE_LTR",
+      "GEN28_TABLE_4889_SOURCE_ROLE_CODE",
+      "GEN28_TABLE_21023_SOURCE_ROLE_GEOMETRY_SENSITIVE_LTR",
+      "GEN28_TABLE_21417_SOURCE_ROLE_GEOMETRY_SENSITIVE_LTR"
     ],
     "next_action_mode": "MUTATING",
     "no_paid_license_dependency": true,
@@ -81,10 +77,9 @@
       "READ",
       "VERIFY_HASH",
       "READ_ONLY_ANALYSIS",
-      "GAP_MAP",
       "REPORT",
-      "GENERATE_DOCX",
-      "QUALIFY"
+      "GAP_MAP",
+      "REIMPLEMENT"
     ],
     "ppges_adjudication_repository_path": "request/GH1/PPGES_ADOPTION_v2.json",
     "ppges_adjudication_sha256": "070937c71849224941434cae047eb2cc6d7e499c8b6990726f1e33e741839b0f",
@@ -102,18 +97,18 @@
     "required_status_check": "publication-authority",
     "secondary_hardening_ruleset_id": 24939466,
     "selected_action_contract_path": "request/STATE_TRANSITION.json",
-    "selected_engine": "Existing authentic DJANGO_PPGES135_GENERATOR_R25R7.py successor; AppVersion metadata fix only, not a new renderer",
-    "selected_next_action": "GLOBAL_PUBLICATION_DJANGO_C1_SEMANTIC_SUCCESSOR_PILOT_EXECUTE",
+    "selected_engine": "NONE_SELECTED_STATIC_METHOD_CODE_ONLY",
+    "selected_next_action": "GLOBAL_PUBLICATION_GEN28_INDEPENDENT_METHOD_BOOTSTRAP_STATIC_ELIGIBILITY_EXECUTE",
     "source_recovery_scope_repository_path": "request/GH1/SOURCE_RECOVERY_SCOPE_v1.json",
     "source_recovery_scope_sha256": "1afd8ee926833ced215bfef35744f07c1c7211c632ae5bd514b34a6c11c90fcd",
     "standalone_aspose_foss_pdf": "NOT_AVAILABLE",
-    "status": "GEN28_DJANGO_C1_SEMANTIC_SCOPE_SELECTED_FRESH_EXECUTE_REQUIRED",
+    "status": "GEN29_METHOD_BOOTSTRAP_SCOPE_SELECTED_FRESH_EXECUTE_REQUIRED",
     "successful_engineering_tests": 144,
-    "target_private_execution_state_sha256": "c4c19407cdeae50dd7d82dca8020c66d136136e661d1008b71cbe32a947169ea",
-    "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.17_DJANGO_C1_SEMANTIC_SCOPE_2026-10-26.json",
+    "target_private_execution_state_sha256": "11116abe6e14fe8c140bd8476b22ac95beb4338338619ba384cb5ed4300c23e6",
+    "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.18_METHOD_BOOTSTRAP_SCOPE_2026-10-26.json",
     "transition_authorization_is_execution_authorization": false,
-    "transition_authorization_run_id": 40260522501,
-    "transition_authorized_action_id": "GLOBAL_PUBLICATION_DJANGO_C1_SEMANTIC_REMEDIATION_SCOPE_GOVERNANCE_V1",
+    "transition_authorization_run_id": 40322649155,
+    "transition_authorized_action_id": "GLOBAL_PUBLICATION_GEN28_METHOD_BOOTSTRAP_AND_SEMANTIC_BINDINGS_GOVERNANCE_V1",
     "transition_authorized_action_kind": "GOVERNANCE_UPGRADE",
     "transition_authorized_operations": [
       "GOVERNANCE_UPGRADE",
@@ -140,9 +135,20 @@
     "no_original_generator_edit": true,
     "no_failed_method_derivation": true,
     "pdf_independent_qualification_pending": true,
-    "word_mobile_new_sha_pending": true
+    "word_mobile_new_sha_pending": true,
+    "new_selected_action": "GLOBAL_PUBLICATION_GEN28_INDEPENDENT_METHOD_BOOTSTRAP_STATIC_ELIGIBILITY_EXECUTE",
+    "new_selected_action_mode": "MUTATING",
+    "new_method_scope": "INDEPENDENT_CODE_AUTHORING_AND_STATIC_ELIGIBILITY_ONLY_AFTER_FRESH_EXECUTE",
+    "owner_governance_issue": 49,
+    "owner_decisions": {
+      "A": "APPROVE_SCOPE_ONLY",
+      "B_189": "ADOPT",
+      "B_4889": "ADOPT",
+      "B_21023": "ADOPT",
+      "B_21417": "ADOPT"
+    }
   },
-  "generation": 28,
+  "generation": 29,
   "gh1_execution_rule": "GEN24 registers completed GEN23 engineering and selects staged same-SHA Q1. execution_authorized_now is eligibility only; fresh owner EXECUTE on this exact current lock/state/action/two scopes/QUALIFY+EXPORT_PDF remains mandatory. Historical EXECUTE and governance do not authorize future device execution.",
   "ledger_hashes": {
     "blocked_project": [
@@ -369,8 +375,8 @@
       "STATE_TRANSITION"
     ]
   },
-  "previous_public_lock_sha256": "a8922d6c0f08bdce7f3d4073f709b89720580f6f15b1abf4c4bb8bc57332cb2c",
-  "private_execution_state_sha256": "c4c19407cdeae50dd7d82dca8020c66d136136e661d1008b71cbe32a947169ea",
+  "previous_public_lock_sha256": "717d929d9b4d8d5b7513f8d2ec2c81165bc8067c29dff0edc6e1d1bd37b0817a",
+  "private_execution_state_sha256": "11116abe6e14fe8c140bd8476b22ac95beb4338338619ba384cb5ed4300c23e6",
   "schema": "GLOBAL_PUBLICATION_PUBLIC_LOCK/1.2.0",
   "scoped_v2_evidence": {
     "delta_authorized_for_execution": false,
@@ -449,5 +455,48 @@
     "no_word_desktop_required": true,
     "no_original_mutation": true,
     "renderer_qualified": false
+  },
+  "gen29_method_bootstrap_scope": {
+    "governance_authorization_run_id": 40322649155,
+    "owner_issue": 49,
+    "source_proposal_sha256": "8614631e7ba8d738ec421fe0171869c74d4100c45c528ae39e46c6e3258943aa",
+    "decision": "APPROVED_SCOPE_ONLY_NOT_EXECUTE",
+    "code_only": true,
+    "static_only": true,
+    "single_attempt": true,
+    "max_active_minutes": 60,
+    "requires_new_exact_owner_execute": true,
+    "excludes": [
+      "DOCX",
+      "ODT",
+      "PDF",
+      "FIXTURE",
+      "FULL_BOOK",
+      "RUN_GENERATOR",
+      "FAILED_METHOD_RETRY"
+    ],
+    "four_semantic_bindings": [
+      {
+        "publication_block_id": 189,
+        "role": "GEOMETRY_SENSITIVE_LTR"
+      },
+      {
+        "publication_block_id": 4889,
+        "role": "CODE"
+      },
+      {
+        "publication_block_id": 21023,
+        "role": "GEOMETRY_SENSITIVE_LTR"
+      },
+      {
+        "publication_block_id": 21417,
+        "role": "GEOMETRY_SENSITIVE_LTR"
+      }
+    ],
+    "c1_table_001_002_003_override": false,
+    "unresolved_source_tables": 9,
+    "canonical_source_immutable": true,
+    "renderer_qualified": false,
+    "pilot_authorized": false
   }
 }
