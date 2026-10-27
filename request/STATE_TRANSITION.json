@@ -1,13 +1,13 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_STATE_TRANSITION/1.0.0",
-  "transition_id": "GEN30_GEN29_ATTEMPT01_PROVENANCE_UNRESOLVED_CLOSEOUT_2026_10_27",
-  "source_public_lock_sha256": "a79bc5c833c091afe9d1d0ad2c46120762b45cc1e7d7f3030e0babb1f313a667",
-  "target_public_lock_sha256": "c9ffb6f4e45a9edebcb556ac4cadc28f47cee5a8581a7eb34d2520d42ab177c4",
-  "source_private_execution_state_sha256": "11116abe6e14fe8c140bd8476b22ac95beb4338338619ba384cb5ed4300c23e6",
-  "target_private_execution_state_sha256": "e9ba762e97c990296ed177f5b9dd0af85f38d9d1ef9f5703a9fd59411726d4ce",
-  "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.19_GEN29_ATTEMPT01_FORENSIC_CLOSEOUT_2026-10-26.json",
-  "authorization_run_id": "40380596602",
-  "action_id": "GLOBAL_PUBLICATION_GEN29_ATTEMPT01_FORENSIC_CLOSEOUT_GOVERNANCE_V1",
+  "transition_id": "GEN31_GEN30_MOTION_D_SCOPE_SELECTION_2026_10_27",
+  "source_public_lock_sha256": "c9ffb6f4e45a9edebcb556ac4cadc28f47cee5a8581a7eb34d2520d42ab177c4",
+  "target_public_lock_sha256": "5b9fc5c8143dba07e3fc7ef18d82d233a8baf881296d60ab37dfacfca1bfaa59",
+  "source_private_execution_state_sha256": "e9ba762e97c990296ed177f5b9dd0af85f38d9d1ef9f5703a9fd59411726d4ce",
+  "target_private_execution_state_sha256": "b06aae37697bd4a4fa22ed5f059b22156b80ab0b9e29a9d9e7ff43272fdc7da6",
+  "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.20_GEN31_MOTION_D_SCOPE_SELECTION_2026-10-27.json",
+  "authorization_run_id": "40456307105",
+  "action_id": "GLOBAL_PUBLICATION_GEN30_ATTEMPT_LEDGER_HARDENING_SCOPE_SELECTION",
   "action_kind": "GOVERNANCE_UPGRADE",
   "project": "GLOBAL",
   "operations": [
@@ -16,20 +16,20 @@
     "STATE_TRANSITION"
   ],
   "target_scope_ids": [
-    "GEN29_ATTEMPT01_CONSUMED_CLOSED_FORENSIC_ONLY",
-    "GEN29_ATTEMPT01_ARTIFACT_A_SHA256_E9BEAC22BC45390571B594D887EC9124122DB1DBB98F9BF4FD732497E6E207BA",
-    "GEN29_ATTEMPT01_ARTIFACT_B_SHA256_9D9DD5B431C85F29A10E98029A07BEA12DA4D811E989BCD9E2CBF27DF7423F74",
-    "GEN29_ATTEMPT01_NO_CANDIDATE_PILOT_NO_METHOD_FAIL",
-    "GEN29_PRESERVE_FOUR_C1_BINDINGS_AND_PRIOR_LEDGER"
+    "GEN30_MOTION_D_SCOPE_SELECTION_ONLY",
+    "GEN30_ATTEMPT_UNIQUENESS_AND_AUTHORIZATION_CONSUMPTION_CONTRACT",
+    "GEN30_IMMUTABLE_CLOSURE_AND_REPLAY_NEGATIVE_TEST_PLAN",
+    "GEN30_PRESERVE_ALL_HISTORICAL_LEDGER_AND_C1",
+    "GEN30_NO_CODE_RENDERER_BUILD_PILOT_OR_ACTIVATION"
   ],
-  "selected_next_action_id": "GLOBAL_PUBLICATION_GEN30_ATTEMPT01_CLOSURE_VERIFICATION_READ_ONLY",
+  "owner_issue_number": 53,
+  "owner_vote": "APPROVE_SCOPE_ONLY",
+  "selected_next_action_id": "GLOBAL_PUBLICATION_GEN31_ATTEMPT_LEDGER_HARDENING_IMPLEMENTATION_ELIGIBILITY_READ_ONLY",
   "selected_next_action_mode": "READ_ONLY",
-  "status": "GOVERNANCE_FORENSIC_CLOSEOUT_ONLY",
-  "final_candidate_sha256": null,
-  "owner_execute_consumed_run_id": 40329927057,
-  "method_fail_asserted": false,
+  "status": "MOTION_D_SCOPE_SELECTED_ONLY",
+  "gate_hardening_implemented": false,
+  "implementation_authorized": false,
   "pilot_authorized": false,
-  "source_preserved": true,
-  "renderer_qualified": false,
-  "gate_runtime_hardening_permitted_or_implemented": false
+  "gen29_receipt_preserved": true,
+  "source_preserved": true
 }
