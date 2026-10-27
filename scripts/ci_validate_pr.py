@@ -18,6 +18,33 @@ PROTECTED_RUNTIME_FILES={".github/CODEOWNERS","README.md"}
 READONLY_CHANGE_PREFIXES=("reports/","request/")
 MUTATING_OPS={"BUILD","PATCH","RENDER","EXPORT_PDF","GENERATE_DOCX","GENERATE_PDF","PROMOTE","QUALIFY","WRITE_CURRENT","UPDATE_POINTER","SOURCE_REBUILD","REQUALIFY","REIMPLEMENT","DELETE","MOVE","RENAME","UPLOAD_OFFICIAL","STATE_TRANSITION","AUTHORITY_UPDATE","ACTIVATE_BACKEND","SET_NEXT_ACTION","GOVERNANCE_UPGRADE"}
 
+
+# Motion F intentionally excludes workflow, renderer, documents and state promotion.
+MOTION_F_ACTION="GLOBAL_PUBLICATION_GEN32_MOTION_F_TRUSTED_GATE_IMPLEMENTATION_AND_TESTS"
+MOTION_F_CODE_FILES={
+    "gate/publication_gate.py","gate/transition_guard.py",
+    "scripts/ci_validate_pr.py","scripts/selftest.py"
+}
+MOTION_F_ALLOWED_CHANGES=MOTION_F_CODE_FILES|{"request/ACTION_REQUEST.json"}
+
+def validate_motion_f_changed_paths(changes,request,base_lock):
+    if request.get("requested_action_id")!=MOTION_F_ACTION:
+        return []
+    reasons=[]
+    if request.get("action_kind")!="GOVERNANCE_UPGRADE":
+        reasons.append("MOTION_F_REQUIRES_GOVERNANCE_UPGRADE")
+    if set(changes)-MOTION_F_ALLOWED_CHANGES:
+        reasons.append("MOTION_F_FILE_ALLOWLIST_VIOLATION:"+",".join(sorted(set(changes)-MOTION_F_ALLOWED_CHANGES)))
+    if not MOTION_F_CODE_FILES.issubset(set(request.get("target_scope_ids") or [])):
+        reasons.append("MOTION_F_CODE_SCOPE_INCOMPLETE")
+    if set(request.get("operations") or [])!={"GOVERNANCE_UPGRADE","PATCH"}:
+        reasons.append("MOTION_F_OPERATIONS_NOT_EXACT")
+    if base_lock.get("generation")!=32:
+        reasons.append("MOTION_F_BASE_GENERATION_NOT_32")
+    if base_lock.get("current_action",{}).get("mode")!="READ_ONLY":
+        reasons.append("MOTION_F_UNEXPECTED_BASE_ACTION_MODE")
+    return reasons
+
 def sha(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 def tree(root):
@@ -139,6 +166,8 @@ def main():
         gres=gate_validate(base/LOCK,base/SIDE,head/REQ,auth)
         print(json.dumps(gres,indent=2))
         if gres["status"]!="ALLOW": reasons += ["GATE:"+x for x in gres.get("reasons",[])]
+
+    reasons += validate_motion_f_changed_paths(changes,req,load_json(base/LOCK))
 
     runtime_changed=[p for p in changes if p in PROTECTED_RUNTIME_FILES or p.startswith(PROTECTED_RUNTIME_PREFIXES)]
     if runtime_changed and req.get("action_kind")!="GOVERNANCE_UPGRADE":
