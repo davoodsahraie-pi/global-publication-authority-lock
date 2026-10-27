@@ -1,9 +1,9 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "gen31-motion-d-scope-selection-2026-10-27",
-  "input_public_lock_sha256": "c9ffb6f4e45a9edebcb556ac4cadc28f47cee5a8581a7eb34d2520d42ab177c4",
-  "input_private_state_sha256": "e9ba762e97c990296ed177f5b9dd0af85f38d9d1ef9f5703a9fd59411726d4ce",
-  "requested_action_id": "GLOBAL_PUBLICATION_GEN30_ATTEMPT_LEDGER_HARDENING_SCOPE_SELECTION",
+  "request_id": "gen32-motion-e-scope-selection-2026-10-27",
+  "input_public_lock_sha256": "5b9fc5c8143dba07e3fc7ef18d82d233a8baf881296d60ab37dfacfca1bfaa59",
+  "input_private_state_sha256": "b06aae37697bd4a4fa22ed5f059b22156b80ab0b9e29a9d9e7ff43272fdc7da6",
+  "requested_action_id": "GLOBAL_PUBLICATION_GEN31_MOTION_E_GATE_IMPLEMENTATION_SELECTION",
   "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "MUTATING",
   "project": "GLOBAL",
@@ -13,12 +13,12 @@
     "STATE_TRANSITION"
   ],
   "target_scope_ids": [
-    "GEN30_MOTION_D_SCOPE_SELECTION_ONLY",
-    "GEN30_ATTEMPT_UNIQUENESS_AND_AUTHORIZATION_CONSUMPTION_CONTRACT",
-    "GEN30_IMMUTABLE_CLOSURE_AND_REPLAY_NEGATIVE_TEST_PLAN",
-    "GEN30_PRESERVE_ALL_HISTORICAL_LEDGER_AND_C1",
-    "GEN30_NO_CODE_RENDERER_BUILD_PILOT_OR_ACTIVATION"
+    "GEN31_MOTION_E_SELECTION_ONLY",
+    "GEN31_ATTEMPT_UNIQUENESS_AND_RUN_CONSUMPTION",
+    "GEN31_IMMUTABLE_CLOSURE_AND_GEN29_RECEIPT_PRESERVATION",
+    "GEN31_GATE_TESTS_A01_A17_T18_T21",
+    "GEN31_NO_GATE_CODE_OR_RENDERER_IN_SELECTION_TRANSITION"
   ],
-  "authorization_run_id": "40456307105",
+  "authorization_run_id": "40501663727",
   "user_explicit_authorization": true
 }

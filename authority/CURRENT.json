@@ -1,6 +1,6 @@
 {
   "current_action": {
-    "id": "GLOBAL_PUBLICATION_GEN31_ATTEMPT_LEDGER_HARDENING_IMPLEMENTATION_ELIGIBILITY_READ_ONLY",
+    "id": "GLOBAL_PUBLICATION_GEN32_ATTEMPT_LEDGER_HARDENING_IMPLEMENTATION_AUTHORIZATION_GATE_READ_ONLY",
     "mode": "READ_ONLY"
   },
   "execution_authorized_now": false,
@@ -50,7 +50,7 @@
     "gen20_failed_docx_sha256": "189c57eb9ed74f850407bbae2918da0af3b53f8ccfe55adff2f586c3664cda3b",
     "gen20_failure_evidence_library_path": "/GLOBAL-PUBLICATION/Renderer/Qualification/Gen20-Docx4j-Failure-2026-10-22/GEN20_DOCX4J_FAILURE_CLOSEOUT_READONLY_20261022.zip",
     "gen20_failure_evidence_sha256": "27c05b7be7ffdd680fd5dd6f4301500bedcc9983fb15c0b86d490fefa84dbfec",
-    "governance_authorization_run_id": 40456307105,
+    "governance_authorization_run_id": 40501663727,
     "governance_transition_source_private_sha256": "11116abe6e14fe8c140bd8476b22ac95beb4338338619ba384cb5ed4300c23e6",
     "governance_transition_target_private_sha256": "e9ba762e97c990296ed177f5b9dd0af85f38d9d1ef9f5703a9fd59411726d4ce",
     "manual_authorization_run_id": "38282330106",
@@ -91,11 +91,11 @@
     "secondary_hardening_ruleset_id": 24939466,
     "selected_action_contract_path": "request/STATE_TRANSITION.json",
     "selected_engine": "NONE_SELECTED_STATIC_METHOD_CODE_ONLY",
-    "selected_next_action": "GLOBAL_PUBLICATION_GEN31_ATTEMPT_LEDGER_HARDENING_IMPLEMENTATION_ELIGIBILITY_READ_ONLY",
+    "selected_next_action": "GLOBAL_PUBLICATION_GEN32_ATTEMPT_LEDGER_HARDENING_IMPLEMENTATION_AUTHORIZATION_GATE_READ_ONLY",
     "source_recovery_scope_repository_path": "request/GH1/SOURCE_RECOVERY_SCOPE_v1.json",
     "source_recovery_scope_sha256": "1afd8ee926833ced215bfef35744f07c1c7211c632ae5bd514b34a6c11c90fcd",
     "standalone_aspose_foss_pdf": "NOT_AVAILABLE",
-    "status": "GEN31_MOTION_D_SCOPE_SELECTED_IMPLEMENTATION_NOT_AUTHORIZED",
+    "status": "GEN32_MOTION_E_SCOPE_SELECTED_FUTURE_GATE_CODE_AUTHORIZATION_REQUIRED",
     "successful_engineering_tests": 144,
     "target_private_execution_state_sha256": "e9ba762e97c990296ed177f5b9dd0af85f38d9d1ef9f5703a9fd59411726d4ce",
     "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.19_GEN29_ATTEMPT01_FORENSIC_CLOSEOUT_2026-10-26.json",
@@ -147,9 +147,9 @@
     "old_execute_authorization_reusable": false,
     "no_new_execution_authorized": true,
     "new_method_selected": false,
-    "scope": "GEN31_ATTEMPT_LEDGER_HARDENING_SCOPE_ONLY_NO_CODE",
+    "scope": "GEN32_MOTION_E_GATE_HARDENING_IMPLEMENTATION_SELECTION_ONLY_NO_CODE",
     "selected_next_action_mode": "READ_ONLY",
-    "latest_governance_run_id": 40456307105,
+    "latest_governance_run_id": 40501663727,
     "governance_transition_authorization_run_id": 40456307105,
     "proposal_sha256": "338ddffa932a2f94f32fe840f4454cf5a6600c22c0d6f0c3272073e487a41a38",
     "target_scope_ids": [
@@ -161,7 +161,7 @@
     ],
     "new_execution_authorization": false
   },
-  "generation": 31,
+  "generation": 32,
   "gh1_execution_rule": "GEN24 registers completed GEN23 engineering and selects staged same-SHA Q1. execution_authorized_now is eligibility only; fresh owner EXECUTE on this exact current lock/state/action/two scopes/QUALIFY+EXPORT_PDF remains mandatory. Historical EXECUTE and governance do not authorize future device execution.",
   "ledger_hashes": {
     "blocked_project": [
@@ -388,8 +388,8 @@
       "STATE_TRANSITION"
     ]
   },
-  "previous_public_lock_sha256": "c9ffb6f4e45a9edebcb556ac4cadc28f47cee5a8581a7eb34d2520d42ab177c4",
-  "private_execution_state_sha256": "b06aae37697bd4a4fa22ed5f059b22156b80ab0b9e29a9d9e7ff43272fdc7da6",
+  "previous_public_lock_sha256": "5b9fc5c8143dba07e3fc7ef18d82d233a8baf881296d60ab37dfacfca1bfaa59",
+  "private_execution_state_sha256": "dfe3488ff09feba990938953c0caab822a01b90c32cc687d11c08f80d0818ed1",
   "schema": "GLOBAL_PUBLICATION_PUBLIC_LOCK/1.2.0",
   "scoped_v2_evidence": {
     "delta_authorized_for_execution": false,
@@ -564,6 +564,41 @@
     "historical_exec_40329927057_consumed": true,
     "final_candidate_sha256": null,
     "next_action_id": "GLOBAL_PUBLICATION_GEN31_ATTEMPT_LEDGER_HARDENING_IMPLEMENTATION_ELIGIBILITY_READ_ONLY",
+    "next_action_mode": "READ_ONLY"
+  },
+  "gen32_motion_e_gate_implementation_scope_selection_receipt": {
+    "schema": "GLOBAL_PUBLICATION_SCOPE_SELECTION_RECEIPT/1.0.0",
+    "origin_generation": 31,
+    "target_generation": 32,
+    "owner_issue": 53,
+    "owner_vote": "APPROVE_GOVERNANCE_IMPLEMENTATION_SCOPE_ONLY",
+    "owner_authorization_run_id": 40501663727,
+    "selected_action_id": "GLOBAL_PUBLICATION_GEN31_MOTION_E_GATE_IMPLEMENTATION_SELECTION",
+    "source_public_sha256": "5b9fc5c8143dba07e3fc7ef18d82d233a8baf881296d60ab37dfacfca1bfaa59",
+    "source_private_sha256": "b06aae37697bd4a4fa22ed5f059b22156b80ab0b9e29a9d9e7ff43272fdc7da6",
+    "target_private_state_sha256": "dfe3488ff09feba990938953c0caab822a01b90c32cc687d11c08f80d0818ed1",
+    "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.21_GEN32_MOTION_E_SELECTION_2026-10-27.json",
+    "authorized_operations": [
+      "GOVERNANCE_UPGRADE",
+      "AUTHORITY_UPDATE",
+      "STATE_TRANSITION"
+    ],
+    "authorized_scope_ids": [
+      "GEN31_MOTION_E_SELECTION_ONLY",
+      "GEN31_ATTEMPT_UNIQUENESS_AND_RUN_CONSUMPTION",
+      "GEN31_IMMUTABLE_CLOSURE_AND_GEN29_RECEIPT_PRESERVATION",
+      "GEN31_GATE_TESTS_A01_A17_T18_T21",
+      "GEN31_NO_GATE_CODE_OR_RENDERER_IN_SELECTION_TRANSITION"
+    ],
+    "scope_status": "SELECTED_ONLY_FUTURE_INDEPENDENT_CODE_AUTHORIZATION_REQUIRED",
+    "gate_hardening_implemented": false,
+    "runtime_gate_activation_verified": false,
+    "implementation_authorized": false,
+    "pilot_authorized": false,
+    "final_candidate_sha256": null,
+    "historical_gen29_attempt01_receipt_preserved": true,
+    "historical_exec_40329927057_consumed": true,
+    "next_action_id": "GLOBAL_PUBLICATION_GEN32_ATTEMPT_LEDGER_HARDENING_IMPLEMENTATION_AUTHORIZATION_GATE_READ_ONLY",
     "next_action_mode": "READ_ONLY"
   }
 }
