@@ -26,7 +26,7 @@ def attempt_snapshot(events):
             raise ValueError("ATTEMPT_KEY_INVALID")
         run=str(event.get("owner_authorization_run_id") or "")
         pin=event.get("reservation_source_public_sha256")
-        if not run.isdigit() or len(pin or "")!=64 or any(c not in "0123456789abcdef" for c in pin):
+        if not run.isdigit() or not isinstance(pin,str) or len(pin)!=64 or any(c not in "0123456789abcdef" for c in pin):
             raise ValueError("ATTEMPT_PROVENANCE_INVALID")
         if run==HISTORICAL_GEN29_RUN or key[2]=="GEN29_ATTEMPT_01":
             raise ValueError("HISTORICAL_GEN29_ALREADY_CONSUMED")
@@ -86,7 +86,7 @@ def audit_attempt_transition(cur,prop,request,cur_sha):
     except ValueError as exc:
         reasons.append(str(exc))
         return sorted(set(reasons))
-    if len(after)==len(before):
+    if len(after)<=len(before):
         return sorted(set(reasons))
     event=after[-1]
     if event.get("event")=="RESERVE" and event.get("reservation_source_public_sha256")!=cur_sha:
