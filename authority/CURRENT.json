@@ -1,6 +1,6 @@
 {
   "current_action": {
-    "id": "GLOBAL_PUBLICATION_GEN30_ATTEMPT01_CLOSURE_VERIFICATION_READ_ONLY",
+    "id": "GLOBAL_PUBLICATION_GEN31_ATTEMPT_LEDGER_HARDENING_DESIGN_READ_ONLY",
     "mode": "READ_ONLY"
   },
   "execution_authorized_now": false,
@@ -50,7 +50,7 @@
     "gen20_failed_docx_sha256": "189c57eb9ed74f850407bbae2918da0af3b53f8ccfe55adff2f586c3664cda3b",
     "gen20_failure_evidence_library_path": "/GLOBAL-PUBLICATION/Renderer/Qualification/Gen20-Docx4j-Failure-2026-10-22/GEN20_DOCX4J_FAILURE_CLOSEOUT_READONLY_20261022.zip",
     "gen20_failure_evidence_sha256": "27c05b7be7ffdd680fd5dd6f4301500bedcc9983fb15c0b86d490fefa84dbfec",
-    "governance_authorization_run_id": 40380596602,
+    "governance_authorization_run_id": 40456307105,
     "governance_transition_source_private_sha256": "11116abe6e14fe8c140bd8476b22ac95beb4338338619ba384cb5ed4300c23e6",
     "governance_transition_target_private_sha256": "e9ba762e97c990296ed177f5b9dd0af85f38d9d1ef9f5703a9fd59411726d4ce",
     "manual_authorization_run_id": "38282330106",
@@ -91,11 +91,11 @@
     "secondary_hardening_ruleset_id": 24939466,
     "selected_action_contract_path": "request/STATE_TRANSITION.json",
     "selected_engine": "NONE_SELECTED_STATIC_METHOD_CODE_ONLY",
-    "selected_next_action": "GLOBAL_PUBLICATION_GEN30_ATTEMPT01_CLOSURE_VERIFICATION_READ_ONLY",
+    "selected_next_action": "GLOBAL_PUBLICATION_GEN31_ATTEMPT_LEDGER_HARDENING_DESIGN_READ_ONLY",
     "source_recovery_scope_repository_path": "request/GH1/SOURCE_RECOVERY_SCOPE_v1.json",
     "source_recovery_scope_sha256": "1afd8ee926833ced215bfef35744f07c1c7211c632ae5bd514b34a6c11c90fcd",
     "standalone_aspose_foss_pdf": "NOT_AVAILABLE",
-    "status": "GEN30_ATTEMPT01_PROVENANCE_UNRESOLVED_CLOSED_NO_METHOD_PILOT",
+    "status": "GEN31_MOTION_D_SCOPE_SELECTED_DESIGN_ONLY",
     "successful_engineering_tests": 144,
     "target_private_execution_state_sha256": "e9ba762e97c990296ed177f5b9dd0af85f38d9d1ef9f5703a9fd59411726d4ce",
     "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.19_GEN29_ATTEMPT01_FORENSIC_CLOSEOUT_2026-10-26.json",
@@ -148,7 +148,7 @@
     "no_new_execution_authorized": true,
     "new_method_selected": false
   },
-  "generation": 30,
+  "generation": 31,
   "gh1_execution_rule": "GEN24 registers completed GEN23 engineering and selects staged same-SHA Q1. execution_authorized_now is eligibility only; fresh owner EXECUTE on this exact current lock/state/action/two scopes/QUALIFY+EXPORT_PDF remains mandatory. Historical EXECUTE and governance do not authorize future device execution.",
   "ledger_hashes": {
     "blocked_project": [
@@ -375,8 +375,8 @@
       "STATE_TRANSITION"
     ]
   },
-  "previous_public_lock_sha256": "a79bc5c833c091afe9d1d0ad2c46120762b45cc1e7d7f3030e0babb1f313a667",
-  "private_execution_state_sha256": "e9ba762e97c990296ed177f5b9dd0af85f38d9d1ef9f5703a9fd59411726d4ce",
+  "previous_public_lock_sha256": "c9ffb6f4e45a9edebcb556ac4cadc28f47cee5a8581a7eb34d2520d42ab177c4",
+  "private_execution_state_sha256": "ccf4ce0cf44dd2c0d482fa135948f1ab27e1be10dab8b37f471130a9549ccf6f",
   "schema": "GLOBAL_PUBLICATION_PUBLIC_LOCK/1.2.0",
   "scoped_v2_evidence": {
     "delta_authorized_for_execution": false,
@@ -516,5 +516,16 @@
     "artifact_B_sha256": "9d9dd5b431c85f29a10e98029a07bea12da4d811e989bcd9e2cbf27df7423f74",
     "immutability": "NO_REOPEN_NO_PATCH_NO_RETRY_NO_ACCEPTED_CANDIDATE",
     "gate_hardening_implemented": false
+  },
+  "motion_d_attempt_ledger_scope_selection": {
+    "schema": "GLOBAL_PUBLICATION_MOTION_D_SCOPE_SELECTION/1.0.0",
+    "source_generation": 30,
+    "owner_issue": 53,
+    "owner_authorization_run": 40456307105,
+    "technical_proposal_sha256": "338ddffa932a2f94f32fe840f4454cf5a6600c22c0d6f0c3272073e487a41a38",
+    "selected_scope": "SCOPE_ONLY_NO_RUNTIME_MUTATION",
+    "new_gate_active": false,
+    "code_change_authorized": false,
+    "final_candidate_authorized": false
   }
 }
