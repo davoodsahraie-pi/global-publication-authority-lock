@@ -11,6 +11,14 @@ def load(p): return json.loads(Path(p).read_text(encoding="utf-8"))
 EVENT_SCHEMA="GLOBAL_PUBLICATION_ATTEMPT_EVENT/1.0.0"
 ATTEMPT_EVENTS=("RESERVE","START","CLOSE")
 HISTORICAL_GEN29_RUN="40329927057"
+# A START/CLOSE event must consume its own distinct authorization Run.
+# A reserved Run must never be reused as the START or CLOSE authorization.
+def run_id(value):
+    return value if isinstance(value,str) and value.isdigit() and value!="" else None
+
+def executor_id(value):
+    return isinstance(value,str) and value.strip()!="" and len(value)<=256
+
 
 def attempt_snapshot(events):
     """Replay immutable events; raise ValueError on any ambiguous or replayed identity."""
@@ -35,7 +43,8 @@ def attempt_snapshot(events):
             if run in runs: raise ValueError("AUTHORIZATION_RUN_ALREADY_RESERVED")
             if event.get("candidate_sha256") is not None:
                 raise ValueError("RESERVATION_HAS_CANDIDATE")
-            attempts[key]={"state":"RESERVED","run":run,"source":pin,"candidate":None}
+            attempts[key]={"state":"RESERVED","run":run,"source":pin,
+                           "candidate":None,"claim_run":None,"executor":None}
             runs[run]=key
         else:
             if key not in attempts: raise ValueError("UNRESERVED_ATTEMPT")
@@ -44,19 +53,35 @@ def attempt_snapshot(events):
                 raise ValueError("ATTEMPT_PROVENANCE_CHANGED")
             if existing["state"]=="CLOSED":
                 raise ValueError("CLOSED_ATTEMPT_REOPEN_OR_REPLAY")
+            claim=run_id(event.get("event_authorization_run_id"))
+            if claim is None: raise ValueError("ATTEMPT_EVENT_AUTH_RUN_INVALID")
+            if claim in runs or claim==HISTORICAL_GEN29_RUN:
+                raise ValueError("AUTHORIZATION_RUN_ALREADY_CONSUMED")
             if typ=="START":
                 if existing["state"]!="RESERVED": raise ValueError("ATTEMPT_START_REPLAY")
                 if event.get("candidate_sha256") is not None:
                     raise ValueError("START_HAS_CANDIDATE")
+                if not executor_id(event.get("executor_id")):
+                    raise ValueError("START_EXECUTOR_ID_REQUIRED")
                 existing["state"]="ACTIVE"
+                existing["claim_run"]=claim
+                existing["executor"]=event["executor_id"]
             elif typ=="CLOSE":
                 if existing["state"] not in {"RESERVED","ACTIVE"}:
                     raise ValueError("ATTEMPT_CLOSE_INVALID_STATE")
+                if existing["state"]=="ACTIVE":
+                    if event.get("executor_id")!=existing["executor"]:
+                        raise ValueError("ATTEMPT_EXECUTOR_ID_CHANGED")
+                elif event.get("executor_id") is not None:
+                    raise ValueError("UNSTARTED_CLOSE_HAS_EXECUTOR")
                 cand=event.get("candidate_sha256")
                 if cand is not None and (not isinstance(cand,str) or len(cand)!=64 or any(c not in "0123456789abcdef" for c in cand)):
                     raise ValueError("CANDIDATE_SHA_INVALID")
+                if existing["state"]=="RESERVED" and cand is not None:
+                    raise ValueError("UNSTARTED_ATTEMPT_HAS_CANDIDATE")
                 existing["state"]="CLOSED"
                 existing["candidate"]=cand
+            runs[claim]=key
     return attempts,runs
 
 def audit_attempt_transition(cur,prop,request,cur_sha):
@@ -104,12 +129,22 @@ def audit_attempt_transition(cur,prop,request,cur_sha):
     if event.get("event")=="RESERVE" and run!=str(event.get("owner_authorization_run_id")):
         reasons.append("RESERVATION_OWNER_RUN_MISMATCH")
     if event.get("event")!="RESERVE":
+        if run!=event.get("event_authorization_run_id"):
+            reasons.append("ATTEMPT_EVENT_AUTH_RUN_MISMATCH")
+        if run in before_runs:
+            reasons.append("AUTHORIZATION_RUN_ALREADY_CONSUMED")
         first=before_attempts.get(tuple(event.get(k) for k in ("project_id","method_id","attempt_id")))
         if first is None: reasons.append("ATTEMPT_EVENT_NOT_PREVIOUSLY_RESERVED")
         elif str(event.get("owner_authorization_run_id"))!=first["run"]:
             reasons.append("ATTEMPT_OWNER_RUN_CHANGED")
     if request.get("input_public_lock_sha256")!=cur_sha:
         reasons.append("ATTEMPT_EVENT_REQUEST_SOURCE_SHA_MISMATCH")
+    if event.get("event")=="START":
+        if event.get("executor_id")!=request.get("executor_id"):
+            reasons.append("ATTEMPT_EXECUTOR_REQUEST_MISMATCH")
+    if event.get("event")=="CLOSE":
+        if event.get("executor_id")!=request.get("executor_id"):
+            reasons.append("ATTEMPT_EXECUTOR_REQUEST_MISMATCH")
     return sorted(set(reasons))
 
 def validate_transition(current_path, proposed_path, request):
