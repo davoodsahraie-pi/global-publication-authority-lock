@@ -73,6 +73,11 @@ def audit_attempt_transition(cur,prop,request,cur_sha):
                  "gen32_motion_e_gate_implementation_scope_selection_receipt"):
         if cur.get(name)!=prop.get(name):
             reasons.append("HISTORICAL_RECEIPT_MUTATED:"+name)
+    # The implementation PR never qualifies its own deployment.
+    if prop.get("runtime_gate_activation_verified") is True and cur.get("runtime_gate_activation_verified") is not True:
+        reasons.append("ACTIVATION_REQUIRES_INDEPENDENT_TRUSTED_BASE_PROOF")
+    if prop.get("gate_hardening_implemented") is True and cur.get("gate_hardening_implemented") is not True:
+        reasons.append("IMPLEMENTATION_STATUS_REQUIRES_POST_MERGE_PROOF")
     if len(after)>len(before)+1:
         reasons.append("MULTIPLE_ATTEMPT_EVENTS_IN_ONE_TRANSITION")
     try:
