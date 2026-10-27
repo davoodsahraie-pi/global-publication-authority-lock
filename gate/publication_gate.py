@@ -76,11 +76,14 @@ def validate(lock_path, sidecar_path, request_path, authorization=None):
     # Gate deployment does not create reservations retroactively.  All future
     # mutating EXECUTE attempts must have a protected, unspent reservation.
     try:
-        attempt_state, reserved_runs=attempt_snapshot(state.get("attempt_ledger",[]))
+        attempt_state, used_runs=attempt_snapshot(state.get("attempt_ledger",[]))
     except ValueError as exc:
         reasons.append("ATTEMPT_LEDGER_INVALID:"+str(exc))
-        attempt_state={}
+        attempt_state={}; used_runs={}
     if action_kind=="EXECUTE" and mutating:
+        # A successful preflight cannot consume a Run. Execution must be
+        # delegated to a future separately authorized, one-use broker.
+        reasons.append("EXECUTE_REQUIRES_DURABLE_ONE_USE_DISPATCH_RECEIPT")
         attempt_id=req.get("attempt_id")
         method_id=req.get("method_id")
         if not attempt_id or not method_id:
@@ -90,10 +93,12 @@ def validate(lock_path, sidecar_path, request_path, authorization=None):
             record=attempt_state.get(key)
             if not record:
                 reasons.append("EXECUTE_REQUIRES_RESERVED_ATTEMPT")
-            elif record["state"]!="RESERVED":
-                reasons.append("EXECUTE_ATTEMPT_ALREADY_STARTED_OR_CLOSED")
-            elif str(req.get("authorization_run_id"))==record["run"]:
-                reasons.append("RESERVATION_AUTHORIZATION_RUN_REUSE_FOR_EXECUTE")
+            elif record["state"]!="ACTIVE":
+                reasons.append("EXECUTE_REQUIRES_COMMITTED_START_CLAIM")
+            elif str(req.get("authorization_run_id"))!=record["claim_run"]:
+                reasons.append("EXECUTE_AUTH_RUN_NOT_CLAIM_OWNER")
+            elif req.get("executor_id")!=record["executor"]:
+                reasons.append("EXECUTE_EXECUTOR_ID_MISMATCH")
 
     project=req.get("project") or ""
     method=req.get("method_id") or ""
