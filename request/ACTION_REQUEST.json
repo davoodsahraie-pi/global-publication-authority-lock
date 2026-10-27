@@ -1,7 +1,7 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "gen32-ci-recovery01-trusted-base-postmerge-proof-2026-10-27",
-  "input_public_lock_sha256": "6870614362a1d090f4694d5f9de035ef4922ec5161707e7b9f83b82431ad64d9",
+  "request_id": "gen32-ci-recovery01-negative-stale-public-sha-2026-10-27",
+  "input_public_lock_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
   "input_private_state_sha256": "dfe3488ff09feba990938953c0caab822a01b90c32cc687d11c08f80d0818ed1",
   "requested_action_id": "GLOBAL_PUBLICATION_GEN32_ATTEMPT_LEDGER_HARDENING_IMPLEMENTATION_AUTHORIZATION_GATE_READ_ONLY",
   "action_kind": "EXECUTE",
