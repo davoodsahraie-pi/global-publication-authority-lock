@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import hashlib, json
 from pathlib import Path
+from transition_guard import attempt_snapshot
 
 READ_ONLY_OPS={"READ","VERIFY_HASH","READ_ONLY_ANALYSIS","REPORT","GAP_MAP","VERIFY_BACKEND"}
 MUTATING_OPS={"BUILD","PATCH","RENDER","EXPORT_PDF","GENERATE_DOCX","GENERATE_PDF","PROMOTE","QUALIFY","WRITE_CURRENT","UPDATE_POINTER","SOURCE_REBUILD","REQUALIFY","REIMPLEMENT","DELETE","MOVE","RENAME","UPLOAD_OFFICIAL","STATE_TRANSITION","AUTHORITY_UPDATE","ACTIVATE_BACKEND","SET_NEXT_ACTION","GOVERNANCE_UPGRADE"}
@@ -32,6 +33,11 @@ def validate_authorization(auth, request, lock_sha, private_sha):
     if sorted(auth.get("operations") or [])!=sorted(norm_ops(request.get("operations"))): reasons.append("AUTH_OPERATIONS_MISMATCH")
     if sorted(auth.get("target_scope_ids") or [])!=sorted(request.get("target_scope_ids") or []): reasons.append("AUTH_TARGET_SCOPE_MISMATCH")
     if auth.get("manual_workflow") is not True: reasons.append("AUTH_NOT_MANUAL_WORKFLOW")
+    # A manual authorization artifact belongs to exactly its submitted Run.
+    if str(auth.get("github_run_id") or "")!=str(request.get("authorization_run_id") or ""):
+        reasons.append("AUTHORIZATION_RUN_ID_MISMATCH")
+    if str(auth.get("authorization_id") or "")!=str(request.get("authorization_run_id") or ""):
+        reasons.append("AUTHORIZATION_ID_MISMATCH")
     return reasons
 
 def validate(lock_path, sidecar_path, request_path, authorization=None):
@@ -66,6 +72,28 @@ def validate(lock_path, sidecar_path, request_path, authorization=None):
         if mutating:
             if state.get("execution_authorized_now") is not True: reasons.append("PUBLIC_LOCK_DOES_NOT_AUTHORIZE_MUTATING_EXECUTION_NOW")
             reasons += validate_authorization(authorization,req,lock_sha,private_sha)
+
+    # Gate deployment does not create reservations retroactively.  All future
+    # mutating EXECUTE attempts must have a protected, unspent reservation.
+    try:
+        attempt_state, reserved_runs=attempt_snapshot(state.get("attempt_ledger",[]))
+    except ValueError as exc:
+        reasons.append("ATTEMPT_LEDGER_INVALID:"+str(exc))
+        attempt_state={}
+    if action_kind=="EXECUTE" and mutating:
+        attempt_id=req.get("attempt_id")
+        method_id=req.get("method_id")
+        if not attempt_id or not method_id:
+            reasons.append("ATTEMPT_ID_AND_METHOD_REQUIRED")
+        else:
+            key=(req.get("project"),method_id,attempt_id)
+            record=attempt_state.get(key)
+            if not record:
+                reasons.append("EXECUTE_REQUIRES_RESERVED_ATTEMPT")
+            elif record["state"]!="RESERVED":
+                reasons.append("EXECUTE_ATTEMPT_ALREADY_STARTED_OR_CLOSED")
+            elif str(req.get("authorization_run_id"))==record["run"]:
+                reasons.append("RESERVATION_AUTHORIZATION_RUN_REUSE_FOR_EXECUTE")
 
     project=req.get("project") or ""
     method=req.get("method_id") or ""

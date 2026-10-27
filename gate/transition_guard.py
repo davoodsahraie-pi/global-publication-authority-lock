@@ -5,6 +5,113 @@ from pathlib import Path
 def sha_file(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def load(p): return json.loads(Path(p).read_text(encoding="utf-8"))
 
+
+# Motion F: public-lock append-only Attempt event ledger.
+# No historical receipts are migrated or synthesized into new reservations.
+EVENT_SCHEMA="GLOBAL_PUBLICATION_ATTEMPT_EVENT/1.0.0"
+ATTEMPT_EVENTS=("RESERVE","START","CLOSE")
+HISTORICAL_GEN29_RUN="40329927057"
+
+def attempt_snapshot(events):
+    """Replay immutable events; raise ValueError on any ambiguous or replayed identity."""
+    attempts={}; runs={}
+    if not isinstance(events,list): raise ValueError("ATTEMPT_LEDGER_NOT_LIST")
+    for event in events:
+        if not isinstance(event,dict) or event.get("schema")!=EVENT_SCHEMA:
+            raise ValueError("ATTEMPT_EVENT_SCHEMA_INVALID")
+        typ=event.get("event")
+        if typ not in ATTEMPT_EVENTS: raise ValueError("ATTEMPT_EVENT_TYPE_INVALID")
+        key=tuple(event.get(k) for k in ("project_id","method_id","attempt_id"))
+        if not all(isinstance(x,str) and x.strip() for x in key):
+            raise ValueError("ATTEMPT_KEY_INVALID")
+        run=str(event.get("owner_authorization_run_id") or "")
+        pin=event.get("reservation_source_public_sha256")
+        if not run.isdigit() or len(pin or "")!=64 or any(c not in "0123456789abcdef" for c in pin):
+            raise ValueError("ATTEMPT_PROVENANCE_INVALID")
+        if run==HISTORICAL_GEN29_RUN or key[2]=="GEN29_ATTEMPT_01":
+            raise ValueError("HISTORICAL_GEN29_ALREADY_CONSUMED")
+        if typ=="RESERVE":
+            if key in attempts: raise ValueError("ATTEMPT_DUPLICATE_RESERVATION")
+            if run in runs: raise ValueError("AUTHORIZATION_RUN_ALREADY_RESERVED")
+            if event.get("candidate_sha256") is not None:
+                raise ValueError("RESERVATION_HAS_CANDIDATE")
+            attempts[key]={"state":"RESERVED","run":run,"source":pin,"candidate":None}
+            runs[run]=key
+        else:
+            if key not in attempts: raise ValueError("UNRESERVED_ATTEMPT")
+            existing=attempts[key]
+            if run!=existing["run"] or pin!=existing["source"]:
+                raise ValueError("ATTEMPT_PROVENANCE_CHANGED")
+            if existing["state"]=="CLOSED":
+                raise ValueError("CLOSED_ATTEMPT_REOPEN_OR_REPLAY")
+            if typ=="START":
+                if existing["state"]!="RESERVED": raise ValueError("ATTEMPT_START_REPLAY")
+                if event.get("candidate_sha256") is not None:
+                    raise ValueError("START_HAS_CANDIDATE")
+                existing["state"]="ACTIVE"
+            elif typ=="CLOSE":
+                if existing["state"] not in {"RESERVED","ACTIVE"}:
+                    raise ValueError("ATTEMPT_CLOSE_INVALID_STATE")
+                cand=event.get("candidate_sha256")
+                if cand is not None and (not isinstance(cand,str) or len(cand)!=64 or any(c not in "0123456789abcdef" for c in cand)):
+                    raise ValueError("CANDIDATE_SHA_INVALID")
+                existing["state"]="CLOSED"
+                existing["candidate"]=cand
+    return attempts,runs
+
+def audit_attempt_transition(cur,prop,request,cur_sha):
+    reasons=[]
+    before=cur.get("attempt_ledger",[])
+    after=prop.get("attempt_ledger",[])
+    if not isinstance(before,list) or not isinstance(after,list):
+        return ["ATTEMPT_LEDGER_NOT_LIST"]
+    if after[:len(before)]!=before:
+        reasons.append("ATTEMPT_LEDGER_IMMUTABLE_PREFIX_CHANGED")
+    for name in ("gen29_attempt01_forensic_closeout_receipt",
+                 "gen29_method_bootstrap_scope",
+                 "gen31_motion_d_scope_selection_receipt",
+                 "gen32_motion_e_gate_implementation_scope_selection_receipt"):
+        if cur.get(name)!=prop.get(name):
+            reasons.append("HISTORICAL_RECEIPT_MUTATED:"+name)
+    # The implementation PR never qualifies its own deployment.
+    if prop.get("runtime_gate_activation_verified") is True and cur.get("runtime_gate_activation_verified") is not True:
+        reasons.append("ACTIVATION_REQUIRES_INDEPENDENT_TRUSTED_BASE_PROOF")
+    if prop.get("gate_hardening_implemented") is True and cur.get("gate_hardening_implemented") is not True:
+        reasons.append("IMPLEMENTATION_STATUS_REQUIRES_POST_MERGE_PROOF")
+    if len(after)>len(before)+1:
+        reasons.append("MULTIPLE_ATTEMPT_EVENTS_IN_ONE_TRANSITION")
+    try:
+        before_attempts,before_runs=attempt_snapshot(before)
+        attempt_snapshot(after)
+    except ValueError as exc:
+        reasons.append(str(exc))
+        return sorted(set(reasons))
+    if len(after)==len(before):
+        return sorted(set(reasons))
+    event=after[-1]
+    if event.get("event")=="RESERVE" and event.get("reservation_source_public_sha256")!=cur_sha:
+        reasons.append("RESERVATION_SOURCE_LOCK_SHA_MISMATCH")
+    if not any(k in {"GOVERNANCE_UPGRADE","EXECUTE"} for k in [request.get("action_kind")]):
+        reasons.append("ATTEMPT_EVENT_ACTION_KIND_FORBIDDEN")
+    ops=[v if isinstance(v,str) else v.get("type") for v in request.get("operations",[])]
+    if not set(ops).intersection({"GOVERNANCE_UPGRADE","PATCH","EXECUTE","STATE_TRANSITION"}):
+        reasons.append("ATTEMPT_EVENT_REQUIRES_MUTATING_OPERATION")
+    if any(event.get(k)!=request.get(v) for k,v in
+           (("project_id","project"),("method_id","method_id"),("attempt_id","attempt_id"))):
+        reasons.append("ATTEMPT_EVENT_REQUEST_IDENTITY_MISMATCH")
+    run=str(request.get("authorization_run_id") or "")
+    if not run.isdigit(): reasons.append("ATTEMPT_EVENT_REQUEST_AUTH_RUN_MISSING")
+    if event.get("event")=="RESERVE" and run!=str(event.get("owner_authorization_run_id")):
+        reasons.append("RESERVATION_OWNER_RUN_MISMATCH")
+    if event.get("event")!="RESERVE":
+        first=before_attempts.get(tuple(event.get(k) for k in ("project_id","method_id","attempt_id")))
+        if first is None: reasons.append("ATTEMPT_EVENT_NOT_PREVIOUSLY_RESERVED")
+        elif str(event.get("owner_authorization_run_id"))!=first["run"]:
+            reasons.append("ATTEMPT_OWNER_RUN_CHANGED")
+    if request.get("input_public_lock_sha256")!=cur_sha:
+        reasons.append("ATTEMPT_EVENT_REQUEST_SOURCE_SHA_MISMATCH")
+    return sorted(set(reasons))
+
 def validate_transition(current_path, proposed_path, request):
     cur=load(current_path); prop=load(proposed_path)
     cur_sha=sha_file(current_path)
@@ -15,6 +122,8 @@ def validate_transition(current_path, proposed_path, request):
         a=set((cur.get("ledger_hashes") or {}).get(ledger) or [])
         b=set((prop.get("ledger_hashes") or {}).get(ledger) or [])
         if not a.issubset(b): reasons.append("LEDGER_REMOVAL_FORBIDDEN:"+ledger)
+
+    reasons += audit_attempt_transition(cur,prop,request,cur_sha)
 
     kind=request.get("action_kind","EXECUTE")
     if kind=="SET_NEXT_ACTION":
