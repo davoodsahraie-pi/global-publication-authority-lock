@@ -1,27 +1,19 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "gen32-motion-f-bounded-gate-implementation-2026-10-27",
+  "request_id": "gen32-motion-f-postmerge-trusted-base-selftest-2026-10-27",
   "input_public_lock_sha256": "6870614362a1d090f4694d5f9de035ef4922ec5161707e7b9f83b82431ad64d9",
   "input_private_state_sha256": "dfe3488ff09feba990938953c0caab822a01b90c32cc687d11c08f80d0818ed1",
-  "requested_action_id": "GLOBAL_PUBLICATION_GEN32_MOTION_F_TRUSTED_GATE_IMPLEMENTATION_AND_TESTS",
-  "action_kind": "GOVERNANCE_UPGRADE",
-  "mode": "MUTATING",
+  "requested_action_id": "GLOBAL_PUBLICATION_GEN32_ATTEMPT_LEDGER_HARDENING_IMPLEMENTATION_AUTHORIZATION_GATE_READ_ONLY",
+  "action_kind": "EXECUTE",
+  "mode": "READ_ONLY",
   "project": "GLOBAL",
   "method_id": null,
   "operations": [
-    "GOVERNANCE_UPGRADE",
-    "PATCH"
+    "READ",
+    "VERIFY_HASH",
+    "REPORT"
   ],
-  "target_scope_ids": [
-    "GEN32_MOTION_F_BOUNDED_GATE_IMPLEMENTATION",
-    "gate/publication_gate.py",
-    "gate/transition_guard.py",
-    "scripts/ci_validate_pr.py",
-    "scripts/selftest.py",
-    "GEN32_GATE_ACCEPTANCE_A01_A17_T18_T21",
-    "GEN32_NO_WORKFLOW_RENDERER_METHOD_CANDIDATE_PILOT_BOOK",
-    "GEN32_POST_DEPLOYMENT_ACTIVATION_PROOF_SEPARATE"
-  ],
-  "authorization_run_id": "40517286785",
+  "target_scope_ids": [],
+  "authorization_run_id": null,
   "user_explicit_authorization": true
 }
