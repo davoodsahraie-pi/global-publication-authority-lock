@@ -26,6 +26,47 @@ MOTION_F_CODE_FILES={
     "scripts/ci_validate_pr.py","scripts/selftest.py"
 }
 MOTION_F_ALLOWED_CHANGES=MOTION_F_CODE_FILES|{"request/ACTION_REQUEST.json"}
+ATOMIC_ACTION="GLOBAL_PUBLICATION_GEN32_ATOMIC_GATE_COMPLETION_BOUNDED_IMPLEMENTATION"
+ATOMIC_SCOPES={"GEN32_ATOMIC_GATE_COMPLETION_ISSUE53",
+               "GEN32_CLAIM_START_SINGLE_USE_AUTHORIZATION",
+               "GEN32_IMMUTABLE_CLOSE_GEN29_PRESERVATION",
+               "GEN32_COMPETING_PR_AND_REPLAY_NEGATIVE_TESTS",
+               "GEN32_NO_WORKFLOW_ASSEMBLER_RENDERER_METHOD_CANDIDATE_PILOT_BOOK"}
+# Exact live protected-main preimages for this one authorized implementation.
+# A second PR/replay after the first merge cannot use the same authorized scope.
+ATOMIC_BASE_BLOBS={
+    "gate/publication_gate.py":"f16fa9b8da6e2026388174fda9b3d02941f488e0",
+    "gate/transition_guard.py":"032523261d1e06779c20b7c8ef1d2b6b840a82b9",
+    "scripts/ci_validate_pr.py":"7a2bbf2bb3687f5c49e1bdceeff1dd28ed0f87d3",
+    "scripts/selftest.py":"91066fec6fba3d2a069a4d30b24a4f3b74136102"
+}
+
+def git_blob_file(path):
+    data=Path(path).read_bytes()
+    return hashlib.sha1(b"blob "+str(len(data)).encode("ascii")+b"\0"+data).hexdigest()
+
+def validate_atomic_changed_paths(changes,request,base_lock,base_root=None):
+    if request.get("requested_action_id")!=ATOMIC_ACTION: return []
+    reasons=[]
+    if request.get("action_kind")!="GOVERNANCE_UPGRADE":
+        reasons.append("ATOMIC_REQUIRES_GOVERNANCE_UPGRADE")
+    if set(changes)-MOTION_F_ALLOWED_CHANGES:
+        reasons.append("ATOMIC_FILE_ALLOWLIST_VIOLATION")
+    if set(request.get("operations") or [])!={"GOVERNANCE_UPGRADE","PATCH"}:
+        reasons.append("ATOMIC_OPERATIONS_NOT_EXACT")
+    if not (MOTION_F_CODE_FILES|ATOMIC_SCOPES).issubset(set(request.get("target_scope_ids") or [])):
+        reasons.append("ATOMIC_SCOPE_INCOMPLETE")
+    if base_lock.get("generation")!=32 or base_lock.get("current_action",{}).get("mode")!="READ_ONLY":
+        reasons.append("ATOMIC_WRONG_BASE_LOCK")
+    if set(changes)!=MOTION_F_ALLOWED_CHANGES:
+        reasons.append("ATOMIC_EXACT_FIVE_PATHS_REQUIRED")
+    if base_root is None:
+        reasons.append("ATOMIC_TRUSTED_BASE_REQUIRED")
+    else:
+        for rel,expected in ATOMIC_BASE_BLOBS.items():
+            if git_blob_file(Path(base_root)/rel)!=expected:
+                reasons.append("ATOMIC_BASE_BLOB_MISMATCH:"+rel)
+    return reasons
 
 def validate_motion_f_changed_paths(changes,request,base_lock):
     if request.get("requested_action_id")!=MOTION_F_ACTION:
@@ -168,6 +209,7 @@ def main():
         if gres["status"]!="ALLOW": reasons += ["GATE:"+x for x in gres.get("reasons",[])]
 
     reasons += validate_motion_f_changed_paths(changes,req,load_json(base/LOCK))
+    reasons += validate_atomic_changed_paths(changes,req,load_json(base/LOCK),base)
 
     runtime_changed=[p for p in changes if p in PROTECTED_RUNTIME_FILES or p.startswith(PROTECTED_RUNTIME_PREFIXES)]
     if runtime_changed and req.get("action_kind")!="GOVERNANCE_UPGRADE":

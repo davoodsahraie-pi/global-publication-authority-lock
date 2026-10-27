@@ -72,6 +72,16 @@ def main():
                  "authorization_run_id":str(event["owner_authorization_run_id"]) if event else "7001",
                  "input_public_lock_sha256":from_sha}
         if req_patch: req_patch(request)
+        # Synthetic Motion-F baseline tests now carry the durable event Run.
+        # Historic records and production state are not migrated.
+        if event is not None and event["event"] in {"START","CLOSE"}:
+            event["event_authorization_run_id"]=request["authorization_run_id"]
+            if event["event"]=="START" or (source.get("attempt_ledger",[]) and
+                 source["attempt_ledger"][-1]["event"]=="START"):
+                event["executor_id"]="MOTION_F_TEST_EXECUTOR"
+                request["executor_id"]="MOTION_F_TEST_EXECUTOR"
+            proposed["attempt_ledger"][-1]=event
+            write(to_path,proposed)
         result=validate_transition(from_path,to_path,request)
         if record: mark(label,expected,result["status"],result["reasons"],required)
         return proposed,from_sha
@@ -177,6 +187,88 @@ def main():
              motion_f_req,s)
       mark("T21_WORKFLOW_FILE_ALLOWLIST","DENY","DENY" if violations else "ALLOW",
            violations,"MOTION_F_FILE_ALLOWLIST_VIOLATION")
+
+      # Atomic completion: negative tests of the actual protected event protocol.
+      # These are pure synthetic state inputs, never official claims.
+      from transition_guard import attempt_snapshot
+      def event_case(name,source,event,request_run,expected,required=None,executor=None):
+        cp=td/(name+"-old.json"); write(cp,source)
+        proposed=copy.deepcopy(source)
+        proposed["generation"]=source["generation"]+1
+        proposed["previous_public_lock_sha256"]=sha(cp)
+        proposed["attempt_ledger"]=copy.deepcopy(source.get("attempt_ledger",[]))+[event]
+        pp=td/(name+"-new.json"); write(pp,proposed)
+        req={"action_kind":"GOVERNANCE_UPGRADE", "operations":["GOVERNANCE_UPGRADE","PATCH"],
+             "project":"GLOBAL","method_id":"MOTION_F_SAFE_TEST",
+             "attempt_id":event.get("attempt_id"),"authorization_run_id":request_run,
+             "input_public_lock_sha256":sha(cp),"executor_id":executor}
+        result=validate_transition(cp,pp,req)
+        mark(name,expected,result["status"],result["reasons"],required)
+      # A single reservation and START are already generated in the historical suite.
+      def fresh(kind,auth,executor=None,candidate=None):
+        result=ev(kind,"7001",pin,cand=candidate)
+        if kind!="RESERVE":
+            result["event_authorization_run_id"]=str(auth)
+            if executor is not None: result["executor_id"]=executor
+        return result
+      event_case("AT01_START_REQUIRES_EVENT_RUN",first,
+                 ev("START","7001",pin),"7030","DENY","ATTEMPT_EVENT_AUTH_RUN_INVALID")
+      event_case("AT02_START_MATCHES_REQUEST_RUN",first,
+                 fresh("START","7031","test-executor"),"7032","DENY","ATTEMPT_EVENT_AUTH_RUN_MISMATCH", "test-executor")
+      event_case("AT03_START_REUSES_RESERVATION_RUN",first,
+                 fresh("START","7001","test-executor"),"7001","DENY","AUTHORIZATION_RUN_ALREADY_CONSUMED", "test-executor")
+      event_case("AT04_START_REQUIRES_EXECUTOR_ID",first,
+                 fresh("START","7033"),"7033","DENY","START_EXECUTOR_ID_REQUIRED")
+      event_case("AT05_START_EXECUTOR_MISMATCH",first,
+                 fresh("START","7034","test-executor"),"7034","DENY","ATTEMPT_EXECUTOR_REQUEST_MISMATCH","wrong-executor")
+      event_case("AT06_START_CLAIM_PASS",first,
+                 fresh("START","7035","test-executor"),"7035","PASS",executor="test-executor")
+      event_case("AT07_REPLAY_START",started,
+                 fresh("START","7036","MOTION_F_TEST_EXECUTOR"),"7036","DENY","ATTEMPT_START_REPLAY","MOTION_F_TEST_EXECUTOR")
+      event_case("AT08_CLOSE_EXECUTOR_MISMATCH",started,
+                 fresh("CLOSE","7037","other-executor",candidate="a"*64),"7037","DENY","ATTEMPT_EXECUTOR_ID_CHANGED","other-executor")
+      event_case("AT09_CLOSE_UNSTARTED_WITH_CANDIDATE",first,
+                 fresh("CLOSE","7038",candidate="a"*64),"7038","DENY","UNSTARTED_ATTEMPT_HAS_CANDIDATE")
+      event_case("AT10_CLOSE_REUSES_START_RUN",started,
+                 fresh("CLOSE","7003","MOTION_F_TEST_EXECUTOR"),"7003","DENY","AUTHORIZATION_RUN_ALREADY_CONSUMED","MOTION_F_TEST_EXECUTOR")
+      event_case("AT11_CLOSE_TERMINAL_PASS",started,
+                 fresh("CLOSE","7039","MOTION_F_TEST_EXECUTOR",candidate="a"*64),"7039","PASS",executor="MOTION_F_TEST_EXECUTOR")
+      event_case("AT12_HISTORIC_GEN29_RUN_REJECT",first,
+                 fresh("START","40329927057","test-executor"),"40329927057","DENY","AUTHORIZATION_RUN_ALREADY_CONSUMED","test-executor")
+      event_case("AT13_NULL_CLOSE_ONLY_UNSTARTED",first,
+                 fresh("CLOSE","7040"),"7040","PASS")
+      event_case("AT14_EVENT_EXECUTOR_MUST_MATCH_REQUEST",started,
+                 fresh("CLOSE","7041","MOTION_F_TEST_EXECUTOR"),"7041","DENY","ATTEMPT_EXECUTOR_REQUEST_MISMATCH","other-executor")
+      # Gate must fail closed even when a claim has been committed, because the
+      # separately governed one-use external executor is not yet installed.
+      synthetic=copy.deepcopy(s)
+      synthetic["current_action"]={"id":"ATOMIC-SYNTHETIC-EXECUTE","mode":"MUTATING"}
+      synthetic["execution_authorized_now"]=True
+      for name,events,run,executor,required in [
+          ("AT15_RESERVED_CANNOT_EXECUTE",first["attempt_ledger"],"7042","test-executor","EXECUTE_REQUIRES_COMMITTED_START_CLAIM"),
+          ("AT16_CLAIMED_CANNOT_DISPATCH_WITHOUT_BROKER",started["attempt_ledger"],"7003","MOTION_F_TEST_EXECUTOR","EXECUTE_REQUIRES_DURABLE_ONE_USE_DISPATCH_RECEIPT"),
+          ("AT17_WRONG_CLAIM_RUN",started["attempt_ledger"],"7043","MOTION_F_TEST_EXECUTOR","EXECUTE_AUTH_RUN_NOT_CLAIM_OWNER"),
+          ("AT18_WRONG_EXECUTOR",started["attempt_ledger"],"7003","wrong-executor","EXECUTE_EXECUTOR_ID_MISMATCH")]:
+        state=copy.deepcopy(synthetic);state["attempt_ledger"]=copy.deepcopy(events)
+        loc=td/(name+"-lock.json");write(loc,state)
+        side=td/(name+"-lock.sha256");side.write_text(sha(loc)+"  lock.json\n")
+        rq={"schema":"GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0","request_id":name,
+            "input_public_lock_sha256":sha(loc),"input_private_state_sha256":state["private_execution_state_sha256"],
+            "requested_action_id":"ATOMIC-SYNTHETIC-EXECUTE","action_kind":"EXECUTE","mode":"MUTATING",
+            "project":"GLOBAL","method_id":"MOTION_F_SAFE_TEST","attempt_id":"MOTION_F_TEST_01",
+            "operations":["BUILD"],"authorization_run_id":run,
+            "target_scope_ids":[],"executor_id":executor,"user_explicit_authorization":True}
+        path=td/(name+"-request.json");write(path,rq)
+        got=validate(loc,side,path)
+        mark(name,"DENY",got["status"],got["reasons"],required)
+      # Non-string malformed source pins fail closed instead of throwing.
+      try:
+        bad_ev=fresh("START","7044","MOTION_F_TEST_EXECUTOR")
+        bad_ev["reservation_source_public_sha256"]=None
+        attempt_snapshot(first["attempt_ledger"]+[bad_ev])
+        mark("AT19_NULL_PIN_DENY","DENY","ALLOW",["missing validation"])
+      except ValueError as error:
+        mark("AT19_NULL_PIN_DENY","DENY","DENY",[str(error)],"ATTEMPT_PROVENANCE_INVALID")
 
     report={"schema":"GLOBAL_PUBLICATION_PUBLIC_LOCK_SELFTEST/1.0.0","total":len(out),"passed":sum(1 for x in out if x[3]),"status":"PASS" if all(x[3] for x in out) else "FAIL","results":[{"id":a,"expected":b,"actual":c,"pass":d,"reasons":e} for a,b,c,d,e in out]}
     print(json.dumps(report,indent=2))

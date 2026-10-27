@@ -1,19 +1,29 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "gen32-ci-recovery01-trusted-base-postmerge-proof-2026-10-27",
+  "request_id": "gen32-atomic-gate-completion-run-40585782096-attempt01",
   "input_public_lock_sha256": "6870614362a1d090f4694d5f9de035ef4922ec5161707e7b9f83b82431ad64d9",
   "input_private_state_sha256": "dfe3488ff09feba990938953c0caab822a01b90c32cc687d11c08f80d0818ed1",
-  "requested_action_id": "GLOBAL_PUBLICATION_GEN32_ATTEMPT_LEDGER_HARDENING_IMPLEMENTATION_AUTHORIZATION_GATE_READ_ONLY",
-  "action_kind": "EXECUTE",
-  "mode": "READ_ONLY",
+  "requested_action_id": "GLOBAL_PUBLICATION_GEN32_ATOMIC_GATE_COMPLETION_BOUNDED_IMPLEMENTATION",
+  "action_kind": "GOVERNANCE_UPGRADE",
+  "mode": "MUTATING",
   "project": "GLOBAL",
   "method_id": null,
+  "attempt_id": null,
   "operations": [
-    "READ",
-    "VERIFY_HASH",
-    "REPORT"
+    "GOVERNANCE_UPGRADE",
+    "PATCH"
   ],
-  "target_scope_ids": [],
-  "authorization_run_id": null,
+  "target_scope_ids": [
+    "GEN32_ATOMIC_GATE_COMPLETION_ISSUE53",
+    "gate/publication_gate.py",
+    "gate/transition_guard.py",
+    "scripts/ci_validate_pr.py",
+    "scripts/selftest.py",
+    "GEN32_CLAIM_START_SINGLE_USE_AUTHORIZATION",
+    "GEN32_IMMUTABLE_CLOSE_GEN29_PRESERVATION",
+    "GEN32_COMPETING_PR_AND_REPLAY_NEGATIVE_TESTS",
+    "GEN32_NO_WORKFLOW_ASSEMBLER_RENDERER_METHOD_CANDIDATE_PILOT_BOOK"
+  ],
+  "authorization_run_id": "40585782096",
   "user_explicit_authorization": true
 }
