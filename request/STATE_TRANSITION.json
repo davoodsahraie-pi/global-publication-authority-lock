@@ -1,13 +1,13 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_STATE_TRANSITION/1.0.0",
-  "transition_id": "GEN31_GEN30_MOTION_D_SCOPE_SELECTION_2026_10_27",
-  "source_public_lock_sha256": "c9ffb6f4e45a9edebcb556ac4cadc28f47cee5a8581a7eb34d2520d42ab177c4",
-  "target_public_lock_sha256": "5b9fc5c8143dba07e3fc7ef18d82d233a8baf881296d60ab37dfacfca1bfaa59",
-  "source_private_execution_state_sha256": "e9ba762e97c990296ed177f5b9dd0af85f38d9d1ef9f5703a9fd59411726d4ce",
-  "target_private_execution_state_sha256": "b06aae37697bd4a4fa22ed5f059b22156b80ab0b9e29a9d9e7ff43272fdc7da6",
-  "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.20_GEN31_MOTION_D_SCOPE_SELECTION_2026-10-27.json",
-  "authorization_run_id": "40456307105",
-  "action_id": "GLOBAL_PUBLICATION_GEN30_ATTEMPT_LEDGER_HARDENING_SCOPE_SELECTION",
+  "transition_id": "GEN32_GEN31_MOTION_E_SCOPE_SELECTION_2026_10_27",
+  "source_public_lock_sha256": "5b9fc5c8143dba07e3fc7ef18d82d233a8baf881296d60ab37dfacfca1bfaa59",
+  "target_public_lock_sha256": "6870614362a1d090f4694d5f9de035ef4922ec5161707e7b9f83b82431ad64d9",
+  "source_private_execution_state_sha256": "b06aae37697bd4a4fa22ed5f059b22156b80ab0b9e29a9d9e7ff43272fdc7da6",
+  "target_private_execution_state_sha256": "dfe3488ff09feba990938953c0caab822a01b90c32cc687d11c08f80d0818ed1",
+  "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.21_GEN32_MOTION_E_SELECTION_2026-10-27.json",
+  "authorization_run_id": "40501663727",
+  "action_id": "GLOBAL_PUBLICATION_GEN31_MOTION_E_GATE_IMPLEMENTATION_SELECTION",
   "action_kind": "GOVERNANCE_UPGRADE",
   "project": "GLOBAL",
   "operations": [
@@ -16,20 +16,22 @@
     "STATE_TRANSITION"
   ],
   "target_scope_ids": [
-    "GEN30_MOTION_D_SCOPE_SELECTION_ONLY",
-    "GEN30_ATTEMPT_UNIQUENESS_AND_AUTHORIZATION_CONSUMPTION_CONTRACT",
-    "GEN30_IMMUTABLE_CLOSURE_AND_REPLAY_NEGATIVE_TEST_PLAN",
-    "GEN30_PRESERVE_ALL_HISTORICAL_LEDGER_AND_C1",
-    "GEN30_NO_CODE_RENDERER_BUILD_PILOT_OR_ACTIVATION"
+    "GEN31_MOTION_E_SELECTION_ONLY",
+    "GEN31_ATTEMPT_UNIQUENESS_AND_RUN_CONSUMPTION",
+    "GEN31_IMMUTABLE_CLOSURE_AND_GEN29_RECEIPT_PRESERVATION",
+    "GEN31_GATE_TESTS_A01_A17_T18_T21",
+    "GEN31_NO_GATE_CODE_OR_RENDERER_IN_SELECTION_TRANSITION"
   ],
   "owner_issue_number": 53,
-  "owner_vote": "APPROVE_SCOPE_ONLY",
-  "selected_next_action_id": "GLOBAL_PUBLICATION_GEN31_ATTEMPT_LEDGER_HARDENING_IMPLEMENTATION_ELIGIBILITY_READ_ONLY",
+  "owner_vote": "APPROVE_GOVERNANCE_IMPLEMENTATION_SCOPE_ONLY",
+  "selected_next_action_id": "GLOBAL_PUBLICATION_GEN32_ATTEMPT_LEDGER_HARDENING_IMPLEMENTATION_AUTHORIZATION_GATE_READ_ONLY",
   "selected_next_action_mode": "READ_ONLY",
-  "status": "MOTION_D_SCOPE_SELECTED_ONLY",
+  "status": "MOTION_E_SCOPE_SELECTED_ONLY_GATE_CODE_PENDING_SEPARATE_AUTHORIZATION",
   "gate_hardening_implemented": false,
   "implementation_authorized": false,
+  "runtime_gate_activation_verified": false,
   "pilot_authorized": false,
   "gen29_receipt_preserved": true,
-  "source_preserved": true
+  "source_preserved": true,
+  "runtime_code_unchanged": true
 }
