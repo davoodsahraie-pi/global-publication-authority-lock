@@ -137,6 +137,52 @@ def validate_gen33_proof_scope(changes, req, base_lock, base_root):
                 reasons.append("GEN33_PROOF_BASE_FILE_MISMATCH:"+rel)
     return reasons
 
+
+# GEN33 synthetic physical-race installation: EXACT five files / no ref write
+# until a separately authorized later workflow_dispatch succeeds.
+GEN33_RACE_CODE_ACTION="GLOBAL_PUBLICATION_GEN33_SYNTHETIC_PROTECTED_REF_RACE_V1_CODE_ONLY_IMPLEMENTATION"
+GEN33_RACE_CODE_FILES={
+    "scripts/gen33_synthetic_claim_race.py",
+    "tests/test_gen33_synthetic_claim_race.py",
+    ".github/workflows/gen33-synthetic-claim-race.yml",
+    "scripts/ci_validate_pr.py",
+    "request/ACTION_REQUEST.json"
+}
+GEN33_RACE_CODE_BASE_SHA="08c2c4c23f1223c7a05554ac81f5f1bac948ac805d28503ca1b0be890b5474fa"
+GEN33_RACE_CODE_PRIVATE_SHA="dfe3488ff09feba990938953c0caab822a01b90c32cc687d11c08f80d0818ed1"
+GEN33_RACE_CODE_PREIMAGES={
+    "scripts/ci_validate_pr.py":"9cf15729ffbf218346e2228ed3df6a2c4495e9f8",
+    "request/ACTION_REQUEST.json":"8ff2ad8fb475cdb4e06235f47feb724aab588485"
+}
+
+def validate_gen33_race_install_scope(changes,req,base_lock,base_root):
+    if req.get("requested_action_id")!=GEN33_RACE_CODE_ACTION:
+        return []
+    reasons=[]
+    if (req.get("action_kind")!="GOVERNANCE_UPGRADE" or
+        set(req.get("operations") or [])!={"GOVERNANCE_UPGRADE","PATCH"}):
+        reasons.append("GEN33_RACE_CODE_ACTION_OR_OPS_MISMATCH")
+    if set(changes)!=GEN33_RACE_CODE_FILES or len(changes)!=5:
+        reasons.append("GEN33_RACE_CODE_EXACT_FIVE_FILES_REQUIRED")
+    if set(req.get("target_scope_ids") or [])!=GEN33_RACE_CODE_FILES or len(req.get("target_scope_ids") or [])!=5:
+        reasons.append("GEN33_RACE_CODE_REQUEST_SCOPE_MISMATCH")
+    if req.get("authorization_run_id")!=40756323455:
+        reasons.append("GEN33_RACE_CODE_AUTH_RUN_MISMATCH")
+    if (base_lock.get("generation")!=33 or
+        base_lock.get("current_action",{}).get("mode")!="READ_ONLY" or
+        base_lock.get("execution_authorized_now") is not False or
+        base_lock.get("private_execution_state_sha256")!=GEN33_RACE_CODE_PRIVATE_SHA):
+        reasons.append("GEN33_RACE_CODE_BASE_STATE_CHANGED")
+    if base_root is None:
+        reasons.append("GEN33_RACE_CODE_BASE_REQUIRED")
+    else:
+        if sha(base_root/LOCK)!=GEN33_RACE_CODE_BASE_SHA:
+            reasons.append("GEN33_RACE_CODE_BASE_AUTHORITY_CHANGED")
+        for rel,digest in GEN33_RACE_CODE_PREIMAGES.items():
+            if git_blob_file(base_root/rel)!=digest:
+                reasons.append("GEN33_RACE_CODE_BASE_BLOB_MISMATCH:"+rel)
+    return reasons
+
 def git_blob_file(path):
     data=Path(path).read_bytes()
     return hashlib.sha1(b"blob "+str(len(data)).encode("ascii")+b"\0"+data).hexdigest()
@@ -336,6 +382,7 @@ def main():
     reasons += validate_dispatch_v2_changed_paths(changes,req,load_json(base/LOCK),base)
     reasons += validate_gen33_broker_scope(changes,req,load_json(base/LOCK),base)
     reasons += validate_gen33_proof_scope(changes,req,load_json(base/LOCK),base)
+    reasons += validate_gen33_race_install_scope(changes,req,load_json(base/LOCK),base)
 
     runtime_changed=[p for p in changes if p in PROTECTED_RUNTIME_FILES or p.startswith(PROTECTED_RUNTIME_PREFIXES)]
     if runtime_changed and req.get("action_kind")!="GOVERNANCE_UPGRADE":
