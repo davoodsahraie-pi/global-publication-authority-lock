@@ -1,0 +1,114 @@
+name: gen32-sentinel-persistent-ref
+on:
+  workflow_dispatch:
+    inputs:
+      expected_winners:
+        description: 'Synthetic proof phase: 1 for first run, 0 for replay run'
+        required: true
+        type: choice
+        options: ['1', '0']
+        default: '1'
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pure synthetic selftest (no Github write)
+        run: python -I -B scripts/gen32_persistent_ref_sentinel.py selftest
+      - name: Check exact Authority and active no-bypass tag ruleset
+        run: python -I -B scripts/gen32_persistent_ref_sentinel.py check-ruleset
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+  claim_a:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    outputs:
+      outcome: ${{ steps.claim.outputs.outcome }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - id: claim
+        name: Competing claim A — synthetic Git ref only
+        run: python -I -B scripts/gen32_persistent_ref_sentinel.py claim
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+  claim_b:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    outputs:
+      outcome: ${{ steps.claim.outputs.outcome }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - id: claim
+        name: Competing claim B — synthetic Git ref only
+        run: python -I -B scripts/gen32_persistent_ref_sentinel.py claim
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+  verify:
+    if: always()
+    needs: [preflight, claim_a, claim_b]
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify synthetic Git ref and still-active Ruleset
+        run: python -I -B scripts/gen32_persistent_ref_sentinel.py check-ref
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Independent-run outcome check
+        env:
+          PREFLIGHT: ${{ needs.preflight.result }}
+          A: ${{ needs.claim_a.outputs.outcome }}
+          B: ${{ needs.claim_b.outputs.outcome }}
+          EXPECTED: ${{ inputs.expected_winners }}
+        run: |
+          python - <<'PY'
+          import json,os,sys
+          a,b=os.environ['A'],os.environ['B']
+          expected=int(os.environ['EXPECTED'])
+          winner_count=sum(x=='WON' for x in (a,b))
+          valid=(os.environ['PREFLIGHT']=='success' and
+                 a in ('WON','DENIED') and b in ('WON','DENIED') and
+                 expected in (0,1) and winner_count==expected)
+          result={'schema':'GEN32_PERSISTENT_REF_GITHUB_PROOF/1.0.0',
+                  'mode':'SYNTHETIC_ONLY','outcomes':[a,b],
+                  'winner_count':winner_count,'expected_winners':expected,
+                  'status':'PASS' if valid else 'DENY'}
+          print(json.dumps(result,indent=2))
+          sys.exit(0 if valid else 3)
+          PY

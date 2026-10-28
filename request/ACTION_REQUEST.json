@@ -1,9 +1,9 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "gen32-cloud-sentinel-bounded-workflow-40631616595-2026-10-28",
+  "request_id": "gen32-persistent-ref-sentinel-40637136431-2026-10-28",
   "input_public_lock_sha256": "6870614362a1d090f4694d5f9de035ef4922ec5161707e7b9f83b82431ad64d9",
   "input_private_state_sha256": "dfe3488ff09feba990938953c0caab822a01b90c32cc687d11c08f80d0818ed1",
-  "requested_action_id": "GLOBAL_PUBLICATION_GEN32_CLOUD_SENTINEL_EPHEMERAL_SQLITE_19CASE_PROOF",
+  "requested_action_id": "GLOBAL_PUBLICATION_GEN32_CLOUD_PERSISTENT_REF_SENTINEL_PROOF",
   "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "READ_ONLY",
   "project": "GLOBAL",
@@ -13,13 +13,15 @@
     "PATCH"
   ],
   "target_scope_ids": [
-    "GEN32_CLOUD_SENTINEL_READ_ONLY_WORKFLOW_SCOPE_ISSUE53",
-    ".github/workflows/gen32-sentinel-local-only.yml",
-    "scripts/gen32_cloud_sentinel.py",
+    "GEN32_PERSISTENT_REF_SENTINEL_SCOPE_ISSUE53",
+    "RULESET_ID_26012498",
+    "refs/tags/gen32-sentinel-claim/*",
+    ".github/workflows/gen32-sentinel-persistent-ref.yml",
+    "scripts/gen32_persistent_ref_sentinel.py",
     "request/ACTION_REQUEST.json",
     "GEN32_NO_PRODUCER_NO_PRIVATE_DATA_NO_DOCX_PDF_NO_GEN29",
-    "GEN32_SENTINEL_ARCHIVE_SHA256_7ccf154043d8280a90fe39c8cd2d51e2e5e4fea7ca05d8c627facc077bac9ee1"
+    "DRAFT_SHA256_b8fb6ee2ccc5ab615d4b7c2ca896c9d7187ac10ccc0f94579db7a739dc98c668"
   ],
-  "authorization_run_id": "40631616595",
+  "authorization_run_id": "40637136431",
   "user_explicit_authorization": true
 }
