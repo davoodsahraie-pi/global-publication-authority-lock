@@ -85,6 +85,58 @@ def validate_gen33_broker_scope(changes,req,base_lock,base_root):
                 reasons.append("GEN33_BROKER_BASE_BLOB_MISMATCH:"+rel)
     return reasons
 
+
+# GEN33 protected-claim proof phase 1: exactly eight code paths,
+# independent from any real Git ref creation or Producer admission.
+GEN33_PROOF_ACTION="GLOBAL_PUBLICATION_GEN33_PROTECTED_CLAIM_PROOF_V1_NONPRODUCER_IMPLEMENTATION"
+GEN33_PROOF_PATHS={
+    "broker/gen33_source_bound_broker.py",
+    "broker/gen33_live_claim.py",
+    "tests/test_gen33_live_claim.py",
+    ".github/workflows/gen33-live-claim-proof.yml",
+    ".github/workflows/gen33-broker-qa.yml",
+    "scripts/ci_validate_pr.py",
+    "scripts/selftest.py",
+    "request/ACTION_REQUEST.json"
+}
+GEN33_PROOF_PREIMAGES={
+    "broker/gen33_source_bound_broker.py":"404c6f650ee178ee3593967c7996c2636537ff91",
+    ".github/workflows/gen33-broker-qa.yml":"ebe92ed236e3380a699ddae4662e769901001208",
+    "scripts/ci_validate_pr.py":"ed11e2bbb1bd96b94c28e3a02b7eabf5548773fe",
+    "scripts/selftest.py":"3c65dceb08af13896edcdb61830e299eb293cf3e",
+    "request/ACTION_REQUEST.json":"544f89b76eb492e6078f152ce44568924f74f1d5"
+}
+GEN33_PROOF_PUBLIC_SHA="08c2c4c23f1223c7a05554ac81f5f1bac948ac805d28503ca1b0be890b5474fa"
+GEN33_PROOF_PRIVATE_SHA="dfe3488ff09feba990938953c0caab822a01b90c32cc687d11c08f80d0818ed1"
+
+def validate_gen33_proof_scope(changes, req, base_lock, base_root):
+    if req.get("requested_action_id")!=GEN33_PROOF_ACTION:
+        return []
+    reasons=[]
+    if (req.get("action_kind")!="GOVERNANCE_UPGRADE" or
+        set(req.get("operations") or [])!={"GOVERNANCE_UPGRADE","PATCH"}):
+        reasons.append("GEN33_PROOF_UNEXPECTED_ACTION_OR_OPERATIONS")
+    if set(changes)!=GEN33_PROOF_PATHS:
+        reasons.append("GEN33_PROOF_EXACT_EIGHT_PATHS_REQUIRED")
+    if set(req.get("target_scope_ids") or [])!=GEN33_PROOF_PATHS:
+        reasons.append("GEN33_PROOF_REQUEST_SCOPE_MISMATCH")
+    if req.get("authorization_run_id")!=40748290755:
+        reasons.append("GEN33_PROOF_AUTH_RUN_MISMATCH")
+    if (base_lock.get("generation")!=33 or
+        base_lock.get("current_action",{}).get("mode")!="READ_ONLY" or
+        base_lock.get("execution_authorized_now") is not False or
+        base_lock.get("private_execution_state_sha256")!=GEN33_PROOF_PRIVATE_SHA):
+        reasons.append("GEN33_PROOF_BASE_STATE_MISMATCH")
+    if base_root is None:
+        reasons.append("GEN33_PROOF_BASE_REQUIRED")
+    else:
+        if sha(base_root/LOCK)!=GEN33_PROOF_PUBLIC_SHA:
+            reasons.append("GEN33_PROOF_PUBLIC_SHA_MISMATCH")
+        for rel, digest in GEN33_PROOF_PREIMAGES.items():
+            if git_blob_file(base_root/rel)!=digest:
+                reasons.append("GEN33_PROOF_BASE_FILE_MISMATCH:"+rel)
+    return reasons
+
 def git_blob_file(path):
     data=Path(path).read_bytes()
     return hashlib.sha1(b"blob "+str(len(data)).encode("ascii")+b"\0"+data).hexdigest()
@@ -283,6 +335,7 @@ def main():
     reasons += validate_atomic_changed_paths(changes,req,load_json(base/LOCK),base)
     reasons += validate_dispatch_v2_changed_paths(changes,req,load_json(base/LOCK),base)
     reasons += validate_gen33_broker_scope(changes,req,load_json(base/LOCK),base)
+    reasons += validate_gen33_proof_scope(changes,req,load_json(base/LOCK),base)
 
     runtime_changed=[p for p in changes if p in PROTECTED_RUNTIME_FILES or p.startswith(PROTECTED_RUNTIME_PREFIXES)]
     if runtime_changed and req.get("action_kind")!="GOVERNANCE_UPGRADE":

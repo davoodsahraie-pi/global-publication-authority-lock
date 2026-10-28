@@ -5,6 +5,7 @@ on:
     paths:
       - "broker/**"
       - "tests/test_gen33_broker.py"
+      - "tests/test_gen33_live_claim.py"
       - ".github/workflows/gen33-broker-qa.yml"
       - "gate/**"
       - "scripts/**"
@@ -26,6 +27,6 @@ jobs:
         with:
           python-version: '3.12'
       - name: Verify synthetic-only Broker tests
-        run: python -I -B -m unittest discover -s tests -p 'test_gen33_broker.py' -v
+        run: python -I -B -m unittest discover -s tests -p 'test_gen33*.py' -v
       - name: Verify code-only imports never spawn or access secrets
-        run: python -I -B -m py_compile broker/gen33_source_bound_broker.py broker/gen33_receipt_verifier.py tests/test_gen33_broker.py
+        run: python -I -B -m py_compile broker/gen33_source_bound_broker.py broker/gen33_receipt_verifier.py broker/gen33_live_claim.py tests/test_gen33_broker.py tests/test_gen33_live_claim.py
