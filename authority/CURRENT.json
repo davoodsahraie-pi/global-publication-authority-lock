@@ -1,6 +1,6 @@
 {
   "current_action": {
-    "id": "GLOBAL_PUBLICATION_GEN32_ATTEMPT_LEDGER_HARDENING_IMPLEMENTATION_AUTHORIZATION_GATE_READ_ONLY",
+    "id": "GLOBAL_PUBLICATION_GEN33_SOURCE_BOUND_BROKER_IMPLEMENTATION_AUTHORIZATION_GATE_READ_ONLY",
     "mode": "READ_ONLY"
   },
   "execution_authorized_now": false,
@@ -161,7 +161,7 @@
     ],
     "new_execution_authorization": false
   },
-  "generation": 32,
+  "generation": 33,
   "gh1_execution_rule": "GEN24 registers completed GEN23 engineering and selects staged same-SHA Q1. execution_authorized_now is eligibility only; fresh owner EXECUTE on this exact current lock/state/action/two scopes/QUALIFY+EXPORT_PDF remains mandatory. Historical EXECUTE and governance do not authorize future device execution.",
   "ledger_hashes": {
     "blocked_project": [
@@ -388,7 +388,7 @@
       "STATE_TRANSITION"
     ]
   },
-  "previous_public_lock_sha256": "5b9fc5c8143dba07e3fc7ef18d82d233a8baf881296d60ab37dfacfca1bfaa59",
+  "previous_public_lock_sha256": "6870614362a1d090f4694d5f9de035ef4922ec5161707e7b9f83b82431ad64d9",
   "private_execution_state_sha256": "dfe3488ff09feba990938953c0caab822a01b90c32cc687d11c08f80d0818ed1",
   "schema": "GLOBAL_PUBLICATION_PUBLIC_LOCK/1.2.0",
   "scoped_v2_evidence": {
