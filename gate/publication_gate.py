@@ -93,6 +93,9 @@ def validate(lock_path, sidecar_path, request_path, authorization=None):
             record=attempt_state.get(key)
             if not record:
                 reasons.append("EXECUTE_REQUIRES_RESERVED_ATTEMPT")
+            elif record["state"]=="DISPATCHED":
+                # V2 records are NOT physical redemption. Keep hard broker DENY.
+                reasons.append("DISPATCH_V2_CONTROL_PLANE_ONLY_NO_BROKER")
             elif record["state"]!="ACTIVE":
                 reasons.append("EXECUTE_REQUIRES_COMMITTED_START_CLAIM")
             elif str(req.get("authorization_run_id"))!=record["claim_run"]:

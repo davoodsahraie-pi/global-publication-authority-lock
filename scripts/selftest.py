@@ -270,6 +270,102 @@ def main():
       except ValueError as error:
         mark("AT19_NULL_PIN_DENY","DENY","DENY",[str(error)],"ATTEMPT_PROVENANCE_INVALID")
 
+
+      # GEN32 DISPATCH v2 synthetic control-plane tests. No producer invocation.
+      from transition_guard import DISPATCH_V2_SCHEMA, dispatch_v2_descriptor
+      from ci_validate_pr import validate_dispatch_v2_changed_paths, DISPATCH_V2_ACTION, DISPATCH_V2_PATHS, DISPATCH_V2_SCOPES
+      def v2_event(source,label,source_pub,source_priv,auth="8101",purpose="INDEPENDENT_ENGINEERING_FIXTURE"):
+          entry={"schema":DISPATCH_V2_SCHEMA,"event":"DISPATCH","project_id":"GLOBAL",
+                 "method_id":"MOTION_F_SAFE_TEST","attempt_id":"MOTION_F_TEST_01",
+                 "owner_authorization_run_id":"7001",
+                 "reservation_source_public_sha256":pin,
+                 "event_authorization_run_id":auth,
+                 "executor_id":"MOTION_F_TEST_EXECUTOR",
+                 "dispatch_source_public_sha256":source_pub,
+                 "dispatch_source_private_sha256":source_priv,
+                 "purpose":purpose,"output_identity":"QUARANTINED_SYNTHETIC_OUTPUT",
+                 "runtime_domain":"TRUSTED_CANDIDATE_TEST_ONLY",
+                 "candidate_sha256":None}
+          from transition_guard import DISPATCH_V2_SHA_FIELDS
+          for f in DISPATCH_V2_SHA_FIELDS: entry[f]="a"*64
+          entry["descriptor_sha256"]=dispatch_v2_descriptor(entry)
+          return entry
+      def v2_check(label,source,mutate=None,expect="PASS",required=None,auth="8101",request_executor="MOTION_F_TEST_EXECUTOR"):
+          cp=td/(label+"-v2-source.json");write(cp,source)
+          oldsha=sha(cp)
+          event=v2_event(source,label,oldsha,source["private_execution_state_sha256"],auth=auth)
+          if mutate: mutate(event)
+          pp=td/(label+"-v2-new.json")
+          proposed=copy.deepcopy(source)
+          proposed["generation"]=source["generation"]+1
+          proposed["previous_public_lock_sha256"]=oldsha
+          proposed["attempt_ledger"]=copy.deepcopy(source.get("attempt_ledger",[]))+[event]
+          write(pp,proposed)
+          request={"action_kind":"GOVERNANCE_UPGRADE","operations":["GOVERNANCE_UPGRADE","PATCH"],
+                   "project":"GLOBAL","method_id":"MOTION_F_SAFE_TEST","attempt_id":"MOTION_F_TEST_01",
+                   "authorization_run_id":auth,"input_public_lock_sha256":oldsha,
+                   "executor_id":request_executor}
+          result=validate_transition(cp,pp,request)
+          mark(label,expect,result["status"],result["reasons"],required)
+          return proposed,event
+      dispatched,original_dispatch=v2_check("DV01_VALID_CONTROL_PLANE_DISPATCH",started)
+      v2_check("DV02_NO_START",first,expect="DENY",required="DISPATCH_REQUIRES_STARTED_ATTEMPT")
+      v2_check("DV03_DUPLICATE_DISPATCH",dispatched,auth="8102",expect="DENY",required="DISPATCH_REQUIRES_STARTED_ATTEMPT")
+      v2_check("DV04_REUSE_START_RUN",started,auth="7003",expect="DENY",required="AUTHORIZATION_RUN_ALREADY_CONSUMED")
+      def change_pinned_sha(e,field):
+          e[field]="0"*64
+          e["descriptor_sha256"]=dispatch_v2_descriptor(e)
+      v2_check("DV05_WRONG_PUBLIC_SHA",started,mutate=lambda e:change_pinned_sha(e,"dispatch_source_public_sha256"),expect="DENY",required="DISPATCH_PREDECESSOR_PUBLIC_SHA_MISMATCH")
+      v2_check("DV06_WRONG_PRIVATE_SHA",started,mutate=lambda e:change_pinned_sha(e,"dispatch_source_private_sha256"),expect="DENY",required="DISPATCH_PREDECESSOR_PRIVATE_SHA_MISMATCH")
+      v2_check("DV07_EXECUTOR_MISMATCH",started,request_executor="wrong",expect="DENY",required="DISPATCH_EXECUTOR_REQUEST_MISMATCH")
+      v2_check("DV08_MATERIAL_HASH_MISSING",started,mutate=lambda e:e.update(c1_sha256=None),expect="DENY",required="DISPATCH_MATERIAL_SHA_INVALID")
+      v2_check("DV09_DESCRIPTOR_FORGERY",started,mutate=lambda e:e.update(descriptor_sha256="0"*64),expect="DENY",required="DISPATCH_DESCRIPTOR_INVALID")
+      v2_check("DV10_RUN_REPLAY",started,auth="7001",expect="DENY",required="AUTHORIZATION_RUN_ALREADY_CONSUMED")
+      # A v1 close must not silently close a v2-dispatched attempt.
+      event_case("DV11_V1_CLOSE_CANNOT_CLOSE_V2",dispatched,
+                 fresh("CLOSE","8103","MOTION_F_TEST_EXECUTOR"),"8103",
+                 "DENY","DISPATCHED_ATTEMPT_REQUIRES_V2_CLOSE","MOTION_F_TEST_EXECUTOR")
+      valid_changes=list(DISPATCH_V2_PATHS)
+      scoped={"requested_action_id":DISPATCH_V2_ACTION,"action_kind":"GOVERNANCE_UPGRADE",
+              "operations":["GOVERNANCE_UPGRADE","PATCH"],
+              "target_scope_ids":list(DISPATCH_V2_SCOPES)}
+      bad=validate_dispatch_v2_changed_paths(valid_changes+[".github/workflows/authorize-next-action.yml"],scoped,s,ROOT)
+      mark("DV12_WORKFLOW_OUT_OF_SCOPE","DENY","DENY" if bad else "ALLOW",bad,"DISPATCH_V2_EXACT_FIVE_PATHS_REQUIRED")
+      # The live head carries patched files; it is never its own trusted preimage.
+      # Positive preimage validation is performed by CI against separate base checkout.
+      missing_base=validate_dispatch_v2_changed_paths(valid_changes,scoped,s,None)
+      mark("DV13_TRUSTED_BASE_REQUIRED","DENY","DENY" if missing_base else "ALLOW",missing_base,
+           "DISPATCH_V2_TRUSTED_BASE_REQUIRED")
+      # A control-plane event never authorizes direct CLI execution.
+      synthetic=copy.deepcopy(s)
+      synthetic["current_action"]={"id":"DV14_NOT_LAUNCHABLE","mode":"MUTATING"}
+      synthetic["execution_authorized_now"]=True
+      synthetic["attempt_ledger"]=dispatched["attempt_ledger"]
+      lock=td/"DV14-lock.json";write(lock,synthetic)
+      side=td/"DV14-lock.sha256";side.write_text(sha(lock)+"  lock.json\n")
+      rq={"schema":"GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0","request_id":"DV14",
+          "input_public_lock_sha256":sha(lock),"input_private_state_sha256":synthetic["private_execution_state_sha256"],
+          "requested_action_id":"DV14_NOT_LAUNCHABLE","action_kind":"EXECUTE","mode":"MUTATING",
+          "project":"GLOBAL","method_id":"MOTION_F_SAFE_TEST","attempt_id":"MOTION_F_TEST_01",
+          "operations":["BUILD"],"authorization_run_id":"8101",
+          "target_scope_ids":[],"executor_id":"MOTION_F_TEST_EXECUTOR","user_explicit_authorization":True}
+      rqpath=td/"DV14-request.json";write(rqpath,rq)
+      got=validate(lock,side,rqpath)
+      mark("DV14_NO_BROKER_NO_LAUNCH","DENY",got["status"],got["reasons"],"EXECUTE_REQUIRES_DURABLE_ONE_USE_DISPATCH_RECEIPT")
+      # Synthetic 64-hex receipt is NOT an authenticated Broker attestation.
+      # No Broker is installed in the approved control-plane-only patch.
+      forged_close=ev("CLOSE","7001",pin,cand=None)
+      forged_close.update(schema=DISPATCH_V2_SCHEMA,
+           event_authorization_run_id="8104",
+           executor_id="MOTION_F_TEST_EXECUTOR",
+           terminal_broker_receipt_sha256="c"*64,
+           terminal_result="NOT_LAUNCHED",
+           dispatch_descriptor_sha256=original_dispatch["descriptor_sha256"])
+      event_case("DV15_FORGED_BROKER_RECEIPT_REJECTED",dispatched,
+           forged_close,"8104","DENY",
+           "V2_CLOSE_REQUIRES_AUTHENTICATED_BROKER_RECEIPT",
+           executor="MOTION_F_TEST_EXECUTOR")
+
     report={"schema":"GLOBAL_PUBLICATION_PUBLIC_LOCK_SELFTEST/1.0.0","total":len(out),"passed":sum(1 for x in out if x[3]),"status":"PASS" if all(x[3] for x in out) else "FAIL","results":[{"id":a,"expected":b,"actual":c,"pass":d,"reasons":e} for a,b,c,d,e in out]}
     print(json.dumps(report,indent=2))
     return 0 if report["status"]=="PASS" else 1

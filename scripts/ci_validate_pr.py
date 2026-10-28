@@ -68,6 +68,33 @@ def validate_atomic_changed_paths(changes,request,base_lock,base_root=None):
                 reasons.append("ATOMIC_BASE_BLOB_MISMATCH:"+rel)
     return reasons
 
+
+# GEN32 DISPATCH v2: one approved immutable 5-path control-plane patch.
+DISPATCH_V2_ACTION="GLOBAL_PUBLICATION_GEN32_R25R7_EXISTING_PRODUCER_ATOMIC_DISPATCH_BINDING"
+DISPATCH_V2_PATHS=set(["gate/transition_guard.py","gate/publication_gate.py","scripts/ci_validate_pr.py","scripts/selftest.py","request/ACTION_REQUEST.json"])
+DISPATCH_V2_SCOPES=set(["GEN32_R25R7_EXISTING_ATOMIC_BINDING_ISSUE53_SCOPE_ONLY","GEN32_DISPATCH_V2_CONTROL_PLANE_ONLY_NO_PRODUCER","GEN32_PRESERVE_V1_GEN29_HISTORY_AND_GATE_49","GEN32_NO_R25R7_ASSEMBLY_GRAMMAR_PPGES_C1_CHANGE","gate/transition_guard.py","gate/publication_gate.py","scripts/ci_validate_pr.py","scripts/selftest.py","request/ACTION_REQUEST.json","CONTRACT_SHA256_0522a6fc87521143d8fd689a6f82b65c1748a4f1bb63d9d0f6ab924ca002f24a","PUBLIC_SHA256_6870614362a1d090f4694d5f9de035ef4922ec5161707e7b9f83b82431ad64d9","PRIVATE_SHA256_dfe3488ff09feba990938953c0caab822a01b90c32cc687d11c08f80d0818ed1"])
+DISPATCH_V2_BASE_BLOBS={"gate/transition_guard.py":"b171f9b8c29e849b2c235eded47f0cb9ea4417a1","gate/publication_gate.py":"462567f7c9c68684b9b1d2f488086f979d2d3982","scripts/ci_validate_pr.py":"d9d860fc3705999360b35da91e73622bc924e886","scripts/selftest.py":"f495fa80fb0364aef4cba9eb4929dcd12933d16f","request/ACTION_REQUEST.json":"5b630f562abde995ca514d24320b6d025f42709a"}
+def validate_dispatch_v2_changed_paths(changes,request,base_lock,base_root=None):
+    if request.get("requested_action_id")!=DISPATCH_V2_ACTION: return []
+    reasons=[]
+    if request.get("action_kind")!="GOVERNANCE_UPGRADE":
+        reasons.append("DISPATCH_V2_REQUIRES_GOVERNANCE_UPGRADE")
+    if set(request.get("operations") or [])!={"GOVERNANCE_UPGRADE","PATCH"}:
+        reasons.append("DISPATCH_V2_OPERATIONS_NOT_EXACT")
+    if set(request.get("target_scope_ids") or [])!=DISPATCH_V2_SCOPES:
+        reasons.append("DISPATCH_V2_SCOPE_NOT_EXACT")
+    if set(changes)!=DISPATCH_V2_PATHS:
+        reasons.append("DISPATCH_V2_EXACT_FIVE_PATHS_REQUIRED")
+    if base_lock.get("generation")!=32 or base_lock.get("current_action",{}).get("mode")!="READ_ONLY":
+        reasons.append("DISPATCH_V2_WRONG_BASE_LOCK")
+    if base_root is None:
+        reasons.append("DISPATCH_V2_TRUSTED_BASE_REQUIRED")
+    else:
+        for rel,expected in DISPATCH_V2_BASE_BLOBS.items():
+            if git_blob_file(Path(base_root)/rel)!=expected:
+                reasons.append("DISPATCH_V2_BASE_BLOB_MISMATCH:"+rel)
+    return reasons
+
 def validate_motion_f_changed_paths(changes,request,base_lock):
     if request.get("requested_action_id")!=MOTION_F_ACTION:
         return []
@@ -210,6 +237,7 @@ def main():
 
     reasons += validate_motion_f_changed_paths(changes,req,load_json(base/LOCK))
     reasons += validate_atomic_changed_paths(changes,req,load_json(base/LOCK),base)
+    reasons += validate_dispatch_v2_changed_paths(changes,req,load_json(base/LOCK),base)
 
     runtime_changed=[p for p in changes if p in PROTECTED_RUNTIME_FILES or p.startswith(PROTECTED_RUNTIME_PREFIXES)]
     if runtime_changed and req.get("action_kind")!="GOVERNANCE_UPGRADE":
