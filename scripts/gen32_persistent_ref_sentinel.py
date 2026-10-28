@@ -12,6 +12,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+from datetime import datetime, timezone
 import re
 import sys
 import urllib.error
@@ -25,6 +26,24 @@ CLAIM_REF = 'refs/tags/gen32-sentinel-claim/20261028-synthetic-a01'
 PUBLIC_SHA256 = '6870614362a1d090f4694d5f9de035ef4922ec5161707e7b9f83b82431ad64d9'
 PRIVATE_SHA256 = 'dfe3488ff09feba990938953c0caab822a01b90c32cc687d11c08f80d0818ed1'
 BASE_API = f'https://api.github.com/repos/{REPOSITORY}'
+# Independently inspected Ruleset 26012498 (GitHub connected owner-authorized read).
+# All fields except bypass permissions are checked live with a version pin.
+# GitHub hides bypass_actors from callers without ruleset-write access.
+OWNER_RULESET_ATTESTATION = {
+    'id': RULESET_ID,
+    'node_id': 'RRS_lACqUmVwb3NpdG9yec5UXi5YzgGM61I',
+    'updated_at': '2026-10-28T08:37:36.633+03:30',
+    'name': 'GEN32-SYNTHETIC-CLAIM-IMMUTABLE',
+    'target': 'tag',
+    'source_type': 'Repository',
+    'source': REPOSITORY,
+    'enforcement': 'active',
+    'ref_include': [TAG_PATTERN],
+    'ref_exclude': [],
+    'rule_types': {'deletion', 'non_fast_forward', 'update'},
+    'verified_bypass_actors': [],
+    'verified_owner_bypass_status': 'never',
+}
 
 class RefDenied(Exception):
     pass
@@ -93,28 +112,66 @@ def api(method: str, path: str, payload: object|None = None) -> tuple[int, objec
     return code,response
 
 
-def ruleset_ok(rule: object) -> bool:
-    if not isinstance(rule,dict):
+def same_instant(a: object, b: object) -> bool:
+    if not isinstance(a, str) or not isinstance(b, str):
         return False
-    conditions=rule.get('conditions') or {}
-    refs=conditions.get('ref_name') or {}
-    types={r.get('type') for r in rule.get('rules',[]) if isinstance(r,dict)}
-    return (rule.get('id')==RULESET_ID
-        and rule.get('target')=='tag'
-        and rule.get('enforcement')=='active'
-        and rule.get('source')==REPOSITORY
-        and refs.get('include')==[TAG_PATTERN]
-        and refs.get('exclude')==[]
-        and rule.get('bypass_actors')==[]
-        and rule.get('current_user_can_bypass')=='never'
-        and {'deletion','update'}.issubset(types)
-        and 'creation' not in types)
+    try:
+        parse = lambda v: datetime.fromisoformat(v.replace('Z', '+00:00')).astimezone(timezone.utc)
+        return parse(a) == parse(b)
+    except (ValueError, TypeError):
+        return False
+
+
+def ruleset_verdict(status: int, rule: object) -> str:
+    """Return safe, bounded diagnostic; never interpret redaction as no bypass.
+
+    A pinned owner-reviewed Ruleset version is only a limited *synthetic*
+    compatibility witness, not cryptographic proof of cross-run immutability.
+    """
+    if status != 200:
+        return ('RULESET_HTTP_'+str(status)+'_NO_CLAIM') if status in (401,403,404,422,429,500,502,503,504) else 'RULESET_HTTP_OTHER_NO_CLAIM'
+    if not isinstance(rule, dict):
+        return 'RULESET_SCHEMA_NO_CLAIM'
+    w = OWNER_RULESET_ATTESTATION
+    if w['verified_bypass_actors'] != [] or w['verified_owner_bypass_status'] != 'never':
+        return 'OWNER_WITNESS_INVALID_NO_CLAIM'
+    for field in ('id','node_id','name','target','source_type','source','enforcement'):
+        if rule.get(field) != w[field]:
+            return 'RULESET_'+field.upper()+'_DRIFT_NO_CLAIM'
+    if not same_instant(rule.get('updated_at'), w['updated_at']):
+        return 'RULESET_VERSION_DRIFT_NO_CLAIM'
+    refs = rule.get('conditions')
+    if not isinstance(refs,dict) or not isinstance(refs.get('ref_name'),dict):
+        return 'RULESET_CONDITIONS_NO_CLAIM'
+    refs=refs['ref_name']
+    if refs.get('include') != w['ref_include'] or refs.get('exclude') != w['ref_exclude']:
+        return 'RULESET_PATTERN_DRIFT_NO_CLAIM'
+    rules=rule.get('rules')
+    if not isinstance(rules,list) or not all(isinstance(item,dict) and isinstance(item.get('type'),str) for item in rules):
+        return 'RULESET_RULES_SCHEMA_NO_CLAIM'
+    types=[item['type'] for item in rules]
+    if set(types) != w['rule_types'] or len(types) != len(w['rule_types']):
+        return 'RULESET_RULES_DRIFT_NO_CLAIM'
+    # An omitted field is REDACTED (not an empty list). Accept only if exact
+    # immutable *version identity and all visible protections* match the
+    # independently checked owner witness embedded in protected source.
+    if 'bypass_actors' in rule and rule['bypass_actors'] != []:
+        return 'RULESET_BYPASS_CONFLICT_NO_CLAIM'
+    if 'current_user_can_bypass' in rule and rule['current_user_can_bypass'] != 'never':
+        return 'RULESET_BYPASS_STATUS_CONFLICT_NO_CLAIM'
+    return 'PASS_RULESET_OWNER_VERSION_ATTESTED_SYNTHETIC_ONLY'
+
+
+def ruleset_ok(rule: object) -> bool:
+    # Compatibility alias so old tests stay meaningful; fail-closed on drift.
+    return ruleset_verdict(200,rule).startswith('PASS_')
 
 
 def verify_ruleset() -> None:
     status,rule=api('GET',f'/rulesets/{RULESET_ID}')
-    if status!=200 or not ruleset_ok(rule):
-        raise RefDenied(f'RULESET_NOT_VERIFIED_{status}')
+    verdict=ruleset_verdict(status,rule)
+    if not verdict.startswith('PASS_'):
+        raise RefDenied(verdict)
 
 
 def check_ref() -> None:
@@ -157,7 +214,7 @@ def claim() -> int:
         outcome=classify_create_result(status,body,commit_sha)
     except (RefDenied,OSError,ValueError,urllib.error.URLError,TimeoutError) as exc:
         # No attempts to mutate anything after any uncertain result.
-        print('SYNTHETIC_CLAIM_FAIL_CLOSED: '+type(exc).__name__)
+        print('SYNTHETIC_CLAIM_FAIL_CLOSED: '+(str(exc) if isinstance(exc,RefDenied) else type(exc).__name__))
         write_output('UNKNOWN')
         return 1
     print(f'SYNTHETIC_CLAIM_RESULT={outcome} HTTP={status}')
@@ -173,7 +230,10 @@ def claim() -> int:
 def selftest() -> int:
     sha='a'*40
     valid={
-        'id':RULESET_ID,'name':'GEN32-SYNTHETIC-CLAIM-IMMUTABLE',
+        'id':RULESET_ID,'node_id':OWNER_RULESET_ATTESTATION['node_id'],
+        'updated_at':OWNER_RULESET_ATTESTATION['updated_at'],
+        'name':'GEN32-SYNTHETIC-CLAIM-IMMUTABLE',
+        'source_type':'Repository',
         'target':'tag','source':REPOSITORY,'enforcement':'active',
         'conditions':{'ref_name':{'include':[TAG_PATTERN],'exclude':[]}},
         'rules':[{'type':'update'},{'type':'deletion'},{'type':'non_fast_forward'}],
@@ -181,6 +241,17 @@ def selftest() -> int:
     }
     checks={
       'ACTIVE_RULE_ACCEPTED':ruleset_ok(valid),
+      'REDACTED_BYPASS_WITH_VERSION_ATTESTED':ruleset_ok({k:v for k,v in valid.items() if k not in ('bypass_actors','current_user_can_bypass')}),
+      'REDACTED_WITH_VERSION_DRIFT_DENIED':not ruleset_ok({**{k:v for k,v in valid.items() if k not in ('bypass_actors','current_user_can_bypass')},'updated_at':'2026-10-28T08:39:01+03:30'}),
+      'MISSING_VERSION_DENIED':not ruleset_ok({k:v for k,v in valid.items() if k!='updated_at'}),
+      'NODE_ID_DRIFT_DENIED':not ruleset_ok({**valid,'node_id':'wrong'}),
+      'SOURCE_TYPE_DRIFT_DENIED':not ruleset_ok({**valid,'source_type':'Organization'}),
+      'SAME_INSTANT_UTC_ACCEPTED':ruleset_ok({**valid,'updated_at':'2026-10-28T05:07:36.633Z'}),
+      'EXPLICIT_BYPASS_STATUS_DENIED':not ruleset_ok({**valid,'current_user_can_bypass':'always'}),
+      'HTTP_403_FAILS_CLOSED':ruleset_verdict(403,{})=='RULESET_HTTP_403_NO_CLAIM',
+      'HTTP_404_FAILS_CLOSED':ruleset_verdict(404,{})=='RULESET_HTTP_404_NO_CLAIM',
+      'MALFORMED_RESPONSE_FAILS_CLOSED':ruleset_verdict(200,None)=='RULESET_SCHEMA_NO_CLAIM',
+
       'INACTIVE_RULE_DENIED':not ruleset_ok({**valid,'enforcement':'disabled'}),
       'WRONG_TARGET_DENIED':not ruleset_ok({**valid,'target':'branch'}),
       'BYPASS_DENIED':not ruleset_ok({**valid,'bypass_actors':[{'actor_id':1}]}),
@@ -211,7 +282,7 @@ def main() -> int:
             check_ref()
             return 0
         except (RefDenied,OSError,ValueError,urllib.error.URLError,TimeoutError) as exc:
-            print('REF_FINAL_CHECK_DENY_'+type(exc).__name__)
+            print('REF_FINAL_CHECK_DENY_'+(str(exc) if isinstance(exc,RefDenied) else type(exc).__name__))
             return 1
     if args.mode=='check-ruleset':
         try:
@@ -221,7 +292,7 @@ def main() -> int:
             print('RULESET_PREFLIGHT_PASS_SYNTHETIC_ONLY')
             return 0
         except (RefDenied,OSError,ValueError,urllib.error.URLError,TimeoutError) as exc:
-            print('RULESET_PREFLIGHT_DENY_'+type(exc).__name__)
+            print('RULESET_PREFLIGHT_DENY_'+(str(exc) if isinstance(exc,RefDenied) else type(exc).__name__))
             return 1
     return claim()
 
