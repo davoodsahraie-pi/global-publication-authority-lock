@@ -1,9 +1,9 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "GEN33_PROTECTED_CLAIM_PROOF_V1_AUTH_RUN_40748290755",
+  "request_id": "GEN33_SYNTHETIC_CLAIM_RACE_CODE_ONLY_40756323455",
   "input_public_lock_sha256": "08c2c4c23f1223c7a05554ac81f5f1bac948ac805d28503ca1b0be890b5474fa",
   "input_private_state_sha256": "dfe3488ff09feba990938953c0caab822a01b90c32cc687d11c08f80d0818ed1",
-  "requested_action_id": "GLOBAL_PUBLICATION_GEN33_PROTECTED_CLAIM_PROOF_V1_NONPRODUCER_IMPLEMENTATION",
+  "requested_action_id": "GLOBAL_PUBLICATION_GEN33_SYNTHETIC_PROTECTED_REF_RACE_V1_CODE_ONLY_IMPLEMENTATION",
   "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "READ_ONLY",
   "project": "GLOBAL",
@@ -13,15 +13,12 @@
     "PATCH"
   ],
   "target_scope_ids": [
-    "broker/gen33_source_bound_broker.py",
-    "broker/gen33_live_claim.py",
-    "tests/test_gen33_live_claim.py",
-    ".github/workflows/gen33-live-claim-proof.yml",
-    ".github/workflows/gen33-broker-qa.yml",
+    "scripts/gen33_synthetic_claim_race.py",
+    "tests/test_gen33_synthetic_claim_race.py",
+    ".github/workflows/gen33-synthetic-claim-race.yml",
     "scripts/ci_validate_pr.py",
-    "scripts/selftest.py",
     "request/ACTION_REQUEST.json"
   ],
-  "authorization_run_id": 40748290755,
+  "authorization_run_id": 40756323455,
   "user_explicit_authorization": true
 }
