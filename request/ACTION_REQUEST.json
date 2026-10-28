@@ -1,9 +1,9 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "gen32-persistent-ref-preflight-compat-40647852395-2026-10-28",
+  "request_id": "GEN32_R25R7_DISPATCH_CONTROL_PLANE_AUTH_RUN_40667538391",
   "input_public_lock_sha256": "6870614362a1d090f4694d5f9de035ef4922ec5161707e7b9f83b82431ad64d9",
   "input_private_state_sha256": "dfe3488ff09feba990938953c0caab822a01b90c32cc687d11c08f80d0818ed1",
-  "requested_action_id": "GLOBAL_PUBLICATION_GEN32_PERSISTENT_REF_PREFLIGHT_COMPAT_PATCH",
+  "requested_action_id": "GLOBAL_PUBLICATION_GEN32_R25R7_EXISTING_PRODUCER_ATOMIC_DISPATCH_BINDING",
   "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "READ_ONLY",
   "project": "GLOBAL",
@@ -13,15 +13,19 @@
     "PATCH"
   ],
   "target_scope_ids": [
-    "GEN32_PERSISTENT_REF_PREFLIGHT_COMPATIBILITY_PATCH_SCOPE_ISSUE53",
-    "RULESET_ID_26012498",
-    "scripts/gen32_persistent_ref_sentinel.py",
+    "GEN32_R25R7_EXISTING_ATOMIC_BINDING_ISSUE53_SCOPE_ONLY",
+    "GEN32_DISPATCH_V2_CONTROL_PLANE_ONLY_NO_PRODUCER",
+    "GEN32_PRESERVE_V1_GEN29_HISTORY_AND_GATE_49",
+    "GEN32_NO_R25R7_ASSEMBLY_GRAMMAR_PPGES_C1_CHANGE",
+    "gate/publication_gate.py",
+    "gate/transition_guard.py",
+    "scripts/ci_validate_pr.py",
+    "scripts/selftest.py",
     "request/ACTION_REQUEST.json",
-    "GEN32_FAIL_CLOSED_DIAGNOSTIC_AND_REDACTED_BYPASS_VERSION_PIN_ONLY",
-    "GEN32_NO_WORKFLOW_RULESET_GATE_AUTHORITY_PRODUCER_DOCX_PDF_GEN29",
-    "SCRIPT_SHA256_aab5d8c88d8b6e89476bf8b27a421d327ea71906f81d4b120918f9f25d4e358d",
-    "DRAFT_SHA256_51444d2da279def2eb7505abed04e8693561bb565a613ddf255a2d43ed1ffe59"
+    "CONTRACT_SHA256_0522a6fc87521143d8fd689a6f82b65c1748a4f1bb63d9d0f6ab924ca002f24a",
+    "PUBLIC_SHA256_6870614362a1d090f4694d5f9de035ef4922ec5161707e7b9f83b82431ad64d9",
+    "PRIVATE_SHA256_dfe3488ff09feba990938953c0caab822a01b90c32cc687d11c08f80d0818ed1"
   ],
-  "authorization_run_id": "40647852395",
+  "authorization_run_id": "40667538391",
   "user_explicit_authorization": true
 }

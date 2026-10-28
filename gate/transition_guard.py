@@ -11,6 +11,19 @@ def load(p): return json.loads(Path(p).read_text(encoding="utf-8"))
 EVENT_SCHEMA="GLOBAL_PUBLICATION_ATTEMPT_EVENT/1.0.0"
 ATTEMPT_EVENTS=("RESERVE","START","CLOSE")
 HISTORICAL_GEN29_RUN="40329927057"
+
+# Additive control-plane protocol. Historical v1 RESERVE/START/CLOSE is immutable.
+DISPATCH_V2_SCHEMA="GLOBAL_PUBLICATION_ATTEMPT_EVENT/2.0.0"
+DISPATCH_V2_SHA_FIELDS=('package_sha256','wheel_sha256','canonical_source_sha256','c1_sha256','ppges_sha256','dependency_lock_sha256','input_manifest_sha256','runtime_code_sha256','runtime_workflow_sha256',)
+DISPATCH_V2_TEXT_FIELDS=("purpose","output_identity","runtime_domain")
+def is_sha256(x):
+    return isinstance(x,str) and len(x)==64 and all(c in "0123456789abcdef" for c in x)
+def dispatch_v2_descriptor(event):
+    # Descriptor is NOT a protected-main launch grant; never use it to spawn.
+    canonical={k:v for k,v in event.items() if k!="descriptor_sha256"}
+    encoded=json.dumps(canonical,sort_keys=True,separators=(",",":"),ensure_ascii=True).encode("utf-8")
+    return hashlib.sha256(b"GLOBAL-PUBLICATION-DISPATCH-V2-DESCRIPTOR\x00"+encoded).hexdigest()
+
 # A START/CLOSE event must consume its own distinct authorization Run.
 # A reserved Run must never be reused as the START or CLOSE authorization.
 def run_id(value):
@@ -25,10 +38,16 @@ def attempt_snapshot(events):
     attempts={}; runs={}
     if not isinstance(events,list): raise ValueError("ATTEMPT_LEDGER_NOT_LIST")
     for event in events:
-        if not isinstance(event,dict) or event.get("schema")!=EVENT_SCHEMA:
+        if not isinstance(event,dict):
             raise ValueError("ATTEMPT_EVENT_SCHEMA_INVALID")
+        version=event.get("schema")
         typ=event.get("event")
-        if typ not in ATTEMPT_EVENTS: raise ValueError("ATTEMPT_EVENT_TYPE_INVALID")
+        if version==EVENT_SCHEMA:
+            if typ not in ATTEMPT_EVENTS: raise ValueError("ATTEMPT_EVENT_TYPE_INVALID")
+        elif version==DISPATCH_V2_SCHEMA:
+            if typ not in {"DISPATCH","CLOSE"}: raise ValueError("DISPATCH_V2_EVENT_TYPE_INVALID")
+        else:
+            raise ValueError("ATTEMPT_EVENT_SCHEMA_INVALID")
         key=tuple(event.get(k) for k in ("project_id","method_id","attempt_id"))
         if not all(isinstance(x,str) and x.strip() for x in key):
             raise ValueError("ATTEMPT_KEY_INVALID")
@@ -66,10 +85,41 @@ def attempt_snapshot(events):
                 existing["state"]="ACTIVE"
                 existing["claim_run"]=claim
                 existing["executor"]=event["executor_id"]
+            elif typ=="DISPATCH":
+                if existing["state"]!="ACTIVE":
+                    raise ValueError("DISPATCH_REQUIRES_STARTED_ATTEMPT")
+                if event.get("executor_id")!=existing["executor"]:
+                    raise ValueError("DISPATCH_EXECUTOR_ID_CHANGED")
+                if not is_sha256(event.get("dispatch_source_public_sha256")) or not is_sha256(event.get("dispatch_source_private_sha256")):
+                    raise ValueError("DISPATCH_SOURCE_SHA_INVALID")
+                if any(not is_sha256(event.get(k)) for k in DISPATCH_V2_SHA_FIELDS):
+                    raise ValueError("DISPATCH_MATERIAL_SHA_INVALID")
+                if any(not isinstance(event.get(k),str) or not event[k].strip() or len(event[k])>256 for k in DISPATCH_V2_TEXT_FIELDS):
+                    raise ValueError("DISPATCH_PURPOSE_OR_RUNTIME_INVALID")
+                if event.get("candidate_sha256") is not None:
+                    raise ValueError("DISPATCH_HAS_CANDIDATE")
+                if event.get("descriptor_sha256")!=dispatch_v2_descriptor(event):
+                    raise ValueError("DISPATCH_DESCRIPTOR_INVALID")
+                existing["state"]="DISPATCHED"
+                existing["dispatch_run"]=claim
+                existing["dispatch_descriptor"]=event["descriptor_sha256"]
             elif typ=="CLOSE":
-                if existing["state"] not in {"RESERVED","ACTIVE"}:
+                if version==DISPATCH_V2_SCHEMA:
+                    if existing["state"]!="DISPATCHED":
+                        raise ValueError("V2_CLOSE_REQUIRES_DISPATCH")
+                    if not is_sha256(event.get("terminal_broker_receipt_sha256")):
+                        raise ValueError("V2_CLOSE_TERMINAL_RECEIPT_REQUIRED")
+                    if event.get("terminal_result")!="NOT_LAUNCHED":
+                        raise ValueError("V2_CLOSE_REQUIRES_FUTURE_QUALIFIED_BROKER")
+                    if event.get("candidate_sha256") is not None:
+                        raise ValueError("V2_NEVER_LAUNCHED_HAS_CANDIDATE")
+                    if event.get("dispatch_descriptor_sha256")!=existing["dispatch_descriptor"]:
+                        raise ValueError("V2_CLOSE_DESCRIPTOR_MISMATCH")
+                elif existing["state"]=="DISPATCHED":
+                    raise ValueError("DISPATCHED_ATTEMPT_REQUIRES_V2_CLOSE")
+                if existing["state"] not in {"RESERVED","ACTIVE","DISPATCHED"}:
                     raise ValueError("ATTEMPT_CLOSE_INVALID_STATE")
-                if existing["state"]=="ACTIVE":
+                if existing["state"] in {"ACTIVE","DISPATCHED"}:
                     if event.get("executor_id")!=existing["executor"]:
                         raise ValueError("ATTEMPT_EXECUTOR_ID_CHANGED")
                 elif event.get("executor_id") is not None:
@@ -142,6 +192,16 @@ def audit_attempt_transition(cur,prop,request,cur_sha):
     if event.get("event")=="START":
         if event.get("executor_id")!=request.get("executor_id"):
             reasons.append("ATTEMPT_EXECUTOR_REQUEST_MISMATCH")
+    if event.get("event")=="DISPATCH":
+        if event.get("dispatch_source_public_sha256")!=cur_sha:
+            reasons.append("DISPATCH_PREDECESSOR_PUBLIC_SHA_MISMATCH")
+        if event.get("dispatch_source_private_sha256")!=cur.get("private_execution_state_sha256"):
+            reasons.append("DISPATCH_PREDECESSOR_PRIVATE_SHA_MISMATCH")
+        if event.get("executor_id")!=request.get("executor_id"):
+            reasons.append("DISPATCH_EXECUTOR_REQUEST_MISMATCH")
+        failed=set((cur.get("ledger_hashes") or {}).get("method_fail") or [])
+        fail_digest=hashlib.sha256(("FAIL:"+str(event.get("method_id")).upper()).encode("utf-8")).hexdigest()
+        if fail_digest in failed: reasons.append("DISPATCH_FAILED_METHOD_FORBIDDEN")
     if event.get("event")=="CLOSE":
         if event.get("executor_id")!=request.get("executor_id"):
             reasons.append("ATTEMPT_EXECUTOR_REQUEST_MISMATCH")
