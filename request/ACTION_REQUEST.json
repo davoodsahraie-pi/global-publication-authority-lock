@@ -1,24 +1,26 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "GEN33_SYNTHETIC_CLAIM_RACE_CODE_ONLY_40756323455",
+  "request_id": "GEN33_POST_RACE_RECONCILIATION_SCOPE_RUN_40766599402",
   "input_public_lock_sha256": "08c2c4c23f1223c7a05554ac81f5f1bac948ac805d28503ca1b0be890b5474fa",
   "input_private_state_sha256": "dfe3488ff09feba990938953c0caab822a01b90c32cc687d11c08f80d0818ed1",
-  "requested_action_id": "GLOBAL_PUBLICATION_GEN33_SYNTHETIC_PROTECTED_REF_RACE_V1_CODE_ONLY_IMPLEMENTATION",
+  "requested_action_id": "GLOBAL_PUBLICATION_GEN33_POST_RACE_AUTHORITY_STATE_RECONCILIATION_AND_R25R7_BRIDGE_SELECTION",
   "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "READ_ONLY",
   "project": "GLOBAL",
   "method_id": null,
   "operations": [
     "GOVERNANCE_UPGRADE",
-    "PATCH"
+    "AUTHORITY_UPDATE",
+    "STATE_TRANSITION"
   ],
   "target_scope_ids": [
-    "scripts/gen33_synthetic_claim_race.py",
-    "tests/test_gen33_synthetic_claim_race.py",
-    ".github/workflows/gen33-synthetic-claim-race.yml",
-    "scripts/ci_validate_pr.py",
-    "request/ACTION_REQUEST.json"
+    "authority/CURRENT.json",
+    "authority/CURRENT.sha256",
+    "request/STATE_TRANSITION.json",
+    "request/ACTION_REQUEST.json",
+    "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_CURRENT.json",
+    "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_CURRENT.json.sha256"
   ],
-  "authorization_run_id": 40756323455,
+  "authorization_run_id": 40766599402,
   "user_explicit_authorization": true
 }
