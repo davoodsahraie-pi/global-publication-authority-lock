@@ -101,5 +101,21 @@ def classify_synthetic_claim(status, response, ref, expected_object_sha, ruleset
     return "SYNTHETIC_WIN_ONLY"
 
 
+
+# GEN33 proof-only capability: maps the original attempt key to an intended
+# protected ref. This never creates/claims the ref, consumes a grant, or
+# communicates with GitHub. A future separately authorized Broker is required.
+def protected_claim_proof_scope(project, method, attempt):
+    ref=expected_claim_ref(project,method,attempt)
+    return {
+        "schema":"GEN33_PROTECTED_CLAIM_SCOPE/1.0.0",
+        "ref":ref,
+        "namespace":REAL_NAMESPACE,
+        "mode":"PROOF_ONLY_NOT_ACTIVATED",
+        "physical_claim_authorized":False,
+        "producer_launch_authorized":False
+    }
+
+
 def launch_producer(*_args, **_kwargs):
     raise NotActivated("GEN33_BROKER_CODE_ONLY_NO_REAL_PRODUCER_EXECUTION")
