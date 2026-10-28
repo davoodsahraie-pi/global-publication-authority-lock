@@ -352,6 +352,7 @@ def main():
       rqpath=td/"DV14-request.json";write(rqpath,rq)
       got=validate(lock,side,rqpath)
       mark("DV14_NO_BROKER_NO_LAUNCH","DENY",got["status"],got["reasons"],"EXECUTE_REQUIRES_DURABLE_ONE_USE_DISPATCH_RECEIPT")
+      mark("GEN33_NO_LAUNCH_CODE_ONLY","DENY",got["status"],got["reasons"],"GEN33_BROKER_CODE_ONLY_NOT_ACTIVATED")
       # Synthetic 64-hex receipt is NOT an authenticated Broker attestation.
       # No Broker is installed in the approved control-plane-only patch.
       forged_close=ev("CLOSE","7001",pin,cand=None)
