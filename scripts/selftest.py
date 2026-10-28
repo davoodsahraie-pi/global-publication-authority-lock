@@ -367,6 +367,14 @@ def main():
            "V2_CLOSE_REQUIRES_AUTHENTICATED_BROKER_RECEIPT",
            executor="MOTION_F_TEST_EXECUTOR")
 
+    # GEN33 claim-proof cannot supply protection or a real grant from metadata.
+    sys.path.insert(0,str(ROOT/"broker"))
+    from gen33_live_claim import verify_ruleset, observe_claim_protection
+    absent_ok=verify_ruleset(None)[0] is False
+    out.append(("GEN33_PROOF_MISSING_RULESET_REJECTS",True,absent_ok,absent_ok,[]))
+    unauthorized_ok=observe_claim_protection(None)["physical_claim_authorized"] is False
+    out.append(("GEN33_PROOF_CANNOT_ISSUE_CLAIM",True,unauthorized_ok,unauthorized_ok,[]))
+
     report={"schema":"GLOBAL_PUBLICATION_PUBLIC_LOCK_SELFTEST/1.0.0","total":len(out),"passed":sum(1 for x in out if x[3]),"status":"PASS" if all(x[3] for x in out) else "FAIL","results":[{"id":a,"expected":b,"actual":c,"pass":d,"reasons":e} for a,b,c,d,e in out]}
     print(json.dumps(report,indent=2))
     return 0 if report["status"]=="PASS" else 1
