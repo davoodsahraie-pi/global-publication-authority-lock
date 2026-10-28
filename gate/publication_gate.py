@@ -84,6 +84,9 @@ def validate(lock_path, sidecar_path, request_path, authorization=None):
         # A successful preflight cannot consume a Run. Execution must be
         # delegated to a future separately authorized, one-use broker.
         reasons.append("EXECUTE_REQUIRES_DURABLE_ONE_USE_DISPATCH_RECEIPT")
+        # GEN33 CODE_ONLY installs no trusted redemption agent or issuer.
+        # Do not treat source-bound preflight or receipt metadata as permission.
+        reasons.append("GEN33_BROKER_CODE_ONLY_NOT_ACTIVATED")
         attempt_id=req.get("attempt_id")
         method_id=req.get("method_id")
         if not attempt_id or not method_id:
