@@ -24,6 +24,19 @@ def dispatch_v2_descriptor(event):
     encoded=json.dumps(canonical,sort_keys=True,separators=(",",":"),ensure_ascii=True).encode("utf-8")
     return hashlib.sha256(b"GLOBAL-PUBLICATION-DISPATCH-V2-DESCRIPTOR\x00"+encoded).hexdigest()
 
+# GEN33 source-bound descriptor is a DESIGN fingerprint ONLY. It is not a
+# DISPATCH v2 event, a redeemed grant, a receipt, or an EXECUTE allowance.
+GEN33_SOURCE_BOUND_DESCRIPTOR_DOMAIN=b"GEN33-SOURCE-BOUND-BROKER-CODE-ONLY\0"
+def gen33_source_bound_fingerprint(material):
+    if not isinstance(material,dict): raise ValueError("GEN33_MATERIAL_NOT_OBJECT")
+    required=("generator_sha256","driver_sha256","canonical_source_sha256",
+              "c1_sha256","ppges_sha256","dependency_lock_sha256")
+    if any(not is_sha256(material.get(key)) for key in required):
+        raise ValueError("GEN33_SOURCE_BOUND_MATERIAL_INVALID")
+    raw=json.dumps({k:material[k] for k in required},sort_keys=True,
+                   separators=(",",":"),ensure_ascii=True).encode("ascii")
+    return hashlib.sha256(GEN33_SOURCE_BOUND_DESCRIPTOR_DOMAIN+raw).hexdigest()
+
 # A START/CLOSE event must consume its own distinct authorization Run.
 # A reserved Run must never be reused as the START or CLOSE authorization.
 def run_id(value):

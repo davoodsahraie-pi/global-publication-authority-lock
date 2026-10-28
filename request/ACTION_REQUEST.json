@@ -1,29 +1,28 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "GEN32_TO_GEN33_SCOPE_SELECTION_AUTH_RUN_40736161003",
-  "input_public_lock_sha256": "6870614362a1d090f4694d5f9de035ef4922ec5161707e7b9f83b82431ad64d9",
+  "request_id": "GEN33_SOURCE_BOUND_BROKER_CODE_ONLY_RUN_40743213897",
+  "input_public_lock_sha256": "08c2c4c23f1223c7a05554ac81f5f1bac948ac805d28503ca1b0be890b5474fa",
   "input_private_state_sha256": "dfe3488ff09feba990938953c0caab822a01b90c32cc687d11c08f80d0818ed1",
-  "requested_action_id": "GLOBAL_PUBLICATION_GEN32_POSTMERGE_GATE_RECONCILIATION_AND_SOURCE_BOUND_BROKER_SCOPE_SELECTION",
-  "action_kind": "SET_NEXT_ACTION",
+  "requested_action_id": "GLOBAL_PUBLICATION_GEN33_SOURCE_BOUND_BROKER_IMPLEMENTATION_V1_CODE_ONLY",
+  "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "READ_ONLY",
   "project": "GLOBAL",
   "method_id": null,
   "operations": [
-    "SET_NEXT_ACTION"
+    "GOVERNANCE_UPGRADE",
+    "PATCH"
   ],
   "target_scope_ids": [
-    "GEN32_TO_GEN33_SCOPE_SELECTION_ONLY",
-    "GEN32_PR66_POSTMERGE_CONTROL_PLANE_RECONCILIATION_READ_ONLY",
-    "GEN33_SOURCE_BOUND_BROKER_NEXT_AUTHORIZATION_GATE_READ_ONLY",
-    "R25R7_ORIGINAL_GENERATOR_SHA256_646cf341c774953baa99da400ee3aa6e992fbbd8d0af95f36144f72c0fa5980c",
-    "R25R7_ORIGINAL_DRIVER_SHA256_b6ff959711cb3f3b9d103cb627bcc54e11de336b4ea2a4d862aa916ed2cb9191",
-    "DISTINGUISH_LEGACY_FULLBOOK_FROM_ENGINEERING_500_BLOCK_FIXTURE",
-    "GEN29_ATTEMPT01_CLOSED_NO_RETRY",
-    "NO_PRODUCER_EXECUTE_NO_BROKER_IMPLEMENTATION_NO_BOOK_BUILD",
-    "NO_R25R7_DRIVER_ASSEMBLY_C1_PPGES_GRAMMAR_CHANGE",
-    "PUBLIC_SHA256_6870614362a1d090f4694d5f9de035ef4922ec5161707e7b9f83b82431ad64d9",
-    "PRIVATE_SHA256_dfe3488ff09feba990938953c0caab822a01b90c32cc687d11c08f80d0818ed1"
+    "broker/gen33_source_bound_broker.py",
+    "broker/gen33_receipt_verifier.py",
+    "tests/test_gen33_broker.py",
+    ".github/workflows/gen33-broker-qa.yml",
+    "gate/publication_gate.py",
+    "gate/transition_guard.py",
+    "scripts/ci_validate_pr.py",
+    "scripts/selftest.py",
+    "request/ACTION_REQUEST.json"
   ],
-  "authorization_run_id": 40736161003,
+  "authorization_run_id": 40743213897,
   "user_explicit_authorization": true
 }
