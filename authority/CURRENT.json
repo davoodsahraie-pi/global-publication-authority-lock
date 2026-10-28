@@ -1,6 +1,6 @@
 {
   "current_action": {
-    "id": "GLOBAL_PUBLICATION_GEN33_SOURCE_BOUND_BROKER_IMPLEMENTATION_AUTHORIZATION_GATE_READ_ONLY",
+    "id": "GLOBAL_PUBLICATION_GEN34_R25R7_SECURE_BROKER_TO_PRODUCER_BRIDGE_AUTHORIZATION_GATE_READ_ONLY",
     "mode": "READ_ONLY"
   },
   "execution_authorized_now": false,
@@ -91,11 +91,11 @@
     "secondary_hardening_ruleset_id": 24939466,
     "selected_action_contract_path": "request/STATE_TRANSITION.json",
     "selected_engine": "NONE_SELECTED_STATIC_METHOD_CODE_ONLY",
-    "selected_next_action": "GLOBAL_PUBLICATION_GEN32_ATTEMPT_LEDGER_HARDENING_IMPLEMENTATION_AUTHORIZATION_GATE_READ_ONLY",
+    "selected_next_action": "GLOBAL_PUBLICATION_GEN34_R25R7_SECURE_BROKER_TO_PRODUCER_BRIDGE_AUTHORIZATION_GATE_READ_ONLY",
     "source_recovery_scope_repository_path": "request/GH1/SOURCE_RECOVERY_SCOPE_v1.json",
     "source_recovery_scope_sha256": "1afd8ee926833ced215bfef35744f07c1c7211c632ae5bd514b34a6c11c90fcd",
     "standalone_aspose_foss_pdf": "NOT_AVAILABLE",
-    "status": "GEN32_MOTION_E_SCOPE_SELECTED_FUTURE_GATE_CODE_AUTHORIZATION_REQUIRED",
+    "status": "GEN34_R25R7_SECURE_BRIDGE_SCOPE_SELECTED_ONLY_NO_PRODUCER",
     "successful_engineering_tests": 144,
     "target_private_execution_state_sha256": "e9ba762e97c990296ed177f5b9dd0af85f38d9d1ef9f5703a9fd59411726d4ce",
     "target_private_state_library_path": "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_v2.19_GEN29_ATTEMPT01_FORENSIC_CLOSEOUT_2026-10-26.json",
@@ -161,7 +161,7 @@
     ],
     "new_execution_authorization": false
   },
-  "generation": 33,
+  "generation": 34,
   "gh1_execution_rule": "GEN24 registers completed GEN23 engineering and selects staged same-SHA Q1. execution_authorized_now is eligibility only; fresh owner EXECUTE on this exact current lock/state/action/two scopes/QUALIFY+EXPORT_PDF remains mandatory. Historical EXECUTE and governance do not authorize future device execution.",
   "ledger_hashes": {
     "blocked_project": [
@@ -388,8 +388,8 @@
       "STATE_TRANSITION"
     ]
   },
-  "previous_public_lock_sha256": "6870614362a1d090f4694d5f9de035ef4922ec5161707e7b9f83b82431ad64d9",
-  "private_execution_state_sha256": "dfe3488ff09feba990938953c0caab822a01b90c32cc687d11c08f80d0818ed1",
+  "previous_public_lock_sha256": "08c2c4c23f1223c7a05554ac81f5f1bac948ac805d28503ca1b0be890b5474fa",
+  "private_execution_state_sha256": "0881394eda6ffa3441cb9dbda592db5a77c68441169749b4d49513ce4d720d78",
   "schema": "GLOBAL_PUBLICATION_PUBLIC_LOCK/1.2.0",
   "scoped_v2_evidence": {
     "delta_authorized_for_execution": false,
@@ -600,5 +600,26 @@
     "historical_exec_40329927057_consumed": true,
     "next_action_id": "GLOBAL_PUBLICATION_GEN32_ATTEMPT_LEDGER_HARDENING_IMPLEMENTATION_AUTHORIZATION_GATE_READ_ONLY",
     "next_action_mode": "READ_ONLY"
+  },
+  "gen34_post_race_reconciliation_receipt": {
+    "schema": "GLOBAL_PUBLICATION_GEN34_BRIDGE_SCOPE_SELECTION_RECEIPT/1.0.0",
+    "origin_generation": 33,
+    "target_generation": 34,
+    "owner_issue_number": 53,
+    "owner_vote": "APPROVE_GEN33_POST_RACE_AUTHORITY_STATE_RECONCILIATION_AND_R25R7_BRIDGE_NEXT_GATE_ONLY",
+    "authorization_run_id": 40766599402,
+    "source_public_sha256": "08c2c4c23f1223c7a05554ac81f5f1bac948ac805d28503ca1b0be890b5474fa",
+    "target_private_sha256": "0881394eda6ffa3441cb9dbda592db5a77c68441169749b4d49513ce4d720d78",
+    "source_private_sha256": "dfe3488ff09feba990938953c0caab822a01b90c32cc687d11c08f80d0818ed1",
+    "synthetic_physical_claim_run_id": 40761646972,
+    "synthetic_claim_result": "ONE_WIN_ONE_DENY_NO_PRODUCER",
+    "selected_next_action_id": "GLOBAL_PUBLICATION_GEN34_R25R7_SECURE_BROKER_TO_PRODUCER_BRIDGE_AUTHORIZATION_GATE_READ_ONLY",
+    "next_action_mode": "READ_ONLY",
+    "original_generator_sha256": "646cf341c774953baa99da400ee3aa6e992fbbd8d0af95f36144f72c0fa5980c",
+    "original_driver_sha256": "b6ff959711cb3f3b9d103cb627bcc54e11de336b4ea2a4d862aa916ed2cb9191",
+    "execution_authorized_now": false,
+    "producer_launch_authorized": false,
+    "private_source_delivery_authorized": false,
+    "gen29_attempt01": "CONSUMED_CLOSED"
   }
 }
