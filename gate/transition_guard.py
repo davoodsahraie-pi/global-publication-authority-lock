@@ -115,6 +115,10 @@ def attempt_snapshot(events):
                         raise ValueError("V2_NEVER_LAUNCHED_HAS_CANDIDATE")
                     if event.get("dispatch_descriptor_sha256")!=existing["dispatch_descriptor"]:
                         raise ValueError("V2_CLOSE_DESCRIPTOR_MISMATCH")
+                    # A SHA-looking string does not authenticate a broker receipt.
+                    # This five-path control-plane patch installs no trusted Broker;
+                    # therefore even NOT_LAUNCHED v2 CLOSE must fail closed.
+                    raise ValueError("V2_CLOSE_REQUIRES_AUTHENTICATED_BROKER_RECEIPT")
                 elif existing["state"]=="DISPATCHED":
                     raise ValueError("DISPATCHED_ATTEMPT_REQUIRES_V2_CLOSE")
                 if existing["state"] not in {"RESERVED","ACTIVE","DISPATCHED"}:

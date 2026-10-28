@@ -352,6 +352,19 @@ def main():
       rqpath=td/"DV14-request.json";write(rqpath,rq)
       got=validate(lock,side,rqpath)
       mark("DV14_NO_BROKER_NO_LAUNCH","DENY",got["status"],got["reasons"],"EXECUTE_REQUIRES_DURABLE_ONE_USE_DISPATCH_RECEIPT")
+      # Synthetic 64-hex receipt is NOT an authenticated Broker attestation.
+      # No Broker is installed in the approved control-plane-only patch.
+      forged_close=ev("CLOSE","7001",pin,cand=None)
+      forged_close.update(schema=DISPATCH_V2_SCHEMA,
+           event_authorization_run_id="8104",
+           executor_id="MOTION_F_TEST_EXECUTOR",
+           terminal_broker_receipt_sha256="c"*64,
+           terminal_result="NOT_LAUNCHED",
+           dispatch_descriptor_sha256=original_dispatch["descriptor_sha256"])
+      event_case("DV15_FORGED_BROKER_RECEIPT_REJECTED",dispatched,
+           forged_close,"8104","DENY",
+           "V2_CLOSE_REQUIRES_AUTHENTICATED_BROKER_RECEIPT",
+           executor="MOTION_F_TEST_EXECUTOR")
 
     report={"schema":"GLOBAL_PUBLICATION_PUBLIC_LOCK_SELFTEST/1.0.0","total":len(out),"passed":sum(1 for x in out if x[3]),"status":"PASS" if all(x[3] for x in out) else "FAIL","results":[{"id":a,"expected":b,"actual":c,"pass":d,"reasons":e} for a,b,c,d,e in out]}
     print(json.dumps(report,indent=2))
