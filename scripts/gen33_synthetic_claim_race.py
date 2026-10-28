@@ -180,7 +180,7 @@ def auth_remote(token,run_id,sha):
         raise Deny("OWNER_AUTH_ZIP_INVALID") from error
     verify_owner_artifact(auth,run_id)
 
-def protected_preflight(env,token,run_id,root):
+def protected_preflight(env,token,run_id,root,require_absent=False):
     sha=verify_runner(env)
     verify_local_authority(root)
     if not isinstance(run_id,str) or not re.fullmatch(r"[1-9][0-9]{4,19}",run_id):
@@ -190,10 +190,11 @@ def protected_preflight(env,token,run_id,root):
     if status!=200:raise Deny("RULESET_GET_FAILED")
     ruleset_check(rule)
     ref=ref_for_owner_run(run_id)
-    # A pre-existing ref means the owner grant is already consumed; never retry.
-    status,existing=api("GET","/git/ref/"+ref[len("refs/"):],token)
-    if status==200:raise Deny("CLAIM_ALREADY_PRESENT_NO_RETRY")
-    if status!=404:raise Deny("CLAIM_PREEXISTENCE_UNKNOWN")
+    # Only the standalone preflight job checks absence; claim competitors must\n    # both POST once and receive one 201 and one 422, even if scheduled later.
+    if require_absent:
+        status,existing=api("GET","/git/ref/"+ref[len("refs/"):],token)
+        if status==200:raise Deny("CLAIM_ALREADY_PRESENT_NO_RETRY")
+        if status!=404:raise Deny("CLAIM_PREEXISTENCE_UNKNOWN")
     return sha,ref
 
 def output(value):
@@ -207,7 +208,7 @@ def stage(mode,root=None,env=None,token=None,run_id=None):
     run_id=env.get("OWNER_AUTH_RUN_ID","") if run_id is None else run_id
     root=Path(__file__).resolve().parents[1] if root is None else root
     try:
-        commit,ref=protected_preflight(env,token,run_id,root)
+        commit,ref=protected_preflight(env,token,run_id,root,require_absent=(mode=="preflight"))
         if mode=="preflight":
             print("GEN33_SYNTHETIC_PREFLIGHT_PASS_NO_CLAIM")
             return 0
