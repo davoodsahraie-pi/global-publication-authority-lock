@@ -41,6 +41,50 @@ ATOMIC_BASE_BLOBS={
     "scripts/selftest.py":"91066fec6fba3d2a069a4d30b24a4f3b74136102"
 }
 
+# GEN33 code-only Broker approval: exact immutable base and exact 9-file diff.
+GEN33_BROKER_ACTION="GLOBAL_PUBLICATION_GEN33_SOURCE_BOUND_BROKER_IMPLEMENTATION_V1_CODE_ONLY"
+GEN33_BROKER_ALLOWED_PATHS={
+    "broker/gen33_source_bound_broker.py", "broker/gen33_receipt_verifier.py",
+    "tests/test_gen33_broker.py", ".github/workflows/gen33-broker-qa.yml",
+    "gate/publication_gate.py", "gate/transition_guard.py",
+    "scripts/ci_validate_pr.py", "scripts/selftest.py", "request/ACTION_REQUEST.json"
+}
+GEN33_BROKER_PREIMAGES={
+    "gate/publication_gate.py":"6d7780d034b4f1eb7d6b1699ad17228ee27ddefb",
+    "gate/transition_guard.py":"d2fa8ebc9504d1d24852cc79a6d8692669fabffc",
+    "scripts/ci_validate_pr.py":"b2b9575feb89ad3fd5ff8e0edb73b9a141306991",
+    "scripts/selftest.py":"34570f848a64f55899f3054861f350a39eb43e33"
+}
+GEN33_BROKER_SHA="08c2c4c23f1223c7a05554ac81f5f1bac948ac805d28503ca1b0be890b5474fa"
+GEN33_BROKER_PRIVATE_SHA="dfe3488ff09feba990938953c0caab822a01b90c32cc687d11c08f80d0818ed1"
+
+def validate_gen33_broker_scope(changes,req,base_lock,base_root):
+    if req.get("requested_action_id")!=GEN33_BROKER_ACTION: return []
+    reasons=[]
+    if (req.get("action_kind")!="GOVERNANCE_UPGRADE" or
+            set(req.get("operations") or [])!={"GOVERNANCE_UPGRADE","PATCH"}):
+        reasons.append("GEN33_BROKER_ACTION_KIND_OR_OPS_INVALID")
+    if set(changes)!=GEN33_BROKER_ALLOWED_PATHS:
+        reasons.append("GEN33_BROKER_EXACT_NINE_PATHS_REQUIRED")
+    if set(req.get("target_scope_ids") or [])!=GEN33_BROKER_ALLOWED_PATHS:
+        reasons.append("GEN33_BROKER_SCOPE_NOT_EXACT")
+    if req.get("authorization_run_id")!=40743213897:
+        reasons.append("GEN33_BROKER_AUTH_RUN_MISMATCH")
+    if (base_lock.get("generation")!=33 or
+        base_lock.get("current_action",{}).get("mode")!="READ_ONLY" or
+        base_lock.get("execution_authorized_now") is not False or
+        base_lock.get("private_execution_state_sha256")!=GEN33_BROKER_PRIVATE_SHA):
+        reasons.append("GEN33_BROKER_UNEXPECTED_BASE_STATE")
+    if base_root is None:
+        reasons.append("GEN33_BROKER_BASE_REQUIRED")
+    else:
+        if sha(base_root/LOCK)!=GEN33_BROKER_SHA:
+            reasons.append("GEN33_BROKER_BASE_LOCK_MISMATCH")
+        for rel,expected in GEN33_BROKER_PREIMAGES.items():
+            if git_blob_file(base_root/rel)!=expected:
+                reasons.append("GEN33_BROKER_BASE_BLOB_MISMATCH:"+rel)
+    return reasons
+
 def git_blob_file(path):
     data=Path(path).read_bytes()
     return hashlib.sha1(b"blob "+str(len(data)).encode("ascii")+b"\0"+data).hexdigest()
@@ -238,6 +282,7 @@ def main():
     reasons += validate_motion_f_changed_paths(changes,req,load_json(base/LOCK))
     reasons += validate_atomic_changed_paths(changes,req,load_json(base/LOCK),base)
     reasons += validate_dispatch_v2_changed_paths(changes,req,load_json(base/LOCK),base)
+    reasons += validate_gen33_broker_scope(changes,req,load_json(base/LOCK),base)
 
     runtime_changed=[p for p in changes if p in PROTECTED_RUNTIME_FILES or p.startswith(PROTECTED_RUNTIME_PREFIXES)]
     if runtime_changed and req.get("action_kind")!="GOVERNANCE_UPGRADE":
