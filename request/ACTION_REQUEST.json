@@ -1,27 +1,34 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "GEN34_R25R7_SECURE_BRIDGE_CODE_ONLY_40818118503",
+  "request_id": "GEN34_R25R7_ACTIVATION_40853721701",
   "input_public_lock_sha256": "f70e7d9f9ae4178800bb62313fd9e61f027b49ebc03c5c8e45808c89c241eee2",
   "input_private_state_sha256": "0881394eda6ffa3441cb9dbda592db5a77c68441169749b4d49513ce4d720d78",
-  "requested_action_id": "GLOBAL_PUBLICATION_GEN34_R25R7_SECURE_BRIDGE_V1_CODE_ONLY_IMPLEMENTATION",
+  "requested_action_id": "GLOBAL_PUBLICATION_GEN34_R25R7_INSTALLED_BRIDGE_PRIVATE_CUSTODY_AND_ACTIVATION_ONLY",
   "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "MUTATING",
   "project": "GLOBAL",
   "operations": [
     "GOVERNANCE_UPGRADE",
+    "AUTHORITY_UPDATE",
+    "STATE_TRANSITION",
+    "ACTIVATE_BACKEND",
     "PATCH"
   ],
   "target_scope_ids": [
-    "broker/gen34_r25r7_bridge.py",
+    "authority/CURRENT.json",
+    "authority/CURRENT.sha256",
+    "request/ACTION_REQUEST.json",
+    "request/STATE_TRANSITION.json",
     "tests/test_gen34_r25r7_bridge.py",
-    ".github/workflows/gen34-r25r7-producer.yml",
-    ".github/workflows/gen34-r25r7-qa.yml",
-    "gate/publication_gate.py",
-    "gate/transition_guard.py",
-    "scripts/ci_validate_pr.py",
-    "scripts/selftest.py",
-    "request/ACTION_REQUEST.json"
+    "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_CURRENT.json",
+    "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_CURRENT.sha256",
+    "ENVIRONMENT:gen34-r25r7-production:main-only:GEN34_PRIVATE_TOKEN:GEN34_RECEIPT_KEY_HEX",
+    "PRIVATE_CUSTODY:davoodsahraie-pi/global-publication-authority:GEN34_R25R7_ORIGINAL_INPUTS",
+    "GEN34_R25R7_FRESH_RESERVATION_NO_DRIVER_EXECUTION"
   ],
-  "authorization_run_id": 40818118503,
-  "user_explicit_authorization": true
+  "authorization_run_id": 40853721701,
+  "user_explicit_authorization": true,
+  "method_id": "GEN34_EXISTING_R25R7_BROKER_INTEGRATION_V1",
+  "attempt_id": "GEN34_R25R7_E2E_01",
+  "executor_id": "GITHUB_ACTIONS_PROTECTED_MAIN"
 }

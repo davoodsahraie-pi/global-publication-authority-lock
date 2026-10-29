@@ -348,6 +348,21 @@ class ExactScopeTests(unittest.TestCase):
         self.assertTrue(base,"Independent base checkout required for this test")
         req=json.loads((ROOT/"request/ACTION_REQUEST.json").read_text());base=Path(base)
         lock=json.loads((base/ci.LOCK).read_text());changes=ci.changed_paths(base,ROOT)
+        if req.get("requested_action_id")!=ci.GEN34_CODE_ACTION:
+            # Later authorized transitions have their own scope. They must not
+            # inherit the consumed installation grant or its old preimages.
+            replay={"requested_action_id":ci.GEN34_CODE_ACTION,
+                    "action_kind":"GOVERNANCE_UPGRADE",
+                    "operations":["GOVERNANCE_UPGRADE","PATCH"],
+                    "target_scope_ids":sorted(ci.GEN34_CODE_PATHS),
+                    "authorization_run_id":ci.GEN34_CODE_RUN}
+            errors=ci.validate_gen34_code_scope(sorted(ci.GEN34_CODE_PATHS),replay,lock,base)
+            self.assertIn("GEN34_NEW_PATH_ALREADY_EXISTS:broker/gen34_r25r7_bridge.py",errors)
+            self.assertTrue(any(e.startswith("GEN34_CODE_PREIMAGE_MISMATCH:") for e in errors))
+            replay["authorization_run_id"]=40761646972
+            self.assertIn("GEN34_CODE_AUTHORIZATION_RUN_MISMATCH",
+                          ci.validate_gen34_code_scope(sorted(ci.GEN34_CODE_PATHS),replay,lock,base))
+            return
         self.assertEqual(set(changes),ci.GEN34_CODE_PATHS)
         self.assertEqual(ci.validate_gen34_code_scope(changes,req,lock,base),[])
         self.assertTrue(ci.validate_gen34_code_scope(changes+["authority/CURRENT.json"],req,lock,base))
