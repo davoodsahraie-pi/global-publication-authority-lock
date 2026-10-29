@@ -3,6 +3,7 @@ import copy, hashlib, json, tempfile, sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/"gate"))
+sys.path.insert(0,str(ROOT/"scripts"))
 from publication_gate import validate
 from transition_guard import validate_transition
 
@@ -374,6 +375,13 @@ def main():
     out.append(("GEN33_PROOF_MISSING_RULESET_REJECTS",True,absent_ok,absent_ok,[]))
     unauthorized_ok=observe_claim_protection(None)["physical_claim_authorized"] is False
     out.append(("GEN33_PROOF_CANNOT_ISSUE_CLAIM",True,unauthorized_ok,unauthorized_ok,[]))
+
+    from publication_gate import validate_gen34_admission
+    from transition_guard import gen34_activation_errors
+    bridge_disabled=validate_gen34_admission(s,{}, {},None,"0"*64)["status"]=="DENY"
+    out.append(("GEN34_INSTALL_IS_NOT_ACTIVATION",True,bridge_disabled,bridge_disabled,[]))
+    engineering_rejected=bool(gen34_activation_errors({"runtime_profile":"ENGINEERING_WHEEL"}))
+    out.append(("GEN34_ENGINEERING_WHEEL_NOT_ORIGINAL_DRIVER",True,engineering_rejected,engineering_rejected,[]))
 
     report={"schema":"GLOBAL_PUBLICATION_PUBLIC_LOCK_SELFTEST/1.0.0","total":len(out),"passed":sum(1 for x in out if x[3]),"status":"PASS" if all(x[3] for x in out) else "FAIL","results":[{"id":a,"expected":b,"actual":c,"pass":d,"reasons":e} for a,b,c,d,e in out]}
     print(json.dumps(report,indent=2))

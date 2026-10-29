@@ -1,0 +1,47 @@
+name: gen34-r25r7-qa
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'broker/**'
+      - 'tests/test_gen34_r25r7_bridge.py'
+      - '.github/workflows/gen34-r25r7-*.yml'
+      - 'gate/**'
+      - 'scripts/**'
+      - 'request/ACTION_REQUEST.json'
+permissions:
+  contents: read
+  actions: read
+jobs:
+  bridge-qa:
+    name: gen34-r25r7-bridge-qa
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout unprivileged proposal
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          path: head
+          persist-credentials: false
+      - name: Checkout independent base snapshot
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: base
+          persist-credentials: false
+      - name: Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12.10'
+      - name: New bridge unit and failure tests without private inputs or claims
+        env:
+          GEN34_BASE_ROOT: ${{ github.workspace }}/base
+        run: python -I -B -m unittest discover -s head/tests -p 'test_gen34_r25r7_bridge.py' -v
+      - name: Head Gate regression
+        run: python -I -B head/scripts/selftest.py
+      - name: Independently compare exact authorized paths and preimages
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+        run: python -I -B head/scripts/ci_validate_pr.py --base base --head head

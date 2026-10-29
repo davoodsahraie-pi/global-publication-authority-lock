@@ -1,26 +1,27 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "GEN33_POST_RACE_RECONCILIATION_SCOPE_RUN_40766599402",
-  "input_public_lock_sha256": "08c2c4c23f1223c7a05554ac81f5f1bac948ac805d28503ca1b0be890b5474fa",
-  "input_private_state_sha256": "dfe3488ff09feba990938953c0caab822a01b90c32cc687d11c08f80d0818ed1",
-  "requested_action_id": "GLOBAL_PUBLICATION_GEN33_POST_RACE_AUTHORITY_STATE_RECONCILIATION_AND_R25R7_BRIDGE_SELECTION",
+  "request_id": "GEN34_R25R7_SECURE_BRIDGE_CODE_ONLY_40818118503",
+  "input_public_lock_sha256": "f70e7d9f9ae4178800bb62313fd9e61f027b49ebc03c5c8e45808c89c241eee2",
+  "input_private_state_sha256": "0881394eda6ffa3441cb9dbda592db5a77c68441169749b4d49513ce4d720d78",
+  "requested_action_id": "GLOBAL_PUBLICATION_GEN34_R25R7_SECURE_BRIDGE_V1_CODE_ONLY_IMPLEMENTATION",
   "action_kind": "GOVERNANCE_UPGRADE",
-  "mode": "READ_ONLY",
+  "mode": "MUTATING",
   "project": "GLOBAL",
-  "method_id": null,
   "operations": [
     "GOVERNANCE_UPGRADE",
-    "AUTHORITY_UPDATE",
-    "STATE_TRANSITION"
+    "PATCH"
   ],
   "target_scope_ids": [
-    "authority/CURRENT.json",
-    "authority/CURRENT.sha256",
-    "request/STATE_TRANSITION.json",
-    "request/ACTION_REQUEST.json",
-    "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_CURRENT.json",
-    "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_CURRENT.json.sha256"
+    "broker/gen34_r25r7_bridge.py",
+    "tests/test_gen34_r25r7_bridge.py",
+    ".github/workflows/gen34-r25r7-producer.yml",
+    ".github/workflows/gen34-r25r7-qa.yml",
+    "gate/publication_gate.py",
+    "gate/transition_guard.py",
+    "scripts/ci_validate_pr.py",
+    "scripts/selftest.py",
+    "request/ACTION_REQUEST.json"
   ],
-  "authorization_run_id": 40766599402,
+  "authorization_run_id": 40818118503,
   "user_explicit_authorization": true
 }

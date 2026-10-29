@@ -37,6 +37,59 @@ def gen33_source_bound_fingerprint(material):
                    separators=(",",":"),ensure_ascii=True).encode("ascii")
     return hashlib.sha256(GEN33_SOURCE_BOUND_DESCRIPTOR_DOMAIN+raw).hexdigest()
 
+
+# GEN34 is an opt-in source-bound runtime. The existing v1/v2 ledger protocol
+# remains unchanged. Physical claims live in the already protected GEN33 tag
+# namespace; no code-only PR creates reservations or activates this contract.
+GEN34_SCHEMA="GEN34_R25R7_BRIDGE_ACTIVATION/1.0"
+GEN34_PINS={
+    "generator_sha256":"646cf341c774953baa99da400ee3aa6e992fbbd8d0af95f36144f72c0fa5980c",
+    "driver_sha256":"b6ff959711cb3f3b9d103cb627bcc54e11de336b4ea2a4d862aa916ed2cb9191",
+    "source_sha256":"360ee8a7db0cfead8576b68b768bfa9e0f4038fd9f2892102e801541abc272d5",
+    "c1_sha256":"b215660f571e32c647186eba253c89b5255567c313c068c0898301ab9eb789d3",
+    "ppges_sha256":"8175f477e0d45c25db894fd00fb51cd3bd0ad78ea18b61aaa034a02f725a1371",
+    "grammar_sha256":"182589531ab1f2b0302fbc567f93510183af20d4682b99318bf6e4efea364213",
+}
+GEN34_SHA_FIELDS=("bundle_sha256","manifest_sha256","dependency_lock_sha256",
+                  "runtime_code_sha256","runtime_workflow_sha256","receipt_key_sha256")
+GEN34_TEXT_FIELDS=("action_id","project","method_id","attempt_id","executor_id")
+
+def gen34_activation_errors(profile):
+    import re
+    required=set(GEN34_PINS)|set(GEN34_SHA_FIELDS)|set(GEN34_TEXT_FIELDS)|{
+        "schema","enabled","runtime_profile","private_repository","bundle_blob_sha",
+        "environment","target_scope_ids","operations","max_seconds"}
+    if not isinstance(profile,dict) or set(profile)!=required:
+        return ["GEN34_ACTIVATION_FIELDS_INVALID"]
+    errors=[]
+    if profile["schema"]!=GEN34_SCHEMA or profile["enabled"] is not True:
+        errors.append("GEN34_NOT_ACTIVATED")
+    if profile["runtime_profile"]!="LEGACY_R25R7_FULL_BOOK":
+        errors.append("GEN34_ENGINEERING_WHEEL_OR_PROFILE_FORBIDDEN")
+    if any(profile[k]!=v for k,v in GEN34_PINS.items()):
+        errors.append("GEN34_IMMUTABLE_INPUT_PIN_MISMATCH")
+    if any(not is_sha256(profile[k]) for k in GEN34_SHA_FIELDS):
+        errors.append("GEN34_RUNTIME_PIN_INVALID")
+    if not re.fullmatch(r"[0-9a-f]{40}",str(profile["bundle_blob_sha"])):
+        errors.append("GEN34_PRIVATE_BLOB_INVALID")
+    if any(not isinstance(profile[k],str) or not re.fullmatch(r"[A-Za-z0-9_.-]{1,128}",profile[k]) for k in GEN34_TEXT_FIELDS):
+        errors.append("GEN34_IDENTITY_INVALID")
+    if profile["private_repository"]!="davoodsahraie-pi/global-publication-authority":
+        errors.append("GEN34_PRIVATE_DESTINATION_INVALID")
+    if profile["environment"]!="gen34-r25r7-production":
+        errors.append("GEN34_ENVIRONMENT_INVALID")
+    if profile["operations"]!=["BUILD","GENERATE_DOCX"] or profile["target_scope_ids"]!=["GEN34_R25R7_ORIGINAL_FULL_BOOK_ONCE"]:
+        errors.append("GEN34_EXECUTION_SCOPE_INVALID")
+    if type(profile["max_seconds"]) is not int or not 1<=profile["max_seconds"]<=3000:
+        errors.append("GEN34_TIME_BOUND_INVALID")
+    return errors
+
+def gen34_descriptor(profile,public_sha,private_sha,authorization_run_id):
+    material={"profile":profile,"public_sha256":public_sha,
+              "private_sha256":private_sha,"authorization_run_id":str(authorization_run_id)}
+    raw=json.dumps(material,sort_keys=True,separators=(",",":"),ensure_ascii=True,allow_nan=False).encode("ascii")
+    return hashlib.sha256(b"GEN34-R25R7-BOUND-DISPATCH\0"+raw).hexdigest()
+
 # A START/CLOSE event must consume its own distinct authorization Run.
 # A reserved Run must never be reused as the START or CLOSE authorization.
 def run_id(value):
@@ -236,6 +289,12 @@ def validate_transition(current_path, proposed_path, request):
         if not a.issubset(b): reasons.append("LEDGER_REMOVAL_FORBIDDEN:"+ledger)
 
     reasons += audit_attempt_transition(cur,prop,request,cur_sha)
+
+    if cur.get("gen34_r25r7_bridge")!=prop.get("gen34_r25r7_bridge"):
+        if request.get("action_kind")!="GOVERNANCE_UPGRADE":
+            reasons.append("GEN34_ACTIVATION_CHANGE_REQUIRES_GOVERNANCE_UPGRADE")
+        if prop.get("gen34_r25r7_bridge") is not None:
+            reasons += gen34_activation_errors(prop["gen34_r25r7_bridge"])
 
     kind=request.get("action_kind","EXECUTE")
     if kind=="SET_NEXT_ACTION":
