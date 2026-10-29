@@ -183,6 +183,39 @@ def validate_gen33_race_install_scope(changes,req,base_lock,base_root):
                 reasons.append("GEN33_RACE_CODE_BASE_BLOB_MISMATCH:"+rel)
     return reasons
 
+# GEN34 exact nine-path code-only installation; no authority/state mutation.
+GEN34_CODE_ACTION="GLOBAL_PUBLICATION_GEN34_R25R7_SECURE_BRIDGE_V1_CODE_ONLY_IMPLEMENTATION"
+GEN34_CODE_RUN=40818118503
+GEN34_CODE_PUBLIC="f70e7d9f9ae4178800bb62313fd9e61f027b49ebc03c5c8e45808c89c241eee2"
+GEN34_CODE_PRIVATE="0881394eda6ffa3441cb9dbda592db5a77c68441169749b4d49513ce4d720d78"
+GEN34_CODE_PREIMAGES={'broker/gen34_r25r7_bridge.py': None, 'tests/test_gen34_r25r7_bridge.py': None, '.github/workflows/gen34-r25r7-producer.yml': None, '.github/workflows/gen34-r25r7-qa.yml': None, 'gate/publication_gate.py': '963cb7dbf1f6b7ed6a8c493213b9e555e929a3af', 'gate/transition_guard.py': 'a77863cedd67aeb1264ab7877a07866325b32327', 'scripts/ci_validate_pr.py': 'df6c5b7d6ed71c0dd608103f91c8e871ff3f18b6', 'scripts/selftest.py': 'd57db4dcb29a4ec78356e80474ab6ed2ab4f80a0', 'request/ACTION_REQUEST.json': '312d546ee2c348efaf7ced1023c683151b9d7392'}
+GEN34_CODE_PATHS=set(GEN34_CODE_PREIMAGES)
+
+def validate_gen34_code_scope(changes,req,base_lock,base_root):
+    if req.get("requested_action_id")!=GEN34_CODE_ACTION: return []
+    reasons=[]
+    if req.get("action_kind")!="GOVERNANCE_UPGRADE" or req.get("operations")!=["GOVERNANCE_UPGRADE","PATCH"]:
+        reasons.append("GEN34_CODE_KIND_OR_OPERATIONS_INVALID")
+    if set(changes)!=GEN34_CODE_PATHS or len(changes)!=9:
+        reasons.append("GEN34_EXACT_NINE_PATHS_REQUIRED")
+    if set(req.get("target_scope_ids",[]))!=GEN34_CODE_PATHS or len(req.get("target_scope_ids",[]))!=9:
+        reasons.append("GEN34_EXACT_AUTHORIZED_SCOPE_REQUIRED")
+    if req.get("authorization_run_id")!=GEN34_CODE_RUN:
+        reasons.append("GEN34_CODE_AUTHORIZATION_RUN_MISMATCH")
+    if base_lock.get("generation")!=34 or base_lock.get("execution_authorized_now") is not False or base_lock.get("current_action",{}).get("mode")!="READ_ONLY" or base_lock.get("private_execution_state_sha256")!=GEN34_CODE_PRIVATE:
+        reasons.append("GEN34_CODE_BASE_STATE_MISMATCH")
+    if base_root is None:
+        reasons.append("GEN34_CODE_TRUSTED_BASE_REQUIRED")
+    else:
+        if sha(base_root/LOCK)!=GEN34_CODE_PUBLIC: reasons.append("GEN34_CODE_PUBLIC_SHA_MISMATCH")
+        for rel,expected in GEN34_CODE_PREIMAGES.items():
+            p=base_root/rel
+            if expected is None:
+                if p.exists(): reasons.append("GEN34_NEW_PATH_ALREADY_EXISTS:"+rel)
+            elif not p.is_file() or git_blob_file(p)!=expected:
+                reasons.append("GEN34_CODE_PREIMAGE_MISMATCH:"+rel)
+    return reasons
+
 def git_blob_file(path):
     data=Path(path).read_bytes()
     return hashlib.sha1(b"blob "+str(len(data)).encode("ascii")+b"\0"+data).hexdigest()
@@ -383,6 +416,8 @@ def main():
     reasons += validate_gen33_broker_scope(changes,req,load_json(base/LOCK),base)
     reasons += validate_gen33_proof_scope(changes,req,load_json(base/LOCK),base)
     reasons += validate_gen33_race_install_scope(changes,req,load_json(base/LOCK),base)
+
+    reasons += validate_gen34_code_scope(changes,req,load_json(base/LOCK),base)
 
     runtime_changed=[p for p in changes if p in PROTECTED_RUNTIME_FILES or p.startswith(PROTECTED_RUNTIME_PREFIXES)]
     if runtime_changed and req.get("action_kind")!="GOVERNANCE_UPGRADE":
