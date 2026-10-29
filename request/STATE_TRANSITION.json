@@ -1,31 +1,40 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_STATE_TRANSITION/1.0.0",
-  "transition_id": "GEN33_TO_GEN34_R25R7_POST_RACE_RECONCILIATION_2026_10_29",
-  "source_public_lock_sha256": "08c2c4c23f1223c7a05554ac81f5f1bac948ac805d28503ca1b0be890b5474fa",
-  "target_public_lock_sha256": "f70e7d9f9ae4178800bb62313fd9e61f027b49ebc03c5c8e45808c89c241eee2",
-  "source_private_execution_state_sha256": "dfe3488ff09feba990938953c0caab822a01b90c32cc687d11c08f80d0818ed1",
-  "target_private_execution_state_sha256": "0881394eda6ffa3441cb9dbda592db5a77c68441169749b4d49513ce4d720d78",
-  "action_id": "GLOBAL_PUBLICATION_GEN33_POST_RACE_AUTHORITY_STATE_RECONCILIATION_AND_R25R7_BRIDGE_SELECTION",
+  "transition_id": "GEN34_R25R7_INSTALLED_BRIDGE_ACTIVATION_40853721701",
+  "source_public_lock_sha256": "f70e7d9f9ae4178800bb62313fd9e61f027b49ebc03c5c8e45808c89c241eee2",
+  "target_public_lock_sha256": "9c397a5b96009374290a2dbc682bd789c804696956191635a4f0c867dd63abc1",
+  "source_private_execution_state_sha256": "0881394eda6ffa3441cb9dbda592db5a77c68441169749b4d49513ce4d720d78",
+  "target_private_execution_state_sha256": "9cefbd129988749f70b106f17e6c3918fc15bb9f0da7e18a70e9982aae6d0a81",
+  "action_id": "GLOBAL_PUBLICATION_GEN34_R25R7_INSTALLED_BRIDGE_PRIVATE_CUSTODY_AND_ACTIVATION_ONLY",
   "action_kind": "GOVERNANCE_UPGRADE",
   "project": "GLOBAL",
   "operations": [
     "GOVERNANCE_UPGRADE",
     "AUTHORITY_UPDATE",
-    "STATE_TRANSITION"
+    "STATE_TRANSITION",
+    "ACTIVATE_BACKEND",
+    "PATCH"
   ],
   "target_scope_ids": [
     "authority/CURRENT.json",
     "authority/CURRENT.sha256",
-    "request/STATE_TRANSITION.json",
     "request/ACTION_REQUEST.json",
+    "request/STATE_TRANSITION.json",
+    "tests/test_gen34_r25r7_bridge.py",
     "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_CURRENT.json",
-    "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_CURRENT.json.sha256"
+    "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_CURRENT.sha256",
+    "ENVIRONMENT:gen34-r25r7-production:main-only:GEN34_PRIVATE_TOKEN:GEN34_RECEIPT_KEY_HEX",
+    "PRIVATE_CUSTODY:davoodsahraie-pi/global-publication-authority:GEN34_R25R7_ORIGINAL_INPUTS",
+    "GEN34_R25R7_FRESH_RESERVATION_NO_DRIVER_EXECUTION"
   ],
-  "authorization_run_id": 40766599402,
+  "authorization_run_id": 40853721701,
   "owner_issue_number": 53,
-  "owner_vote": "APPROVE_GEN33_POST_RACE_AUTHORITY_STATE_RECONCILIATION_AND_R25R7_BRIDGE_NEXT_GATE_ONLY",
-  "selected_next_action_id": "GLOBAL_PUBLICATION_GEN34_R25R7_SECURE_BROKER_TO_PRODUCER_BRIDGE_AUTHORIZATION_GATE_READ_ONLY",
-  "selected_next_action_mode": "READ_ONLY",
-  "execution_authorized_now": false,
-  "status": "GEN33_TO_GEN34_R25R7_SECURE_BRIDGE_SELECTION_ONLY_NO_PRODUCER"
+  "owner_vote": "APPROVE_GEN34_R25R7_INSTALLED_BRIDGE_PRIVATE_CUSTODY_AND_ACTIVATION_ONLY",
+  "selected_next_action_id": "GLOBAL_PUBLICATION_GEN34_R25R7_ORIGINAL_FULL_BOOK_BROKER_EXECUTE_ONCE",
+  "selected_next_action_mode": "MUTATING",
+  "execution_authorized_now": true,
+  "separate_fresh_owner_execute_required": true,
+  "setup_authorization_is_execution_authorization": false,
+  "producer_executed": false,
+  "status": "INSTALLED_BRIDGE_ACTIVATION_AND_RESERVATION_ONLY_FRESH_OWNER_EXECUTE_REQUIRED"
 }
