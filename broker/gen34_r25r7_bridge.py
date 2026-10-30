@@ -59,6 +59,18 @@ MAX_BUNDLE=256*1024*1024
 HEX40=re.compile(r"^[0-9a-f]{40}$")
 HEX64=re.compile(r"^[0-9a-f]{64}$")
 
+
+# Independently authenticated full GETs on 2026-10-29 verified zero bypass
+# on these exact versions. This is the already-qualified GEN33 version-pin
+# approach; an omitted bypass list is never independent evidence of no bypass.
+# Hash all policy fields, identity and normalized timestamps. Any drift denies.
+RULESET_POLICY_FIELDS=('id', 'node_id', 'name', 'source_type', 'source', 'target', 'enforcement', 'conditions', 'rules', 'created_at', 'updated_at')
+RULESET_VERSION_SHA256={24932377: '56a44a5a6edff9b8384561b01f937f1e7fbf14a8edd0d55f4f73ab5478229b09', 24939466: 'edf95a5524b482fabf0befe2a5dd481a39b4aec0990a5b5eb4fca97a837af1eb', 26070404: 'b8403c4336eebe7337f5f58dc414cf112579f4fef1c8c4d3a288a88eafaebc28'}
+
+# Literal codes only. Arbitrary exception text (including a forged Denied)
+# must never reach public logs. All outcomes continue to prohibit retry.
+SAFE_FAILURE_CODES=frozenset(('AUTHORITY_CHANGED_BEFORE_CLAIM', 'AUTHORIZATION_NOT_FRESH', 'AUTH_ARCHIVE_DIGEST_MISMATCH', 'AUTH_ARTIFACT_UNAVAILABLE', 'CLAIM_PROTECTION_INVALID', 'CLAIM_PROTECTION_LOST', 'CREDENTIAL_UNAVAILABLE', 'ENVIRONMENT_BRANCH_RESTRICTION_REQUIRED', 'ENVIRONMENT_ONLY_MAIN_REQUIRED', 'EXECUTION_ADMISSION_DENIED', 'GEN34_AUTHORITY_READ_ONLY', 'GEN34_PROTECTED_ACTIVATION_REQUIRED', 'GIT_BLOB_READBACK_MISMATCH', 'HTTP_400', 'HTTP_401', 'HTTP_403', 'HTTP_404', 'HTTP_409', 'HTTP_422', 'HTTP_429', 'HTTP_500', 'HTTP_502', 'HTTP_503', 'HTTP_504', 'HTTP_OUTCOME_UNKNOWN_NO_RETRY', 'INPUT_DESTINATION_NOT_PRIVATE', 'LIVE_AUTHORITY_BYTE_MISMATCH', 'MAIN_PROTECTION_INVALID', 'MAIN_REQUIRED_CHECK_MISSING', 'MAIN_STRICT_CHECK_MISSING', 'MANIFEST_SHA_MISMATCH', 'OWNER_AUTH_PROVENANCE_INVALID', 'OWNER_EXECUTE_BINDING_MISMATCH', 'PAYLOAD_FILE_SHA_MISMATCH', 'PRIVATE_BUNDLE_SHA_MISMATCH', 'PUBLIC_SIDECAR_MISMATCH', 'RECEIPT_KEY_IDENTITY_MISMATCH', 'RECEIPT_KEY_UNAVAILABLE', 'RULESET_ACTOR_BYPASS_FOUND', 'RULESET_BYPASS_FOUND', 'RULESET_CHANGED_BEFORE_CLAIM', 'RULESET_IDENTITY_INVALID', 'RULESET_VERSION_UNATTESTED', 'RUNNER_API_PROVENANCE_INVALID', 'RUNNER_NOT_CURRENT_PROTECTED_MAIN', 'RUNNER_PROVENANCE_INVALID', 'RUNTIME_BYTE_PIN_MISMATCH'))
+
 class Denied(RuntimeError):
     """Only fixed, nonsecret codes may be exposed by the entrypoint."""
 
@@ -183,6 +195,38 @@ def authenticate_owner(api,run_id,head_sha):
     require(issued.tzinfo is not None and 0<=(dt.datetime.now(dt.timezone.utc)-issued).total_seconds()<=86400,"AUTHORIZATION_NOT_FRESH")
     return auth
 
+
+def attested_ruleset(rule,ident):
+    """Validate a live response against an independently full-read policy version.
+
+    This adds no permission: a missing bypass list is accepted only for the
+    exact protected-code-pinned version already observed with an empty list.
+    Explicit bypass, timestamp/identity/policy drift and incomplete data deny.
+    Legacy verify_ruleset remains unchanged and still rejects unknown bypass.
+    """
+    require(isinstance(rule,dict) and rule.get("id")==ident and
+            ident in RULESET_VERSION_SHA256,"RULESET_IDENTITY_INVALID")
+    try:
+        snapshot={k:rule[k] for k in RULESET_POLICY_FIELDS}
+        for key in ("created_at","updated_at"):
+            stamp=dt.datetime.fromisoformat(snapshot[key].replace("Z","+00:00"))
+            require(stamp.tzinfo is not None,"RULESET_VERSION_UNATTESTED")
+            snapshot[key]=stamp.astimezone(dt.timezone.utc).isoformat()
+        digest=sha(canonical(snapshot))
+    except (KeyError,TypeError,ValueError,AttributeError):
+        raise Denied("RULESET_VERSION_UNATTESTED") from None
+    require(digest==RULESET_VERSION_SHA256[ident],"RULESET_VERSION_UNATTESTED")
+    require("bypass_actors" not in rule or rule["bypass_actors"]==[],"RULESET_BYPASS_FOUND")
+    require("current_user_can_bypass" not in rule or rule["current_user_can_bypass"]=="never",
+            "RULESET_ACTOR_BYPASS_FOUND")
+    return {**rule,"bypass_actors":[]}
+
+def safe_failure(exc):
+    code=exc.args[0] if isinstance(exc,Denied) and len(exc.args)==1 else None
+    return {"status":"DENIED_OR_UNKNOWN","retry_allowed":False,
+            "reason_code":code if isinstance(code,str) and code in SAFE_FAILURE_CODES else "UNCLASSIFIED_FAILURE",
+            "detail":"Inspect protected claims before any owner decision; no automatic replay."}
+
 def verify_platform(api,env,profile):
     require(env.get("GITHUB_REPOSITORY")==REPO and env.get("GITHUB_REF")=="refs/heads/main" and
         env.get("GITHUB_EVENT_NAME")=="workflow_dispatch" and env.get("GITHUB_RUN_ATTEMPT")=="1" and
@@ -194,14 +238,14 @@ def verify_platform(api,env,profile):
         run.get("event")=="workflow_dispatch" and run.get("head_branch")=="main" and
         run.get("actor",{}).get("login")==OWNER and run.get("triggering_actor",{}).get("login")==OWNER,"RUNNER_API_PROVENANCE_INVALID")
     for ident in (24932377,24939466):
-        rules=api.get("/rulesets/"+str(ident))
+        rules=attested_ruleset(api.get("/rulesets/"+str(ident)),ident)
         require(rules.get("enforcement")=="active" and rules.get("target")=="branch" and rules.get("bypass_actors")==[] and
             rules.get("conditions",{}).get("ref_name")=={"include":["~DEFAULT_BRANCH"],"exclude":[]},"MAIN_PROTECTION_INVALID")
         kinds={x["type"]:x for x in rules.get("rules",[])}
         checks=kinds.get("required_status_checks",{}).get("parameters",{})
         require("pull_request" in kinds and any(x.get("context")=="publication-authority" and x.get("integration_id")==15368 for x in checks.get("required_status_checks",[])),"MAIN_REQUIRED_CHECK_MISSING")
         if ident==24932377: require(checks.get("strict_required_status_checks_policy") is True,"MAIN_STRICT_CHECK_MISSING")
-    protection=api.get("/rulesets/26070404")
+    protection=attested_ruleset(api.get("/rulesets/26070404"),26070404)
     require(protection.get("id")==26070404 and verify_ruleset(protection)[0],"CLAIM_PROTECTION_INVALID")
     environment=api.get("/environments/"+profile["environment"])
     require(environment.get("deployment_branch_policy")=={"protected_branches":False,"custom_branch_policies":True},"ENVIRONMENT_BRANCH_RESTRICTION_REQUIRED")
@@ -365,7 +409,7 @@ def complete_claimed(api,private_api,profile,auth_run,descriptor,head,runner_id,
         # Revalidate protection and authority after the one-use mutation and
         # immediately before any producer subprocess. Drift consumes, never retries.
         require(api.get("/git/ref/heads/main")["object"]["sha"]==head,"AUTHORITY_DRIFT_AFTER_CLAIM")
-        require(verify_ruleset(api.get("/rulesets/26070404"))[0],"CLAIM_PROTECTION_LOST")
+        require(verify_ruleset(attested_ruleset(api.get("/rulesets/26070404"),26070404))[0],"CLAIM_PROTECTION_LOST")
         remaining=int(deadline-time.monotonic())
         require(remaining>60,"TIME_BUDGET_EXHAUSTED")
         launch_started=True
@@ -409,7 +453,7 @@ def execute(api,private_api,env,authorization_run_id,key_hex,work):
     admission=validate_gen34_admission(lock,private_state,request,auth,public_sha)
     require(admission["status"]=="ELIGIBLE_FOR_PHYSICAL_CLAIM_ONLY","EXECUTION_ADMISSION_DENIED")
     python=prepare_python(payload,deps,work)
-    require(api.get("/rulesets/26070404")==protection,"RULESET_CHANGED_BEFORE_CLAIM")
+    require(attested_ruleset(api.get("/rulesets/26070404"),26070404)==protection,"RULESET_CHANGED_BEFORE_CLAIM")
     require(api.get("/git/ref/heads/main")["object"]["sha"]==head,"AUTHORITY_CHANGED_BEFORE_CLAIM")
     descriptor=gen34_descriptor(profile,public_sha,lock["private_execution_state_sha256"],authorization_run_id)
     return complete_claimed(api,private_api,profile,authorization_run_id,descriptor,head,env["GITHUB_RUN_ID"],key,payload,python,work,deadline)
@@ -428,8 +472,8 @@ def main():
                            os.environ.get("GEN34_RECEIPT_KEY_HEX",""),Path(directory))
         print(json.dumps(result,sort_keys=True))
         return 0 if result["status"]=="COMPLETED" else 3
-    except BaseException:
-        print('{"status":"DENIED_OR_UNKNOWN","retry_allowed":false,"detail":"Inspect protected claims before any owner decision; no automatic replay."}')
+    except BaseException as exc:
+        print(json.dumps(safe_failure(exc),sort_keys=True))
         return 2
 
 if __name__=="__main__": raise SystemExit(main())
