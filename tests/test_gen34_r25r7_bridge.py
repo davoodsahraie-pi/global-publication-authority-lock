@@ -57,10 +57,185 @@ def authority():
         "target_scope_ids":p["target_scope_ids"],"authorization_id":RUN,"github_run_id":RUN,"github_actor":b.OWNER,"manual_workflow":True}
     return lock,private,req,auth
 
-def rules():
-    return {"id":26070404,"target":"tag","enforcement":"active","bypass_actors":[],
-        "conditions":{"ref_name":{"include":[b.REAL_NAMESPACE+"*"],"exclude":[]}},
-        "rules":[{"type":x} for x in ("deletion","update","non_fast_forward")]}
+# Independent authenticated GitHub readback, 2026-10-29. No secrets.
+OBSERVED_RULESETS=json.loads(r'''{
+  "24932377": {
+    "_links": {
+      "html": {
+        "href": "https://github.com/davoodsahraie-pi/global-publication-authority-lock/rules/24932377"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/davoodsahraie-pi/global-publication-authority-lock/rulesets/24932377"
+      }
+    },
+    "bypass_actors": [],
+    "conditions": {
+      "ref_name": {
+        "exclude": [],
+        "include": [
+          "~DEFAULT_BRANCH"
+        ]
+      }
+    },
+    "created_at": "2026-10-12T17:39:45.402+03:30",
+    "current_user_can_bypass": "never",
+    "enforcement": "active",
+    "id": 24932377,
+    "name": "publication-authority-main-lock",
+    "node_id": "RRS_lACqUmVwb3NpdG9yec5UXi5YzgF8cBk",
+    "rules": [
+      {
+        "type": "deletion"
+      },
+      {
+        "type": "non_fast_forward"
+      },
+      {
+        "parameters": {
+          "allowed_merge_methods": [
+            "merge",
+            "squash",
+            "rebase"
+          ],
+          "dismiss_stale_reviews_on_push": false,
+          "require_code_owner_review": false,
+          "require_extra_approval_for_unattributed_changes": true,
+          "require_last_push_approval": false,
+          "required_approving_review_count": 0,
+          "required_review_thread_resolution": false,
+          "required_reviewers": []
+        },
+        "type": "pull_request"
+      },
+      {
+        "parameters": {
+          "do_not_enforce_on_create": false,
+          "required_status_checks": [
+            {
+              "context": "publication-authority",
+              "integration_id": 15368
+            }
+          ],
+          "strict_required_status_checks_policy": true
+        },
+        "type": "required_status_checks"
+      }
+    ],
+    "source": "davoodsahraie-pi/global-publication-authority-lock",
+    "source_type": "Repository",
+    "target": "branch",
+    "updated_at": "2026-10-27T22:49:43.483+03:30"
+  },
+  "24939466": {
+    "_links": {
+      "html": {
+        "href": "https://github.com/davoodsahraie-pi/global-publication-authority-lock/rules/24939466"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/davoodsahraie-pi/global-publication-authority-lock/rulesets/24939466"
+      }
+    },
+    "bypass_actors": [],
+    "conditions": {
+      "ref_name": {
+        "exclude": [],
+        "include": [
+          "~DEFAULT_BRANCH"
+        ]
+      }
+    },
+    "created_at": "2026-10-12T19:58:17.650+03:30",
+    "current_user_can_bypass": "never",
+    "enforcement": "active",
+    "id": 24939466,
+    "name": "GLOBAL-PUBLICATION-MAIN-LOCK",
+    "node_id": "RRS_lACqUmVwb3NpdG9yec5UXi5YzgF8i8o",
+    "rules": [
+      {
+        "type": "deletion"
+      },
+      {
+        "type": "non_fast_forward"
+      },
+      {
+        "parameters": {
+          "allowed_merge_methods": [
+            "merge",
+            "squash",
+            "rebase"
+          ],
+          "dismiss_stale_reviews_on_push": false,
+          "require_code_owner_review": false,
+          "require_extra_approval_for_unattributed_changes": true,
+          "require_last_push_approval": false,
+          "required_approving_review_count": 0,
+          "required_review_thread_resolution": false,
+          "required_reviewers": []
+        },
+        "type": "pull_request"
+      },
+      {
+        "parameters": {
+          "do_not_enforce_on_create": false,
+          "required_status_checks": [
+            {
+              "context": "publication-authority",
+              "integration_id": 15368
+            }
+          ],
+          "strict_required_status_checks_policy": false
+        },
+        "type": "required_status_checks"
+      }
+    ],
+    "source": "davoodsahraie-pi/global-publication-authority-lock",
+    "source_type": "Repository",
+    "target": "branch",
+    "updated_at": "2026-10-27T22:48:18.170+03:30"
+  },
+  "26070404": {
+    "_links": {
+      "html": {
+        "href": "https://github.com/davoodsahraie-pi/global-publication-authority-lock/rules/26070404"
+      },
+      "self": {
+        "href": "https://api.github.com/repos/davoodsahraie-pi/global-publication-authority-lock/rulesets/26070404"
+      }
+    },
+    "bypass_actors": [],
+    "conditions": {
+      "ref_name": {
+        "exclude": [],
+        "include": [
+          "refs/tags/gen33-execution-claim/*"
+        ]
+      }
+    },
+    "created_at": "2026-10-28T22:54:46.971+03:30",
+    "current_user_can_bypass": "never",
+    "enforcement": "active",
+    "id": 26070404,
+    "name": "GEN33-PROTECTED-CLAIM-IMMUTABLE",
+    "node_id": "RRS_lACqUmVwb3NpdG9yec5UXi5YzgGNzYQ",
+    "rules": [
+      {
+        "type": "deletion"
+      },
+      {
+        "type": "non_fast_forward"
+      },
+      {
+        "type": "update"
+      }
+    ],
+    "source": "davoodsahraie-pi/global-publication-authority-lock",
+    "source_type": "Repository",
+    "target": "tag",
+    "updated_at": "2026-10-28T22:54:47.017+03:30"
+  }
+}''')
+
+def rules():return copy.deepcopy(OBSERVED_RULESETS["26070404"])
 
 class FakeGit:
     def __init__(self,private=False):
@@ -217,6 +392,28 @@ class ClaimAndTerminalTests(unittest.TestCase):
         self.assertFalse(b.verify_terminal_receipt(receipt,KEY,expected,[receipt["nonce"]])["authenticated"])
         self.assertNotIn(b"PRIVATE-MANUSCRIPT-UNIT-ONLY",b"".join(api.blobs.values()))
         self.assertIn(b"PRIVATE-MANUSCRIPT-UNIT-ONLY",b"".join(private.blobs.values()))
+
+    def test_attested_redaction_after_claim_allows_only_one_fake_launch(self):
+        api=FakeGit();original=api.get
+        def redacted(path):
+            result=original(path)
+            if path=="/rulesets/26070404":result.pop("bypass_actors");result.pop("current_user_can_bypass")
+            return result
+        api.get=redacted
+        result,_,_,runner=self.flow(api=api)
+        self.assertEqual(result["status"],"COMPLETED");runner.assert_called_once()
+
+    def test_ruleset_version_drift_after_claim_consumes_without_launch(self):
+        api=FakeGit();original=api.get
+        def drift(path):
+            result=original(path)
+            if path=="/rulesets/26070404":result.pop("bypass_actors");result["updated_at"]="2026-10-29T00:00:00Z"
+            return result
+        api.get=drift;runner=Mock()
+        result,_,_,_=self.flow(api=api,runner=runner)
+        self.assertEqual(result["status"],"NOT_LAUNCHED");runner.assert_not_called()
+        self.assertEqual(len(api.refs),3)
+
     def test_same_authorization_cannot_launch_twice(self):
         _,api,private,_=self.flow();runner=Mock()
         with self.assertRaises(b.Denied):self.flow(api,private,runner)
@@ -282,15 +479,28 @@ class DriverAndEntrypointTests(unittest.TestCase):
             self.assertEqual(b.main(),2)
         self.assertNotIn("SECRET-PRIVATE-PAYLOAD",output.getvalue());self.assertFalse(json.loads(output.getvalue())["retry_allowed"])
 
+
+    def test_safe_denial_code_is_reported_without_granting_retry(self):
+        for code in ("RULESET_VERSION_UNATTESTED","ENVIRONMENT_ONLY_MAIN_REQUIRED","HTTP_403"):
+            output=io.StringIO()
+            with patch.object(sys,"argv",["bridge","--authorization-run-id",RUN]),patch.object(b,"GitHub",side_effect=b.Denied(code)),contextlib.redirect_stdout(output):
+                self.assertEqual(b.main(),2)
+            result=json.loads(output.getvalue());self.assertEqual(result["reason_code"],code)
+            self.assertFalse(result["retry_allowed"])
+
+    def test_arbitrary_denied_text_is_never_public(self):
+        for exc in (b.Denied("SECRET_PRIVATE_PAYLOAD"),b.Denied("HTTP_403", "SECRET"),RuntimeError("HTTP_403")):
+            result=b.safe_failure(exc)
+            self.assertEqual(result["reason_code"],"UNCLASSIFIED_FAILURE")
+            self.assertNotIn("SECRET",json.dumps(result));self.assertFalse(result["retry_allowed"])
+
 class PlatformTests(unittest.TestCase):
     def fixture(self):
         env={"GITHUB_REPOSITORY":b.REPO,"GITHUB_REF":"refs/heads/main","GITHUB_EVENT_NAME":"workflow_dispatch",
              "GITHUB_RUN_ATTEMPT":"1","GITHUB_ACTOR":b.OWNER,"GITHUB_TRIGGERING_ACTOR":b.OWNER,"GITHUB_SHA":HEAD,"GITHUB_RUN_ID":"90000002"}
-        main={"enforcement":"active","target":"branch","bypass_actors":[],"conditions":{"ref_name":{"include":["~DEFAULT_BRANCH"],"exclude":[]}},
-              "rules":[{"type":"pull_request"},{"type":"required_status_checks","parameters":{"strict_required_status_checks_policy":True,"required_status_checks":[{"context":"publication-authority","integration_id":15368}]}}]}
         data={"/git/ref/heads/main":{"object":{"sha":HEAD}},
               "/actions/runs/90000002":{"head_sha":HEAD,"path":b.WORKFLOW,"run_attempt":1,"event":"workflow_dispatch","head_branch":"main","actor":{"login":b.OWNER},"triggering_actor":{"login":b.OWNER}},
-              "/rulesets/24932377":copy.deepcopy(main),"/rulesets/24939466":copy.deepcopy(main),"/rulesets/26070404":rules(),
+              "/rulesets/24932377":copy.deepcopy(OBSERVED_RULESETS["24932377"]),"/rulesets/24939466":copy.deepcopy(OBSERVED_RULESETS["24939466"]),"/rulesets/26070404":rules(),
               "/environments/gen34-r25r7-production":{"deployment_branch_policy":{"protected_branches":False,"custom_branch_policies":True}},
               "/environments/gen34-r25r7-production/deployment-branch-policies":{"total_count":1,"branch_policies":[{"name":"main","type":"branch"}]}}
         api=Mock();api.get.side_effect=lambda path:data[path]
@@ -305,6 +515,57 @@ class PlatformTests(unittest.TestCase):
                        lambda e,d:d["/environments/gen34-r25r7-production/deployment-branch-policies"]["branch_policies"][0].update(type="tag")):
             env,data,api=self.fixture();change(env,data)
             with self.assertRaises(b.Denied):b.verify_platform(api,env,profile())
+
+    def test_actions_redaction_matches_exact_independently_attested_versions(self):
+        env,data,api=self.fixture()
+        for ident in (24932377,24939466,26070404):
+            data["/rulesets/"+str(ident)].pop("bypass_actors")
+            data["/rulesets/"+str(ident)].pop("current_user_can_bypass")
+        self.assertEqual(b.verify_platform(api,env,profile())[0],HEAD)
+
+    def test_redaction_never_hides_ruleset_drift_or_bypass(self):
+        mutations=(lambda r:r.update(updated_at="2026-10-29T00:00:00Z"),
+                   lambda r:r.pop("updated_at"), lambda r:r.update(updated_at="2026-10-29T00:00:00"),
+                   lambda r:r.update(node_id="wrong"),lambda r:r.update(source="attacker/repo"),
+                   lambda r:r.update(enforcement="disabled"),lambda r:r.update(rules=[]),
+                   lambda r:r["conditions"]["ref_name"].update(include=["*"]),
+                   lambda r:r.update(bypass_actors=[{"actor_id":1}]),
+                   lambda r:r.update(bypass_actors=None),lambda r:r.update(current_user_can_bypass="always"))
+        for ident in (24932377,24939466,26070404):
+            for mutation in mutations:
+                with self.subTest(ident=ident,mutation=mutation):
+                    env,data,api=self.fixture();rule=data["/rulesets/"+str(ident)]
+                    rule.pop("bypass_actors");rule.pop("current_user_can_bypass");mutation(rule)
+                    with self.assertRaises(b.Denied):b.verify_platform(api,env,profile())
+                    self.assertEqual(api.post.call_count,0)
+
+    def test_equivalent_utc_timestamps_are_the_same_version(self):
+        for ident,rule in OBSERVED_RULESETS.items():
+            changed=copy.deepcopy(rule)
+            for key in ("created_at","updated_at"):
+                changed[key]=dt.datetime.fromisoformat(changed[key]).astimezone(dt.timezone.utc).isoformat()
+            self.assertEqual(b.attested_ruleset(changed,int(ident))["bypass_actors"],[])
+
+    def test_legacy_verifier_still_denies_unattested_redaction(self):
+        rule=rules();rule.pop("bypass_actors")
+        self.assertFalse(b.verify_ruleset(rule)[0])
+        with self.assertRaises(b.Denied):b.attested_ruleset(rule,123)
+
+    def test_readback_cannot_hide_relaxed_main_required_checks(self):
+        for ident in (24932377,24939466):
+            env,data,api=self.fixture();rule=data["/rulesets/"+str(ident)]
+            rule.pop("bypass_actors")
+            for item in rule["rules"]:
+                if item["type"]=="required_status_checks":
+                    item["parameters"]["required_status_checks"]=[]
+            with self.assertRaises(b.Denied):b.verify_platform(api,env,profile())
+
+    def test_missing_environment_branch_type_is_not_assumed_safe(self):
+        env,data,api=self.fixture()
+        data["/environments/gen34-r25r7-production/deployment-branch-policies"]["branch_policies"][0].pop("type")
+        with self.assertRaisesRegex(b.Denied,"ENVIRONMENT_ONLY_MAIN_REQUIRED"):
+            b.verify_platform(api,env,profile())
+
     def test_activation_change_requires_governance_and_exact_contract(self):
         with tempfile.TemporaryDirectory() as td:
             cur={"generation":34,"ledger_hashes":{}};a=Path(td)/"a.json";c=Path(td)/"b.json";a.write_text(json.dumps(cur))
