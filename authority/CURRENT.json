@@ -406,7 +406,7 @@
     "ppges_sha256": "8175f477e0d45c25db894fd00fb51cd3bd0ad78ea18b61aaa034a02f725a1371",
     "private_repository": "davoodsahraie-pi/global-publication-authority",
     "project": "GLOBAL",
-    "receipt_key_sha256": "c1fa7f76260091bad780535b211c84a4dd299e0b8d934149a6b94daa967a9868",
+    "receipt_key_sha256": "585967e5f7fe822efc9b20c6b2840f5c936707c8d2528f6b8f9580cf3cd240a0",
     "runtime_code_sha256": "948152b3084abb2e9596e597a69763a4fb137fba8d5d09dc4642aaf73611e02b",
     "runtime_profile": "LEGACY_R25R7_FULL_BOOK",
     "runtime_workflow_sha256": "ba4043d886e19e6a660e6fc080516919238ba0b239822a2b727663aabe34321b",
@@ -416,7 +416,7 @@
       "GEN34_R25R7_ORIGINAL_FULL_BOOK_ONCE"
     ]
   },
-  "generation": 36,
+  "generation": 37,
   "gh1_execution_rule": "GEN24 registers completed GEN23 engineering and selects staged same-SHA Q1. execution_authorized_now is eligibility only; fresh owner EXECUTE on this exact current lock/state/action/two scopes/QUALIFY+EXPORT_PDF remains mandatory. Historical EXECUTE and governance do not authorize future device execution.",
   "ledger_hashes": {
     "blocked_project": [
@@ -959,7 +959,7 @@
     ],
     "word_mobile_new_sha_pending": true
   },
-  "previous_public_lock_sha256": "9c397a5b96009374290a2dbc682bd789c804696956191635a4f0c867dd63abc1",
+  "previous_public_lock_sha256": "0945fdf86005d2174bd4c4aac4de4fd5435c8fc3b7317358d690343052938ace",
   "private_execution_state_sha256": "a25c71c8c4dbfd54052fad46989fa5a43ac7fc89a9b88eb906822b24006e5124",
   "qualification_policy": {
     "c1_profile_supplement_sha256": "0c5a4c03ca3f98d905af8cae9b3cce1ea1390753ad114b2df5ae7e4a052a1109",

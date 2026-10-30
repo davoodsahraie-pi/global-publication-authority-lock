@@ -1,29 +1,24 @@
 {
+  "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
+  "request_id": "GEN36_RECEIPT_KEY_ROTATION_40999684003",
+  "requested_action_id": "GLOBAL_PUBLICATION_GEN36_R25R7_RECEIPT_KEY_FINGERPRINT_ROTATION_ONLY",
   "action_kind": "GOVERNANCE_UPGRADE",
-  "authorization_run_id": 40946344126,
-  "input_private_state_sha256": "9cefbd129988749f70b106f17e6c3918fc15bb9f0da7e18a70e9982aae6d0a81",
-  "input_public_lock_sha256": "9c397a5b96009374290a2dbc682bd789c804696956191635a4f0c867dd63abc1",
+  "project": "GLOBAL",
   "mode": "MUTATING",
   "operations": [
     "GOVERNANCE_UPGRADE",
-    "PATCH",
     "AUTHORITY_UPDATE",
-    "STATE_TRANSITION"
+    "STATE_TRANSITION",
+    "PATCH"
   ],
-  "project": "GLOBAL",
-  "request_id": "GEN34_PRECLAIM_CORRECTION_40946344126",
-  "requested_action_id": "GLOBAL_PUBLICATION_GEN34_R25R7_PRECLAIM_RULESET_COMPATIBILITY_CORRECTION",
-  "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
   "target_scope_ids": [
-    "broker/gen34_r25r7_bridge.py",
-    "tests/test_gen34_r25r7_bridge.py",
     "authority/CURRENT.json",
     "authority/CURRENT.sha256",
     "request/ACTION_REQUEST.json",
-    "request/STATE_TRANSITION.json",
-    "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_CURRENT.json",
-    "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_CURRENT.sha256",
-    "PRIVATE_CUSTODY:davoodsahraie-pi/global-publication-authority:GEN34_R25R7_ORIGINAL_INPUTS"
+    "request/STATE_TRANSITION.json"
   ],
+  "authorization_run_id": 40999684003,
+  "input_public_lock_sha256": "0945fdf86005d2174bd4c4aac4de4fd5435c8fc3b7317358d690343052938ace",
+  "input_private_state_sha256": "a25c71c8c4dbfd54052fad46989fa5a43ac7fc89a9b88eb906822b24006e5124",
   "user_explicit_authorization": true
 }
