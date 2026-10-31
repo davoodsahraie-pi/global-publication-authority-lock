@@ -18,7 +18,8 @@ jobs:
         with:
           python-version: '3.12.10'
       - name: Pin code-only signature test dependency (not a Producer dependency)
-        run: python -m pip install --only-binary=:all: 'cryptography==46.0.4'
+        run: |
+          python -m pip install --only-binary=:all: 'cryptography==46.0.4'
       - name: Review-only stage3 affected-scope unit tests (no skip allowed)
         env:
           STAGE3_REQUIRE_CRYPTO: '1'
