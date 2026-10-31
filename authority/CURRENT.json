@@ -12,7 +12,7 @@
     }
   ],
   "current_action": {
-    "id": "GLOBAL_PUBLICATION_GEN38_ENGSEQ_IDENTITY_V2_FORMAL_REVIEW_READ_ONLY",
+    "id": "GLOBAL_PUBLICATION_GEN39_ENGSEQ_IDENTITY_V2_GOVERNANCE_ALIGNED_PREACTIVATION_READ_ONLY",
     "mode": "READ_ONLY"
   },
   "execution_authorized_now": false,
@@ -416,7 +416,7 @@
       "GEN34_R25R7_ORIGINAL_FULL_BOOK_ONCE"
     ]
   },
-  "generation": 38,
+  "generation": 39,
   "gh1_execution_rule": "GEN24 registers completed GEN23 engineering and selects staged same-SHA Q1. execution_authorized_now is eligibility only; fresh owner EXECUTE on this exact current lock/state/action/two scopes/QUALIFY+EXPORT_PDF remains mandatory. Historical EXECUTE and governance do not authorize future device execution.",
   "ledger_hashes": {
     "blocked_project": [
@@ -959,8 +959,8 @@
     ],
     "word_mobile_new_sha_pending": true
   },
-  "previous_public_lock_sha256": "f4fd5e45669690ccf54f0dabcd06f2a935af10963e699adbf8f9111e2c46a2ab",
-  "private_execution_state_sha256": "a25c71c8c4dbfd54052fad46989fa5a43ac7fc89a9b88eb906822b24006e5124",
+  "previous_public_lock_sha256": "e972e0293128c7d223079603ceaf62db9d0fe96afcc2844fa947af6dc2a562ab",
+  "private_execution_state_sha256": "c68b28e0839d26be4956e5f0db4eb066190a41bd6e2fd30756d21d37990aa7d6",
   "qualification_policy": {
     "c1_profile_supplement_sha256": "0c5a4c03ca3f98d905af8cae9b3cce1ea1390753ad114b2df5ae7e4a052a1109",
     "explicit_profiles": [
