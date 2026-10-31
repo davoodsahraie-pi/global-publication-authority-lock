@@ -1,25 +1,32 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_STATE_TRANSITION/1.0.0",
-  "transition_id": "GEN37_GEN38_ENGSEQ_IDENTITY_V2_FORMAL_REVIEW_SCOPE_SELECTION_41193586643",
-  "source_public_lock_sha256": "f4fd5e45669690ccf54f0dabcd06f2a935af10963e699adbf8f9111e2c46a2ab",
-  "target_public_lock_sha256": "e972e0293128c7d223079603ceaf62db9d0fe96afcc2844fa947af6dc2a562ab",
+  "transition_id": "GEN38_TO_GEN39_ENGSEQ_ALIGNMENT_PENDING_CROSS_STORE_COMMIT_41201781898",
+  "source_public_lock_sha256": "e972e0293128c7d223079603ceaf62db9d0fe96afcc2844fa947af6dc2a562ab",
+  "target_public_lock_sha256": "1a9bd1812d43d961c01521dd1f98566ecc4e0f7ae7e4c6689d4c864c989aba61",
   "source_private_execution_state_sha256": "a25c71c8c4dbfd54052fad46989fa5a43ac7fc89a9b88eb906822b24006e5124",
-  "target_private_execution_state_sha256": "a25c71c8c4dbfd54052fad46989fa5a43ac7fc89a9b88eb906822b24006e5124",
-  "authorization_run_id": 41193586643,
-  "action_id": "GLOBAL_PUBLICATION_GEN37_ENGSEQ_IDENTITY_V2_FORMAL_REVIEW_SCOPE_SELECTION",
-  "action_kind": "SET_NEXT_ACTION",
+  "target_private_execution_state_sha256": "c68b28e0839d26be4956e5f0db4eb066190a41bd6e2fd30756d21d37990aa7d6",
+  "authorization_run_id": 41201781898,
+  "action_id": "GLOBAL_PUBLICATION_GEN38_ENGSEQ_GOVERNANCE_ALIGNMENT_AND_PREACTIVATION_READ_ONLY",
+  "action_kind": "GOVERNANCE_UPGRADE",
   "project": "GLOBAL",
   "operations": [
-    "SET_NEXT_ACTION"
+    "GOVERNANCE_UPGRADE",
+    "AUTHORITY_UPDATE",
+    "STATE_TRANSITION"
   ],
   "target_scope_ids": [
-    "ENGSEQ_IDENTITY_V2_FORMAL_REVIEW_ONLY",
-    "R08_R09_R10_FROZEN",
-    "NO_BROKER_GATE_SOURCE_DELTA_CLAIM_OR_PRODUCER"
+    "authority/CURRENT.json",
+    "authority/CURRENT.sha256",
+    "request/ACTION_REQUEST.json",
+    "request/STATE_TRANSITION.json",
+    "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_CURRENT.json",
+    "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_CURRENT.sha256"
   ],
   "owner_issue_number": 53,
-  "owner_vote": "APPROVE_ENGSEQ_IDENTITY_V2_FORMAL_REVIEW_SCOPE",
-  "selected_next_action_id": "GLOBAL_PUBLICATION_GEN38_ENGSEQ_IDENTITY_V2_FORMAL_REVIEW_READ_ONLY",
+  "owner_vote": "APPROVE_GEN38_ENGSEQ_GOVERNANCE_ALIGNMENT_AND_PREACTIVATION_SCOPE",
+  "selected_next_action_id": "GLOBAL_PUBLICATION_GEN39_ENGSEQ_IDENTITY_V2_GOVERNANCE_ALIGNED_PREACTIVATION_READ_ONLY",
   "selected_next_action_mode": "READ_ONLY",
-  "status": "SCOPE_SELECTION_ONLY_NO_PRODUCER_OR_DELTA_ADMISSION"
+  "status": "DRAFT_PRIVATE_STATE_CANDIDATE_NOT_LIVE_BLOCKED_UNTIL_CROSS_STORE_COMMIT_ATTESTED",
+  "claim_authorized": false,
+  "producer_authorized": false
 }
