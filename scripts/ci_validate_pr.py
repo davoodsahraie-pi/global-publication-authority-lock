@@ -330,6 +330,110 @@ def validate_gen38_engseq_code_scope(changes, request, base_lock, base_root):
                 reasons.append("GEN38_ENGSEQ_PREIMAGE_DRIFT:" + rel)
     return reasons
 
+
+# GEN38 / Stage-3: exact owner-authorized 11-path inert code-only proposal.
+# No Authority, private CURRENT, Generator, Driver, Claim or Producer mutation.
+STAGE3_ACTION="GLOBAL_PUBLICATION_GEN38_ENGSEQ_STAGE3_CODE_ONLY_PREQUALIFICATION_INSTALL"
+STAGE3_AUTH_RUN=41214566958
+STAGE3_PUBLIC_SHA="e972e0293128c7d223079603ceaf62db9d0fe96afcc2844fa947af6dc2a562ab"
+STAGE3_PRIVATE_SHA="a25c71c8c4dbfd54052fad46989fa5a43ac7fc89a9b88eb906822b24006e5124"
+STAGE3_PATHS=set(["stage3/engseq_stage3_trust.py","stage3/engseq_stage3_roles.py","stage3/trust_policy.json","stage3/trust_anchors.json","stage3/role_evidence.json","stage3/staged_profile.json","stage3/README.md","tests/test_stage3_prequalification.py",".github/workflows/gen38-engseq-stage3-staged-qa.yml","scripts/ci_validate_pr.py","request/ACTION_REQUEST.json"])
+STAGE3_EXISTING={
+    "scripts/ci_validate_pr.py":"2f540cf8a644c04fe4bb86f6b13c27242797f93d",
+    "request/ACTION_REQUEST.json":"29d944a50be7b99125115e3d8c90d37358bd86c9",
+}
+STAGE3_ORIGINAL_PINS={
+    "source_sha256":"360ee8a7db0cfead8576b68b768bfa9e0f4038fd9f2892102e801541abc272d5",
+    "engseq_queue_gzip_sha256":"2e970a4f50cfef286d8d041ca3c4c02f48c5bd4cdc96c9718913240ed9ae85fe",
+    "r08_archive_sha256":"27bfe2030719e38faa100fefc0e8759e46362874c40de0342073dcd93707bd63",
+    "record_crosswalk_gzip_sha256":"b3a050a4c4b55185a2646470f3a4cb584590123da22ca289e2744148ca95141c",
+    "occurrence_crosswalk_gzip_sha256":"715099b791e0a6c6b756bf8280bd5148f6b784d21793b5c21fd184bd51c101b8",
+    "ppges_bundle_sha256":"8175f477e0d45c25db894fd00fb51cd3bd0ad78ea18b61aaa034a02f725a1371",
+    "grammar_sha256":"182589531ab1f2b0302fbc567f93510183af20d4682b99318bf6e4efea364213",
+    "generator_sha256":"646cf341c774953baa99da400ee3aa6e992fbbd8d0af95f36144f72c0fa5980c",
+    "driver_sha256":"b6ff959711cb3f3b9d103cb627bcc54e11de336b4ea2a4d862aa916ed2cb9191",
+    "identity_v2_broker_sha256":"b1d194ece679968e4f242a8512f0c978befdd696e574a0ab044375f23820b6c7",
+    "identity_v2_glue_sha256":"88826252ba555b7b076fa5506bcbebd0c9f02cdef5c2ca9d2a20544cb563395e",
+    "installed_legacy_broker_sha256":"204eec188b76408778efeea224afa1a4af0e23daf063736ebd16664f6d1a55a5",
+    "historic_legacy_broker_runtime_pin_sha256":"948152b3084abb2e9596e597a69763a4fb137fba8d5d09dc4642aaf73611e02b",
+}
+STAGE3_BYTE_PINS={
+    "engseq_stage3_trust.py_sha256":"stage3/engseq_stage3_trust.py",
+    "engseq_stage3_roles.py_sha256":"stage3/engseq_stage3_roles.py",
+    "trust_policy_sha256":"stage3/trust_policy.json",
+    "trust_anchors_sha256":"stage3/trust_anchors.json",
+    "role_evidence_sha256":"stage3/role_evidence.json",
+}
+
+def validate_stage3_code_only_scope(changes, request, base_lock, base_root, head_root):
+    if request.get("requested_action_id") != STAGE3_ACTION:
+        return []
+    reasons=[]
+    if request.get("action_kind")!="GOVERNANCE_UPGRADE" or request.get("mode")!="READ_ONLY":
+        reasons.append("STAGE3_GOVERNANCE_READ_ONLY_REQUIRED")
+    if request.get("operations")!=["GOVERNANCE_UPGRADE","PATCH"]:
+        reasons.append("STAGE3_EXACT_OPERATIONS_REQUIRED")
+    if (set(request.get("target_scope_ids") or [])!=STAGE3_PATHS or
+            len(request.get("target_scope_ids") or [])!=len(STAGE3_PATHS)):
+        reasons.append("STAGE3_EXACT_OWNER_SCOPE_REQUIRED")
+    if set(changes)!=STAGE3_PATHS or len(changes)!=len(STAGE3_PATHS):
+        reasons.append("STAGE3_EXACT_ELEVEN_CHANGED_PATHS_REQUIRED")
+    if request.get("authorization_run_id")!=STAGE3_AUTH_RUN or request.get("user_explicit_authorization") is not True:
+        reasons.append("STAGE3_OWNER_AUTHORIZATION_RUN_REQUIRED")
+    if (base_lock.get("generation")!=38 or base_lock.get("execution_authorized_now") is not False or
+            base_lock.get("private_execution_state_sha256")!=STAGE3_PRIVATE_SHA or
+            base_lock.get("current_action",{}).get("mode")!="READ_ONLY"):
+        reasons.append("STAGE3_BASE_AUTHORITY_NOT_READ_ONLY_GEN38")
+    if request.get("input_public_lock_sha256")!=STAGE3_PUBLIC_SHA or request.get("input_private_state_sha256")!=STAGE3_PRIVATE_SHA:
+        reasons.append("STAGE3_REQUEST_PREDECESSOR_PINS_INVALID")
+    if base_root is None or sha(base_root/LOCK)!=STAGE3_PUBLIC_SHA:
+        reasons.append("STAGE3_PROTECTED_BASE_PUBLIC_SHA_INVALID")
+        return reasons
+    for rel,blob in STAGE3_EXISTING.items():
+        if not (base_root/rel).is_file() or git_blob_file(base_root/rel)!=blob:
+            reasons.append("STAGE3_PROTECTED_BASE_PREIMAGE_MISMATCH:"+rel)
+    for rel in STAGE3_PATHS-set(STAGE3_EXISTING):
+        if (base_root/rel).exists():
+            reasons.append("STAGE3_NONADDITIVE_NEW_PATH:"+rel)
+    try:
+        p=load_json(head_root/"stage3/staged_profile.json")
+        anchors=load_json(head_root/"stage3/trust_anchors.json")
+        roles=load_json(head_root/"stage3/role_evidence.json")
+        if (p.get("schema")!="GLOBAL_PUBLICATION_GEN38_ENGSEQ_STAGE3_STAGED_PROFILE/1.0" or
+                p.get("status")!="STAGED_REVIEW_ONLY_NOT_ACTIVATED" or
+                p.get("authority_generation")!=38 or
+                p.get("authority_readonly_public_sha256")!=STAGE3_PUBLIC_SHA or
+                p.get("private_current_sha256")!=STAGE3_PRIVATE_SHA):
+            reasons.append("STAGE3_STAGED_PROFILE_BASE_BINDING_INVALID")
+        for key in ("claim_allowed","producer_allowed","release_allowed","trust_anchors_qualified",
+                    "role_coverage_attested","new_broker_runtime_pin_activated","owner_public_private_transition_completed"):
+            if p.get(key) is not False:
+                reasons.append("STAGE3_PROHIBITED_ACTIVATION_FLAG:"+key)
+        for field,expected in STAGE3_ORIGINAL_PINS.items():
+            if p.get(field)!=expected:
+                reasons.append("STAGE3_ORIGINAL_PIN_DRIFT:"+field)
+        for field,rel in STAGE3_BYTE_PINS.items():
+            if p.get(field)!=sha(head_root/rel):
+                reasons.append("STAGE3_NEW_COMPONENT_PIN_MISMATCH:"+field)
+        if (anchors.get("registry_status")!="NOT_PROVISIONED" or
+                anchors.get("reviewers")!=[] or anchors.get("revocation_checked_at") is not None):
+            reasons.append("STAGE3_UNAUTHORIZED_REVIEWER_TRUST_PROVISIONING")
+        a=roles.get("attestations",{})
+        if (not isinstance(a,dict) or
+                set(a)!={"captions","mixed_table_semantic_review","part_titles","rendered_output","tables"} or
+                any(not isinstance(v,dict) or v.get("verified") is not False for v in a.values())):
+            reasons.append("STAGE3_UNATTESTED_ROLE_CLAIM_OR_MISSING_COVERAGE")
+        census=roles.get("census",{})
+        if (roles.get("source_sha256")!=STAGE3_ORIGINAL_PINS["source_sha256"] or
+                not isinstance(census,dict) or census.get("total_blocks")!=56 or
+                census.get("raw_multiword_spans")!=363 or
+                census.get("mixed_persian_table_spans")!=163 or
+                census.get("non_persian_context_spans")!=200):
+            reasons.append("STAGE3_ORIGINAL_ROLE_EVIDENCE_DRIFT")
+    except (OSError,ValueError,TypeError,KeyError) as exc:
+        reasons.append("STAGE3_STAGED_METADATA_INVALID:"+type(exc).__name__)
+    return reasons
+
 def sha(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 def tree(root):
@@ -461,6 +565,7 @@ def main():
 
     reasons += validate_gen34_code_scope(changes,req,load_json(base/LOCK),base)
     reasons += validate_gen38_engseq_code_scope(changes,req,load_json(base/LOCK),base)
+    reasons += validate_stage3_code_only_scope(changes,req,load_json(base/LOCK),base,head)
 
     runtime_changed=[p for p in changes if p in PROTECTED_RUNTIME_FILES or p.startswith(PROTECTED_RUNTIME_PREFIXES)]
     if runtime_changed and req.get("action_kind")!="GOVERNANCE_UPGRADE":

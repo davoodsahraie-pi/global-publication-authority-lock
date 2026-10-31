@@ -1,6 +1,6 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "GEN38_GEN39_ENGSEQ_PREACTIVATION_GOV_ALIGNMENT_STAGED_41201781898",
+  "request_id": "GEN38_GEN39_ENGSEQ_FENCED_HANDOFF_STAGED_41219392498",
   "input_public_lock_sha256": "e972e0293128c7d223079603ceaf62db9d0fe96afcc2844fa947af6dc2a562ab",
   "input_private_state_sha256": "a25c71c8c4dbfd54052fad46989fa5a43ac7fc89a9b88eb906822b24006e5124",
   "requested_action_id": "GLOBAL_PUBLICATION_GEN38_ENGSEQ_GOVERNANCE_ALIGNMENT_AND_PREACTIVATION_READ_ONLY",
@@ -21,6 +21,6 @@
     "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_CURRENT.json",
     "/GLOBAL-PUBLICATION/Publication Master Control/GLOBAL_PUBLICATION_EXECUTION_STATE_CURRENT.sha256"
   ],
-  "authorization_run_id": 41201781898,
+  "authorization_run_id": 41219392498,
   "user_explicit_authorization": true
 }
