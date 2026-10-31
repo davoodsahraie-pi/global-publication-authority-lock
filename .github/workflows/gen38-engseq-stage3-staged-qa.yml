@@ -1,0 +1,35 @@
+name: gen38-engseq-stage3-review-only-qa
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'stage3/**'
+      - 'tests/test_stage3_prequalification.py'
+      - '.github/workflows/gen38-engseq-stage3-staged-qa.yml'
+permissions:
+  contents: read
+jobs:
+  code-only-stage3:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12.10'
+      - name: Review-only stage3 affected-scope unit tests
+        run: python -I -B -m unittest discover -s tests -p 'test_stage3_prequalification.py' -v
+      - name: Enforce retained authority and inactive binding
+        run: |
+          python -I -B - <<'PY'
+          import json, hashlib
+          from pathlib import Path
+          p=json.loads(Path('stage3/staged_profile.json').read_text())
+          a=json.loads(Path('authority/CURRENT.json').read_text())
+          assert a['generation']==38 and a['execution_authorized_now'] is False
+          assert a['private_execution_state_sha256']==p['private_current_sha256']
+          assert hashlib.sha256(Path('authority/CURRENT.json').read_bytes()).hexdigest()==p['authority_readonly_public_sha256']
+          assert p['claim_allowed'] is False and p['producer_allowed'] is False
+          assert p['trust_anchors_qualified'] is False
+          print('STAGE3_STAGED_CODE_ONLY_FAIL_CLOSED_PASS')
+          PY
