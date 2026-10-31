@@ -452,6 +452,11 @@ def execute(api,private_api,env,authorization_run_id,key_hex,work):
     payload,private_state,deps=prepare_payload(raw_bundle,profile,lock["private_execution_state_sha256"],work)
     admission=validate_gen34_admission(lock,private_state,request,auth,public_sha)
     require(admission["status"]=="ELIGIBLE_FOR_PHYSICAL_CLAIM_ONLY","EXECUTION_ADMISSION_DENIED")
+    # GEN38 code-only hook: refuse any v2 candidate until independently activated.
+    # This check precedes prepare_python(), redeem() and complete_claimed().
+    from engseq_registry_v2_broker_glue import code_only_preclaim_guard
+    identity_hold=code_only_preclaim_guard(lock)
+    require(identity_hold["status"]=="UNSELECTED_CODE_ONLY","EXECUTION_ADMISSION_DENIED")
     python=prepare_python(payload,deps,work)
     require(attested_ruleset(api.get("/rulesets/26070404"),26070404)==protection,"RULESET_CHANGED_BEFORE_CLAIM")
     require(api.get("/git/ref/heads/main")["object"]["sha"]==head,"AUTHORITY_CHANGED_BEFORE_CLAIM")
