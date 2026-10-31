@@ -1,24 +1,21 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "GEN36_RECEIPT_KEY_ROTATION_40999684003",
-  "requested_action_id": "GLOBAL_PUBLICATION_GEN36_R25R7_RECEIPT_KEY_FINGERPRINT_ROTATION_ONLY",
-  "action_kind": "GOVERNANCE_UPGRADE",
+  "request_id": "GEN37_GEN38_ENGSEQ_IDENTITY_V2_SCOPE_SELECTION_AUTH_RUN_41193586643",
+  "input_public_lock_sha256": "f4fd5e45669690ccf54f0dabcd06f2a935af10963e699adbf8f9111e2c46a2ab",
+  "input_private_state_sha256": "a25c71c8c4dbfd54052fad46989fa5a43ac7fc89a9b88eb906822b24006e5124",
+  "requested_action_id": "GLOBAL_PUBLICATION_GEN37_ENGSEQ_IDENTITY_V2_FORMAL_REVIEW_SCOPE_SELECTION",
+  "action_kind": "SET_NEXT_ACTION",
+  "mode": "READ_ONLY",
   "project": "GLOBAL",
-  "mode": "MUTATING",
+  "method_id": null,
   "operations": [
-    "GOVERNANCE_UPGRADE",
-    "AUTHORITY_UPDATE",
-    "STATE_TRANSITION",
-    "PATCH"
+    "SET_NEXT_ACTION"
   ],
   "target_scope_ids": [
-    "authority/CURRENT.json",
-    "authority/CURRENT.sha256",
-    "request/ACTION_REQUEST.json",
-    "request/STATE_TRANSITION.json"
+    "ENGSEQ_IDENTITY_V2_FORMAL_REVIEW_ONLY",
+    "R08_R09_R10_FROZEN",
+    "NO_BROKER_GATE_SOURCE_DELTA_CLAIM_OR_PRODUCER"
   ],
-  "authorization_run_id": 40999684003,
-  "input_public_lock_sha256": "0945fdf86005d2174bd4c4aac4de4fd5435c8fc3b7317358d690343052938ace",
-  "input_private_state_sha256": "a25c71c8c4dbfd54052fad46989fa5a43ac7fc89a9b88eb906822b24006e5124",
+  "authorization_run_id": 41193586643,
   "user_explicit_authorization": true
 }
