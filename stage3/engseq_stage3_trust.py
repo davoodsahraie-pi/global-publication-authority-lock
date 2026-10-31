@@ -119,6 +119,14 @@ class ReviewOnlyTrustVerifier:
                 raise ValueError("REVIEWER_DOMAIN_MISSING")
             if not isinstance(r.get("qualifications"), list) or not r["qualifications"]:
                 raise ValueError("REVIEWER_QUALIFICATION_MISSING")
+            if not isinstance(r.get("source_sha256_scopes"), list) or not all(
+                    isinstance(x, str) and HEX64.fullmatch(x) for x in r["source_sha256_scopes"]):
+                raise ValueError("REVIEWER_SOURCE_SCOPE_MISSING")
+            if not isinstance(r.get("sense_id_scopes"), list) or not all(
+                    isinstance(x, str) and x for x in r["sense_id_scopes"]):
+                raise ValueError("REVIEWER_SENSE_SCOPE_MISSING")
+            if not r["source_sha256_scopes"] or not r["sense_id_scopes"]:
+                raise ValueError("REVIEWER_SCOPE_EMPTY")
             byid[rid] = r
         obj = object.__new__(cls)
         obj._policy, obj._anchors = policy, (anchors, byid)
@@ -156,7 +164,9 @@ class ReviewOnlyTrustVerifier:
                     raise ValueError("REVIEW_EVIDENCE_MISMATCH")
             if (claims.get("class") not in _ALLOWED_AB
                 or claims.get("domain") not in reviewer["domains"]
-                or claims.get("qualification") not in reviewer["qualifications"]):
+                or claims.get("qualification") not in reviewer["qualifications"]
+                or claims.get("canonical_source_sha256") not in reviewer["source_sha256_scopes"]
+                or claims.get("sense_id") not in reviewer["sense_id_scopes"]):
                 raise ValueError("OUT_OF_SCOPE_OR_UNQUALIFIED")
             for k in ("stable_occurrence_key_sha256", "canonical_source_sha256", "evidence_sha256"):
                 if not isinstance(claims.get(k), str) or not HEX64.fullmatch(claims[k]):

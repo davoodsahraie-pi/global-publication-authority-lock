@@ -6,6 +6,7 @@ import sys
 import unittest
 from datetime import datetime,timezone,timedelta
 from pathlib import Path
+import os
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'stage3'))
 import engseq_stage3_trust as trust
@@ -91,7 +92,7 @@ class Stage3Tests(unittest.TestCase):
 
     def synthetic_positive_fixture(self, *,anchor_age=timedelta(minutes=2), revoke=False, allowed_domain='software'):
         if not self.crypto_available:
-            self.skipTest('No qualified crypto library installed: signature-positive fixture unverified')
+            self.fail('CI_BACKEND_REQUIRED_BUT_NOT_INSTALLED') if os.getenv('STAGE3_REQUIRE_CRYPTO') else self.skipTest('No qualified crypto library installed: signature-positive fixture unverified')
         from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
         from cryptography.hazmat.primitives import serialization
         key=Ed25519PrivateKey.generate()
@@ -100,7 +101,8 @@ class Stage3Tests(unittest.TestCase):
         rev=(now-anchor_age).isoformat(timespec='seconds').replace('+00:00','Z')
         anchors={'schema':trust.ANCHOR_SCHEMA,'registry_status':'EXTERNAL_OWNER_PROVISIONED','revocation_checked_at':rev,
                  'reviewers':[{'reviewer_id':'synthetic-test-key','ed25519_public_key_b64':base64.b64encode(pub).decode(),
-                               'credential_verified':True,'independent':True,'revoked':revoke,'domains':[allowed_domain],'qualifications':['scientific']}]}
+                               'credential_verified':True,'independent':True,'revoked':revoke,'domains':[allowed_domain],'qualifications':['scientific'],
+                               'source_sha256_scopes':[roles.SOURCE_SHA],'sense_id_scopes':['django-server']}]}
         b={'stable_occurrence_key_sha256':'a'*64,'canonical_source_sha256':roles.SOURCE_SHA,
            'source_record_sha256':'b'*64,'effective_text_sha256':'c'*64,
            'publication_block_id':21473,'canonical_block_id':21471,'source_line':21473,
@@ -136,6 +138,14 @@ class Stage3Tests(unittest.TestCase):
         self.assertFalse(verifier.verify(entry,b)['authenticated'])
     def test_cross_domain_denied(self):
         verifier,entry,b=self.synthetic_positive_fixture(allowed_domain='electronics')
+        self.assertFalse(verifier.verify(entry,b)['authenticated'])
+    def test_cross_sense_denied(self):
+        verifier,entry,b=self.synthetic_positive_fixture()
+        entry['sense_id']='another-sense'
+        self.assertFalse(verifier.verify(entry,b)['authenticated'])
+    def test_cross_source_denied(self):
+        verifier,entry,b=self.synthetic_positive_fixture()
+        b['canonical_source_sha256']='f'*64
         self.assertFalse(verifier.verify(entry,b)['authenticated'])
     def test_expired_revocation_snapshot_denied(self):
         verifier,entry,b=self.synthetic_positive_fixture(anchor_age=timedelta(days=3))
