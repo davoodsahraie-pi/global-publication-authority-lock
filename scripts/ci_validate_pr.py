@@ -288,6 +288,48 @@ def validate_motion_f_changed_paths(changes,request,base_lock):
         reasons.append("MOTION_F_UNEXPECTED_BASE_ACTION_MODE")
     return reasons
 
+
+# GEN38 identity-v2: one owner-authorized, code-only seven-file change.
+# This scope does NOT activate v2 or alter any protected Authority/Source.
+GEN38_ENGSEQ_ACTION="GLOBAL_PUBLICATION_GEN38_ENGSEQ_IDENTITY_V2_BROKER_GATE_CODE_ONLY_INSTALL"
+GEN38_ENGSEQ_AUTH_RUN=41195814356
+GEN38_ENGSEQ_PUBLIC_SHA="e972e0293128c7d223079603ceaf62db9d0fe96afcc2844fa947af6dc2a562ab"
+GEN38_ENGSEQ_PRIVATE_SHA="a25c71c8c4dbfd54052fad46989fa5a43ac7fc89a9b88eb906822b24006e5124"
+GEN38_ENGSEQ_SCOPES=["broker/gen34_r25r7_bridge.py","broker/engseq_identity_registry_v2.py","broker/engseq_registry_v2_broker_glue.py","gate/publication_gate.py","tests/test_engseq_identity_v2.py","scripts/ci_validate_pr.py","scripts/selftest.py",".github/workflows/gen38-engseq-identity-v2-qa.yml","request/ACTION_REQUEST.json"]
+GEN38_ENGSEQ_CHANGED=["broker/gen34_r25r7_bridge.py","broker/engseq_identity_registry_v2.py","broker/engseq_registry_v2_broker_glue.py","tests/test_engseq_identity_v2.py","scripts/ci_validate_pr.py",".github/workflows/gen38-engseq-identity-v2-qa.yml","request/ACTION_REQUEST.json"]
+GEN38_ENGSEQ_PREIMAGES={
+    "broker/gen34_r25r7_bridge.py":"63fcda25e02cf741f473786146502c5a9d14664b",
+    "scripts/ci_validate_pr.py":"ffef2218e18e6e46a27a4a064009d28cb53db488",
+    "request/ACTION_REQUEST.json":"e8286b2260352f6f5299345b6eca61044d35d3f8"
+}
+
+def validate_gen38_engseq_code_scope(changes, request, base_lock, base_root):
+    if request.get("requested_action_id") != GEN38_ENGSEQ_ACTION:
+        return []
+    reasons = []
+    if request.get("action_kind") != "GOVERNANCE_UPGRADE" or set(request.get("operations") or []) != {"GOVERNANCE_UPGRADE", "PATCH"}:
+        reasons.append("GEN38_ENGSEQ_INVALID_ACTION_OR_OPERATIONS")
+    if set(request.get("target_scope_ids") or []) != set(GEN38_ENGSEQ_SCOPES):
+        reasons.append("GEN38_ENGSEQ_SCOPE_MISMATCH")
+    if set(changes) != set(GEN38_ENGSEQ_CHANGED):
+        reasons.append("GEN38_ENGSEQ_NONEXACT_CHANGED_PATHS")
+    if request.get("authorization_run_id") != GEN38_ENGSEQ_AUTH_RUN:
+        reasons.append("GEN38_ENGSEQ_WRONG_OWNER_AUTHORIZATION")
+    if (base_lock.get("generation") != 38 or
+        base_lock.get("private_execution_state_sha256") != GEN38_ENGSEQ_PRIVATE_SHA or
+        base_lock.get("execution_authorized_now") is not False or
+        base_lock.get("current_action", {}).get("mode") != "READ_ONLY"):
+        reasons.append("GEN38_ENGSEQ_BASE_STATE_DRIFT")
+    if base_root is None:
+        reasons.append("GEN38_ENGSEQ_TRUSTED_BASE_REQUIRED")
+    else:
+        if sha(base_root / LOCK) != GEN38_ENGSEQ_PUBLIC_SHA:
+            reasons.append("GEN38_ENGSEQ_BASE_SHA_DRIFT")
+        for rel, expected in GEN38_ENGSEQ_PREIMAGES.items():
+            if git_blob_file(base_root / rel) != expected:
+                reasons.append("GEN38_ENGSEQ_PREIMAGE_DRIFT:" + rel)
+    return reasons
+
 def sha(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 def tree(root):
@@ -418,6 +460,7 @@ def main():
     reasons += validate_gen33_race_install_scope(changes,req,load_json(base/LOCK),base)
 
     reasons += validate_gen34_code_scope(changes,req,load_json(base/LOCK),base)
+    reasons += validate_gen38_engseq_code_scope(changes,req,load_json(base/LOCK),base)
 
     runtime_changed=[p for p in changes if p in PROTECTED_RUNTIME_FILES or p.startswith(PROTECTED_RUNTIME_PREFIXES)]
     if runtime_changed and req.get("action_kind")!="GOVERNANCE_UPGRADE":
