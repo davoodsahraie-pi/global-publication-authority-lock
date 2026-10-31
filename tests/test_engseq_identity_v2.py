@@ -127,8 +127,20 @@ class V2IdentityTests(unittest.TestCase):
         self.assertLess(prep,claim)
 
     def test_lab_result_can_never_be_claim(self):
-        self.assertIn("claim_authorized\": False", "claim_authorized\": False")
-        self.assertEqual(glue.mandatory_preclaim_v2.__doc__.count("future"),1)
+        from unittest.mock import patch
+        for reported in ("LAB_READY_FOR_SEPARATE_GOVERNANCE_CHECK", "DENIED"):
+            with self.subTest(reported=reported):
+                # Even an adversarial/mistaken upstream result cannot promote a LAB
+                # decision into real Claim, rendering or publication permission.
+                fake={"status":reported,"producer_authorized":True,
+                      "claim_authorized":True,"release_authorized":True}
+                with patch.object(glue,"preclaim_v2_from_frozen_crosswalk",return_value=fake):
+                    res=glue.mandatory_preclaim_v2()
+                self.assertEqual(res["status"],reported)
+                self.assertFalse(res["producer_authorized"])
+                self.assertFalse(res["claim_authorized"])
+                self.assertFalse(res["release_authorized"])
+                self.assertTrue(res["code_only"])
 
 if __name__=="__main__":
     unittest.main()
