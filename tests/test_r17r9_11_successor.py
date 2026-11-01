@@ -405,3 +405,44 @@ class PrivateGitBlobSingleAuthorityCodeOnly(unittest.TestCase):
         self.assertEqual(state["generation"],38)
         self.assertFalse(state["execution_authorized_now"])
         self.assertNotIn("r17r9_11_successor",state)
+
+
+
+class RuntimeManifestSourcePinRegression(unittest.TestCase):
+    """Fail-closed proof for the surviving post-PR82 historical Manifest pin."""
+
+    def test_new_executable_manifest_reaches_broker_source_pins(self):
+        p = ManifestCycleContractFix().make_profile()
+        self.assertEqual(guard.r17r9_11_successor_activation_errors(p), [])
+        pins = bridge.r17r9_11_pins(p)
+        self.assertEqual(pins["source_sha256"], SOURCE_NEW)
+        self.assertEqual(pins["generator_sha256"], guard.GEN34_PINS["generator_sha256"])
+        self.assertEqual(pins["driver_sha256"], guard.GEN34_PINS["driver_sha256"])
+
+    def test_historical_lab_manifest_denied(self):
+        p = ManifestCycleContractFix().make_profile()
+        p["manifest_sha256"] = guard.R17R9_11_MANIFEST_SHA256
+        with self.assertRaises(bridge.Denied):
+            bridge.r17r9_11_pins(p)
+
+    def test_malformed_manifest_digest_denied(self):
+        for digest in (None, "", "a"*63, "G"*64, 34):
+            with self.subTest(digest=digest):
+                p = ManifestCycleContractFix().make_profile()
+                p["manifest_sha256"] = digest
+                with self.assertRaises(bridge.Denied):
+                    bridge.r17r9_11_pins(p)
+
+    def test_wrong_source_denied_even_with_fresh_manifest(self):
+        for digest in (SOURCE_OLD, "0"*64):
+            p = ManifestCycleContractFix().make_profile()
+            p["source_sha256"] = digest
+            with self.assertRaises(bridge.Denied):
+                bridge.r17r9_11_pins(p)
+
+    def test_existing_manifest_member_and_state_byte_checks_remain(self):
+        import inspect
+        body = inspect.getsource(bridge.prepare_payload)
+        self.assertIn('profile["manifest_sha256"]', body)
+        self.assertIn('"private-state.json":private_sha', body)
+        self.assertIn("PAYLOAD_FILE_SHA_MISMATCH", body)
