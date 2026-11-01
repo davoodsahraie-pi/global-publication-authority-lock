@@ -625,6 +625,21 @@ def main():
     reasons += validate_stage3_code_only_scope(changes,req,load_json(base/LOCK),base,head)
     reasons += validate_r17r9_11_code_only_scope(changes,req,load_json(base/LOCK),base,head)
 
+    # Run changed-only successor negative tests in unprivileged PR CI only.
+    # publication-authority pull_request_target executes trusted BASE validator,
+    # so it never runs tests supplied by untrusted PR content.
+    if req.get("requested_action_id") == R17R9_11_CODE_ACTION:
+        import subprocess
+        result = subprocess.run(
+            [sys.executable, "-I", "-B", "-m", "unittest", "discover",
+             "-s", "tests", "-p", "test_r17r9_11_successor.py", "-v"],
+            cwd=head, timeout=120, check=False)
+        if result.returncode != 0:
+            reasons.append("R17R9_11_NEW_SCOPED_TESTS_FAILED")
+        else:
+            print("R17R9_11_NEW_SCOPED_TESTS: PASS")
+
+
     runtime_changed=[p for p in changes if p in PROTECTED_RUNTIME_FILES or p.startswith(PROTECTED_RUNTIME_PREFIXES)]
     if runtime_changed and req.get("action_kind")!="GOVERNANCE_UPGRADE":
         reasons.append("TRUSTED_RUNTIME_CHANGE_REQUIRES_GOVERNANCE_UPGRADE")
