@@ -393,7 +393,6 @@ def r17r9_11_successor_activation_errors(profile):
         reasons.append("R17R9_RUNTIME_PROFILE_INVALID")
     for key,value in {
         "source_sha256":R17R9_11_SOURCE_SHA256,
-        "manifest_sha256":R17R9_11_MANIFEST_SHA256,
         "generator_sha256":GEN34_PINS["generator_sha256"],
         "driver_sha256":GEN34_PINS["driver_sha256"],
         "c1_sha256":GEN34_PINS["c1_sha256"],
@@ -415,6 +414,12 @@ def r17r9_11_successor_activation_errors(profile):
     for k in ("bundle_sha256","dependency_lock_sha256","receipt_key_sha256",
               "runtime_code_sha256","runtime_workflow_sha256","source_admission_receipt_sha256"):
         if not is_sha256(profile.get(k)): reasons.append("R17R9_DIGEST_INVALID:"+k)
+    # LAB Manifest was generated with the old private state. The executable
+    # Manifest must be newly SHA-pinned by protected CURRENT, outside private-state.json.
+    if not is_sha256(profile.get("manifest_sha256")):
+        reasons.append("R17R9_EXECUTABLE_MANIFEST_DIGEST_INVALID")
+    elif profile["manifest_sha256"]==R17R9_11_MANIFEST_SHA256:
+        reasons.append("R17R9_LAB_MANIFEST_IS_NOT_EXECUTABLE")
     if not isinstance(profile.get("bundle_blob_sha"),str) or not re.fullmatch(r"[0-9a-f]{40}",profile["bundle_blob_sha"]):
         reasons.append("R17R9_PRIVATE_BLOB_INVALID")
     if profile.get("bundle_sha256")==R17R9_11_LAB_INPUT_SHA256:
