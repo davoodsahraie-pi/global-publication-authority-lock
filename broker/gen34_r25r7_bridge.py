@@ -492,6 +492,28 @@ def r17r9_11_pins(profile):
     return {**GEN34_PINS,"source_sha256":profile["source_sha256"],
             "generator_sha256":R17R9_11_CLI_GENERATOR_SHA256}
 
+R17R9_11_ACTIVE_GENERATOR_SHA_PROOF = "2ee4fabe98066c78dc5be0017c0c84ab4885ab582ca0cf66fdd32005e91dd8e9"
+
+def r17r9_11_techlit_pending_identity():
+    """Code-only proposal; NEVER a runtime selector, claim, or owner EXECUTE."""
+    from transition_guard import (
+        R17R9_11_CLI_GENERATOR_SHA256,
+        R17R9_11_TECHLIT_PENDING_GENERATOR_SHA256,
+        R17R9_11_SOURCE_SHA256,
+    )
+    require(R17R9_11_CLI_GENERATOR_SHA256==R17R9_11_ACTIVE_GENERATOR_SHA_PROOF,
+            "R17R9_ACTIVE_GENERATOR_PREIMAGE_CHANGED")
+    return {
+        "status": "CODE_ONLY_NOT_ADMITTED",
+        "active_generator_sha256": R17R9_11_CLI_GENERATOR_SHA256,
+        "pending_generator_sha256": R17R9_11_TECHLIT_PENDING_GENERATOR_SHA256,
+        "source_sha256": R17R9_11_SOURCE_SHA256,
+        "scope": ["WINDOWS_PATH", "QUOTED_DIAGNOSTIC", "ESCAPED_CONTROL"],
+        "execute_allowed": False,
+        "claim_allowed": False,
+        "producer_allowed": False,
+    }
+
 def run_r17r9_11_seven_batches(python,payload,work,seconds,pins):
     """One protected claimed attempt, seven bounded resumable Driver calls."""
     started=time.monotonic()
