@@ -798,7 +798,7 @@ def validate_r17r9_cli_generator_code_only(changes,req,base_lock,base_root,head_
     newg=(head_root/"gate/transition_guard.py").read_text(encoding="utf-8")
     expectedg=oldg.replace(
         'R17R9_11_RUNTIME_SCHEMA = "R17R9_11_SOURCE_BOUND_RUNTIME/1.0"',
-        'R17R9_11_RUNTIME_SCHEMA = "R17R9_11_SOURCE_BOUND_RUNTIME/1.0"\\n# Exact generator successor digest; original GEN34_PINS is immutable.\\nR17R9_11_CLI_GENERATOR_SHA256 = "2ee4fabe98066c78dc5be0017c0c84ab4885ab582ca0cf66fdd32005e91dd8e9"')
+        'R17R9_11_RUNTIME_SCHEMA = "R17R9_11_SOURCE_BOUND_RUNTIME/1.0"\n# Exact generator successor digest; original GEN34_PINS is immutable.\nR17R9_11_CLI_GENERATOR_SHA256 = "2ee4fabe98066c78dc5be0017c0c84ab4885ab582ca0cf66fdd32005e91dd8e9"')
     expectedg=expectedg.replace(
         '        "generator_sha256":GEN34_PINS["generator_sha256"],',
         '        "generator_sha256":R17R9_11_CLI_GENERATOR_SHA256,',1)
@@ -809,11 +809,11 @@ def validate_r17r9_cli_generator_code_only(changes,req,base_lock,base_root,head_
         'from transition_guard import R17R9_11_SOURCE_SHA256, R17R9_11_MANIFEST_SHA256, is_sha256',
         'from transition_guard import R17R9_11_SOURCE_SHA256, R17R9_11_MANIFEST_SHA256, R17R9_11_CLI_GENERATOR_SHA256, is_sha256',1)
     expectedb=expectedb.replace(
-        '    require(profile["source_sha256"]==R17R9_11_SOURCE_SHA256 and\\n            is_sha256(profile.get("manifest_sha256")) and',
-        '    require(profile["source_sha256"]==R17R9_11_SOURCE_SHA256 and\\n            profile.get("generator_sha256")==R17R9_11_CLI_GENERATOR_SHA256 and\\n            is_sha256(profile.get("manifest_sha256")) and',1)
+        '    require(profile["source_sha256"]==R17R9_11_SOURCE_SHA256 and\n            is_sha256(profile.get("manifest_sha256")) and',
+        '    require(profile["source_sha256"]==R17R9_11_SOURCE_SHA256 and\n            profile.get("generator_sha256")==R17R9_11_CLI_GENERATOR_SHA256 and\n            is_sha256(profile.get("manifest_sha256")) and',1)
     expectedb=expectedb.replace(
         '    return {**GEN34_PINS,"source_sha256":profile["source_sha256"]}',
-        '    return {**GEN34_PINS,"source_sha256":profile["source_sha256"],\\n            "generator_sha256":R17R9_11_CLI_GENERATOR_SHA256}',1)
+        '    return {**GEN34_PINS,"source_sha256":profile["source_sha256"],\n            "generator_sha256":R17R9_11_CLI_GENERATOR_SHA256}',1)
     if newb!=expectedb: reasons.append("R17R9_CLI_UNAUTHORIZED_BROKER_DIFF")
     return reasons
 
