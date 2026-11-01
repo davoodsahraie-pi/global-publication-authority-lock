@@ -217,7 +217,7 @@ class ManifestCycleContractFix(unittest.TestCase):
             "environment":"gen34-r25r7-production",
             "source_sha256":guard.R17R9_11_SOURCE_SHA256,
             "manifest_sha256":digest,
-            "generator_sha256":legacy["generator_sha256"],
+            "generator_sha256":guard.R17R9_11_CLI_GENERATOR_SHA256,
             "driver_sha256":legacy["driver_sha256"],
             "c1_sha256":legacy["c1_sha256"],
             "grammar_sha256":legacy["grammar_sha256"],
@@ -416,7 +416,7 @@ class RuntimeManifestSourcePinRegression(unittest.TestCase):
         self.assertEqual(guard.r17r9_11_successor_activation_errors(p), [])
         pins = bridge.r17r9_11_pins(p)
         self.assertEqual(pins["source_sha256"], SOURCE_NEW)
-        self.assertEqual(pins["generator_sha256"], guard.GEN34_PINS["generator_sha256"])
+        self.assertEqual(pins["generator_sha256"], guard.R17R9_11_CLI_GENERATOR_SHA256)
         self.assertEqual(pins["driver_sha256"], guard.GEN34_PINS["driver_sha256"])
 
     def test_historical_lab_manifest_denied(self):
@@ -446,3 +446,48 @@ class RuntimeManifestSourcePinRegression(unittest.TestCase):
         self.assertIn('profile["manifest_sha256"]', body)
         self.assertIn('"private-state.json":private_sha', body)
         self.assertIn("PAYLOAD_FILE_SHA_MISMATCH", body)
+
+
+class CLIOptionGeneratorSuccessorCodeOnly(unittest.TestCase):
+    """Run 41307551624: successor-only CLI atom fix, NEVER an execution grant."""
+    def test_exact_sha_and_frozen_legacy(self):
+        self.assertEqual(guard.R17R9_11_CLI_GENERATOR_SHA256, "2ee4fabe98066c78dc5be0017c0c84ab4885ab582ca0cf66fdd32005e91dd8e9")
+        self.assertEqual(guard.GEN34_PINS["generator_sha256"], "646cf341c774953baa99da400ee3aa6e992fbbd8d0af95f36144f72c0fa5980c")
+        self.assertNotEqual(guard.R17R9_11_CLI_GENERATOR_SHA256, guard.GEN34_PINS["generator_sha256"])
+
+    def test_successor_pins_new_sha_but_not_legacy(self):
+        p=ManifestCycleContractFix().make_profile()
+        self.assertEqual(guard.r17r9_11_successor_activation_errors(p), [])
+        pins=bridge.r17r9_11_pins(p)
+        self.assertEqual(pins["generator_sha256"], guard.R17R9_11_CLI_GENERATOR_SHA256)
+        self.assertEqual(pins["source_sha256"], guard.R17R9_11_SOURCE_SHA256)
+        self.assertEqual(pins["driver_sha256"], guard.GEN34_PINS["driver_sha256"])
+        self.assertEqual(guard.GEN34_PINS["generator_sha256"], "646cf341c774953baa99da400ee3aa6e992fbbd8d0af95f36144f72c0fa5980c")
+
+    def test_old_or_forged_generator_fails_closed(self):
+        for digest in (guard.GEN34_PINS["generator_sha256"], "0"*64, "", None):
+            with self.subTest(generator_sha256=digest):
+                p=ManifestCycleContractFix().make_profile()
+                p["generator_sha256"]=digest
+                self.assertIn("R17R9_PIN_INVALID:generator_sha256",
+                              guard.r17r9_11_successor_activation_errors(p))
+                with self.assertRaises(bridge.Denied):
+                    bridge.r17r9_11_pins(p)
+
+    def test_unverified_private_payload_still_denied(self):
+        p=ManifestCycleContractFix().make_profile()
+        self.assertEqual(guard.r17r9_11_successor_activation_errors(p), [])
+        lock=gate.load_json(ROOT/"authority/CURRENT.json")
+        self.assertEqual(lock["generation"], 38)
+        self.assertFalse(lock["execution_authorized_now"])
+        self.assertIsNone(lock.get("r17r9_11_successor"))
+        self.assertEqual(gate.validate_r17r9_11_successor_admission(
+            lock,{}, {},None, "e972e0293128c7d223079603ceaf62db9d0fe96afcc2844fa947af6dc2a562ab")["status"], "DENY")
+
+    def test_private_manifest_still_bound_to_exact_generator(self):
+        import inspect
+        source=inspect.getsource(bridge.prepare_payload)
+        self.assertIn('GENERATOR:pins["generator_sha256"]',source)
+        stages=inspect.getsource(bridge.run_r17r9_11_seven_batches)
+        self.assertIn('file_sha(payload/GENERATOR)==pins["generator_sha256"]',stages)
+        self.assertIn("PAYLOAD_FILE_SHA_MISMATCH", source)

@@ -369,6 +369,8 @@ def audit_r17r9_11_successor_draft(candidate):
 R17R9_PRIVATE_AUTHORITY_MODE = "R17R9_PRIVATE_GITHUB_IMMUTABLE_BLOB/1.0"
 R17R9_LIBRARY_ARCHIVE_ROLE = "ARCHIVE_ONLY_NOT_EXECUTION_AUTHORITY"
 R17R9_11_RUNTIME_SCHEMA = "R17R9_11_SOURCE_BOUND_RUNTIME/1.0"
+# Exact generator successor digest; original GEN34_PINS is immutable.
+R17R9_11_CLI_GENERATOR_SHA256 = "2ee4fabe98066c78dc5be0017c0c84ab4885ab582ca0cf66fdd32005e91dd8e9"
 R17R9_11_SOURCE_SHA256 = "fbbd4d43367545d14c988d60604ed4523fbe5311fbce7f02b65f7cb742782b40"
 R17R9_11_MANIFEST_SHA256 = "4bf88aa6ab1632b9bde6757cdd6aac195542d33bfc1940d8ca52604d904ea980"
 R17R9_11_OWNER_VOTE_ID = 6553602646
@@ -405,7 +407,7 @@ def r17r9_11_successor_activation_errors(profile):
         reasons.append("R17R9_LIBRARY_MUST_BE_ARCHIVE_ONLY")
     for key,value in {
         "source_sha256":R17R9_11_SOURCE_SHA256,
-        "generator_sha256":GEN34_PINS["generator_sha256"],
+        "generator_sha256":R17R9_11_CLI_GENERATOR_SHA256,
         "driver_sha256":GEN34_PINS["driver_sha256"],
         "c1_sha256":GEN34_PINS["c1_sha256"],
         "grammar_sha256":GEN34_PINS["grammar_sha256"],

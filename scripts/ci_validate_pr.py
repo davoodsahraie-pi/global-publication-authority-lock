@@ -767,6 +767,56 @@ def validate_r17r9_private_blob_code_only_scope(changes,req,base_lock,base_root,
         reasons.append("R17R9_PRIVATE_BLOB_LEGACY_EXECUTE_CHANGED")
     return reasons
 
+
+# GEN38 owner Run 41307551624 — CLI atom generator successor CODE ONLY.
+# This check is additive; protected trusted-base CI still makes the admission decision.
+R17R9_CLI_ACTION="GLOBAL_PUBLICATION_GEN38_R17R9_11_CLI_OPTION_ATOM_GENERATOR_SUCCESSOR_CODE_ONLY"
+R17R9_CLI_RUN=41307551624
+R17R9_CLI_GENERATOR_SHA="2ee4fabe98066c78dc5be0017c0c84ab4885ab582ca0cf66fdd32005e91dd8e9"
+R17R9_CLI_PATHS={
+    "broker/gen34_r25r7_bridge.py", "gate/transition_guard.py",
+    "tests/test_r17r9_11_successor.py", "scripts/ci_validate_pr.py",
+    "request/ACTION_REQUEST.json",
+}
+def validate_r17r9_cli_generator_code_only(changes,req,base_lock,base_root,head_root):
+    if req.get("requested_action_id")!=R17R9_CLI_ACTION: return []
+    reasons=[]
+    if set(changes)!=R17R9_CLI_PATHS or set(req.get("target_scope_ids") or [])!=R17R9_CLI_PATHS:
+        reasons.append("R17R9_CLI_EXACT_FIVE_FILES_REQUIRED")
+    if (req.get("action_kind")!="GOVERNANCE_UPGRADE" or req.get("mode")!="READ_ONLY" or
+        req.get("operations")!=["GOVERNANCE_UPGRADE","PATCH"] or
+        req.get("authorization_run_id")!=R17R9_CLI_RUN or req.get("user_explicit_authorization") is not True):
+        reasons.append("R17R9_CLI_OWNER_SCOPE_MISMATCH")
+    if (base_lock.get("generation")!=38 or base_lock.get("execution_authorized_now") is not False or
+        (base_lock.get("current_action") or {}).get("mode")!="READ_ONLY" or
+        base_lock.get("private_execution_state_sha256")!="a25c71c8c4dbfd54052fad46989fa5a43ac7fc89a9b88eb906822b24006e5124" or
+        sha(base_root/LOCK)!="e972e0293128c7d223079603ceaf62db9d0fe96afcc2844fa947af6dc2a562ab"):
+        reasons.append("R17R9_CLI_NOT_EXACT_GEN38_AUTHORITY")
+    if req.get("input_public_lock_sha256")!="e972e0293128c7d223079603ceaf62db9d0fe96afcc2844fa947af6dc2a562ab" or req.get("input_private_state_sha256")!="a25c71c8c4dbfd54052fad46989fa5a43ac7fc89a9b88eb906822b24006e5124":
+        reasons.append("R17R9_CLI_STALE_PREDECESSOR")
+    oldg=(base_root/"gate/transition_guard.py").read_text(encoding="utf-8")
+    newg=(head_root/"gate/transition_guard.py").read_text(encoding="utf-8")
+    expectedg=oldg.replace(
+        'R17R9_11_RUNTIME_SCHEMA = "R17R9_11_SOURCE_BOUND_RUNTIME/1.0"',
+        'R17R9_11_RUNTIME_SCHEMA = "R17R9_11_SOURCE_BOUND_RUNTIME/1.0"\n# Exact generator successor digest; original GEN34_PINS is immutable.\nR17R9_11_CLI_GENERATOR_SHA256 = "2ee4fabe98066c78dc5be0017c0c84ab4885ab582ca0cf66fdd32005e91dd8e9"')
+    expectedg=expectedg.replace(
+        '        "generator_sha256":GEN34_PINS["generator_sha256"],',
+        '        "generator_sha256":R17R9_11_CLI_GENERATOR_SHA256,',1)
+    if newg!=expectedg: reasons.append("R17R9_CLI_UNAUTHORIZED_GUARD_DIFF")
+    oldb=(base_root/"broker/gen34_r25r7_bridge.py").read_text(encoding="utf-8")
+    newb=(head_root/"broker/gen34_r25r7_bridge.py").read_text(encoding="utf-8")
+    expectedb=oldb.replace(
+        'from transition_guard import R17R9_11_SOURCE_SHA256, R17R9_11_MANIFEST_SHA256, is_sha256',
+        'from transition_guard import R17R9_11_SOURCE_SHA256, R17R9_11_MANIFEST_SHA256, R17R9_11_CLI_GENERATOR_SHA256, is_sha256',1)
+    expectedb=expectedb.replace(
+        '    require(profile["source_sha256"]==R17R9_11_SOURCE_SHA256 and\n            is_sha256(profile.get("manifest_sha256")) and',
+        '    require(profile["source_sha256"]==R17R9_11_SOURCE_SHA256 and\n            profile.get("generator_sha256")==R17R9_11_CLI_GENERATOR_SHA256 and\n            is_sha256(profile.get("manifest_sha256")) and',1)
+    expectedb=expectedb.replace(
+        '    return {**GEN34_PINS,"source_sha256":profile["source_sha256"]}',
+        '    return {**GEN34_PINS,"source_sha256":profile["source_sha256"],\n            "generator_sha256":R17R9_11_CLI_GENERATOR_SHA256}',1)
+    if newb!=expectedb: reasons.append("R17R9_CLI_UNAUTHORIZED_BROKER_DIFF")
+    return reasons
+
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument("--base",required=True); ap.add_argument("--head",required=True)
     args=ap.parse_args(); base=Path(args.base); head=Path(args.head); reasons=[]
@@ -824,6 +874,14 @@ def main():
     reasons += validate_r17r9_manifest_cycle_code_only_scope(changes,req,load_json(base/LOCK),base,head)
     reasons += validate_r17r9_private_blob_code_only_scope(changes,req,load_json(base/LOCK),base,head)
     reasons += validate_r17r9_broker_manifest_fix(changes,req,load_json(base/LOCK),base,head)
+    reasons += validate_r17r9_cli_generator_code_only(changes,req,load_json(base/LOCK),base,head)
+    if req.get("requested_action_id")==R17R9_CLI_ACTION:
+        import subprocess
+        cp=subprocess.run([sys.executable,"-I","-B","-m","unittest","discover",
+                           "-s","tests","-p","test_r17r9_11_successor.py","-v"],
+                          cwd=head,timeout=120,check=False)
+        if cp.returncode: reasons.append("R17R9_CLI_SCOPED_TESTS_FAILED")
+
     if req.get("requested_action_id")==R17R9_BROKER_MANIFEST_FIX_ACTION:
         import subprocess
         result=subprocess.run(
