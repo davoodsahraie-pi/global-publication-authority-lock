@@ -868,6 +868,38 @@ def validate_gen39_techlit_code_only(changes,req,base_lock,base_root,head_root):
         reasons.append("GEN39_TECHLIT_AUTHORITY_SIDECAR_CHANGED")
     return reasons
 
+
+# Exact GEN39 to GEN40 private-Git-Blob successor admission under owner Run 41332286159.
+GEN40_TECHLIT_ACTION="GLOBAL_PUBLICATION_GEN39_R17R9_TECHLIT_SUCCESSOR_ADMISSION_NEW_ATTEMPT_ONCE"
+GEN40_TECHLIT_PATHS=["broker/gen34_r25r7_bridge.py","gate/transition_guard.py","gate/publication_gate.py","tests/test_r17r9_11_successor.py","scripts/ci_validate_pr.py","request/ACTION_REQUEST.json","request/STATE_TRANSITION.json","authority/CURRENT.json","authority/CURRENT.sha256","reports/R17R9_TECHLIT_SOURCE_ADMISSION_RECEIPT.json"]
+def validate_gen40_techlit_admission(changes,req,base_lock,base_root,head_root):
+    if req.get("requested_action_id")!=GEN40_TECHLIT_ACTION: return []
+    reasons=[]
+    if set(changes)!=set(GEN40_TECHLIT_PATHS):reasons.append("GEN40_EXACT_TEN_PUBLIC_PATHS_REQUIRED")
+    if (req.get("authorization_run_id")!=41332286159 or req.get("action_kind")!="GOVERNANCE_UPGRADE" or
+        req.get("mode")!="READ_ONLY" or req.get("user_explicit_authorization") is not True or
+        req.get("operations")!=["GOVERNANCE_UPGRADE","PATCH","UPLOAD_OFFICIAL","STATE_TRANSITION","AUTHORITY_UPDATE"] or req.get("target_scope_ids")!=["broker/gen34_r25r7_bridge.py","gate/transition_guard.py","gate/publication_gate.py","tests/test_r17r9_11_successor.py","scripts/ci_validate_pr.py","request/ACTION_REQUEST.json","request/STATE_TRANSITION.json","authority/CURRENT.json","authority/CURRENT.sha256","reports/R17R9_TECHLIT_SOURCE_ADMISSION_RECEIPT.json","PRIVATE_CUSTODY:davoodsahraie-pi/global-publication-authority:R17R9_11_TECHLIT_PATH_DIAG_E2E_02","PRIVATE_PAYLOAD:R17R9_11_TECHLIT_PATH_DIAG_E2E_02","R17R9_11_TECHLIT_PATH_DIAG_E2E_02"]):
+        reasons.append("GEN40_OWNER_SCOPE_MISMATCH")
+    if (sha(base_root/LOCK)!="3fa91dbe1fa4bf51f35fe7172f6eba6ebc979c6f4e02be3757c5a24bdf71a02e" or base_lock.get("generation")!=39 or
+        base_lock.get("private_execution_state_sha256")!="e08f305d3c9980a0177435bb22274fee84a9fe1aee462f33aaa62818fcff64f9" or
+        req.get("input_public_lock_sha256")!="3fa91dbe1fa4bf51f35fe7172f6eba6ebc979c6f4e02be3757c5a24bdf71a02e" or req.get("input_private_state_sha256")!="e08f305d3c9980a0177435bb22274fee84a9fe1aee462f33aaa62818fcff64f9"):
+        reasons.append("GEN40_STALE_PREDECESSOR")
+    prop=load_json(head_root/LOCK);p=prop.get("r17r9_11_successor") or {}
+    if (prop.get("generation")!=40 or prop.get("previous_public_lock_sha256")!="3fa91dbe1fa4bf51f35fe7172f6eba6ebc979c6f4e02be3757c5a24bdf71a02e" or
+        prop.get("private_execution_state_sha256")!="60f74349af42e0816d445fb198b372453060bb57663e413496169792b146c90d" or
+        prop.get("current_action")!={"id":"GLOBAL_PUBLICATION_R17R9_TECHLIT_CORRECTED_FULLBOOK_BUILD_ONCE","mode":"MUTATING"} or
+        p.get("generator_sha256")!="028222d542c7628a87a20c313f8930260001983d06d4f9c3126ef708639948e4" or p.get("attempt_id")!="R17R9_11_TECHLIT_PATH_DIAG_E2E_02" or
+        p.get("bundle_sha256")!="e1d2bef6c6b663f0ca619dad428963b4ad91f21809b1a8f8cc6f5140e496a3ae" or p.get("bundle_blob_sha")!="13d28cd90e83f65c625eff90c84e54a30c07cc24" or
+        p.get("manifest_sha256")!="fbc8f598e69bc8bb5ef0246b7694931863a40daa980bc78ba8b79a9d9a284e53" or p.get("runtime_code_sha256")!="9f5592625a85fe99bc3648dc3bfaeabc69fc811aff47f29ae30d1069ca71cb78" or
+        p.get("source_admission_receipt_sha256")!="ea1fcde5707e6040ef0db92d0410301d93505006c8699fb5d128afebf9ac84bb" or
+        prop.get("attempt_ledger",[])[-1].get("attempt_id")!="R17R9_11_TECHLIT_PATH_DIAG_E2E_02"):
+        reasons.append("GEN40_SOURCE_BOUND_PROFILE_MISMATCH")
+    if sha(head_root/"broker/gen34_r25r7_bridge.py")!="9f5592625a85fe99bc3648dc3bfaeabc69fc811aff47f29ae30d1069ca71cb78":
+        reasons.append("GEN40_BROKER_SHA_INVALID")
+    if sha(head_root/"reports/R17R9_TECHLIT_SOURCE_ADMISSION_RECEIPT.json")!="ea1fcde5707e6040ef0db92d0410301d93505006c8699fb5d128afebf9ac84bb":
+        reasons.append("GEN40_RECEIPT_SHA_INVALID")
+    return reasons
+
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument("--base",required=True); ap.add_argument("--head",required=True)
     args=ap.parse_args(); base=Path(args.base); head=Path(args.head); reasons=[]
@@ -927,6 +959,12 @@ def main():
     reasons += validate_r17r9_broker_manifest_fix(changes,req,load_json(base/LOCK),base,head)
     reasons += validate_r17r9_cli_generator_code_only(changes,req,load_json(base/LOCK),base,head)
     reasons += validate_gen39_techlit_code_only(changes,req,load_json(base/LOCK),base,head)
+    reasons += validate_gen40_techlit_admission(changes,req,load_json(base/LOCK),base,head)
+    if req.get('requested_action_id')==GEN40_TECHLIT_ACTION:
+        import subprocess
+        runner='import sys,unittest;sys.path.insert(0,"tests");import test_r17r9_11_successor as t;s=unittest.defaultTestLoader.loadTestsFromTestCase(t.Gen40TechlitBoundAdmission);x=unittest.TextTestRunner(verbosity=2).run(s);sys.exit(0 if x.wasSuccessful() else 1)'
+        p=subprocess.run([sys.executable,'-I','-B','-c',runner],cwd=head,timeout=120,check=False)
+        if p.returncode:reasons.append('GEN40_SCOPED_TESTS_FAILED')
     if req.get("requested_action_id")==GEN39_TECHLIT_ACTION:
         import subprocess
         runner='import sys,unittest; sys.path.insert(0,"tests"); import test_r17r9_11_successor as t; suite=unittest.defaultTestLoader.loadTestsFromTestCase(t.Gen39TechlitPendingCodeOnly); result=unittest.TextTestRunner(verbosity=2).run(suite); sys.exit(0 if result.wasSuccessful() else 1)'

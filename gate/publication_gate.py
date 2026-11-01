@@ -209,7 +209,7 @@ def validate_r17r9_11_successor_admission(lock, private_state, request, auth, pu
     from transition_guard import (
         r17r9_11_successor_activation_errors, R17R9_11_OWNER_VOTE_ID,
         R17R9_11_SOURCE_SHA256, R17R9_11_MANIFEST_SHA256,
-        R17R9_11_NEW_ATTEMPT,
+        R17R9_11_TECHLIT_ACTIVE_ATTEMPT,
     )
     if not isinstance(lock,dict) or not isinstance(private_state,dict):
         return {"status":"DENY","reasons":["R17R9_STATES_REQUIRED"],"launch_allowed":False}
@@ -223,7 +223,7 @@ def validate_r17r9_11_successor_admission(lock, private_state, request, auth, pu
     required={
         "id":profile["action_id"],"mode":"MUTATING",
         "source_sha256":R17R9_11_SOURCE_SHA256,
-        "attempt_id":R17R9_11_NEW_ATTEMPT,
+        "attempt_id":R17R9_11_TECHLIT_ACTIVE_ATTEMPT,
         "method_id":profile["method_id"],
         "owner_source_adoption_comment_id":R17R9_11_OWNER_VOTE_ID,
         "source_admission_status":"FORMALLY_ADMITTED",

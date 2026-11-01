@@ -1,24 +1,36 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "GEN39_R17R9_TECHLIT_PATH_DIAG_CODE_ONLY_RUN_41324860418",
+  "request_id": "GEN39_GEN40_R17R9_TECHLIT_ADMISSION_RUN_41332286159",
   "input_public_lock_sha256": "3fa91dbe1fa4bf51f35fe7172f6eba6ebc979c6f4e02be3757c5a24bdf71a02e",
   "input_private_state_sha256": "e08f305d3c9980a0177435bb22274fee84a9fe1aee462f33aaa62818fcff64f9",
-  "requested_action_id": "GLOBAL_PUBLICATION_GEN39_R17R9_TECHLIT_PATH_DIAG_ATOM_SUCCESSOR_CODE_ONLY",
+  "requested_action_id": "GLOBAL_PUBLICATION_GEN39_R17R9_TECHLIT_SUCCESSOR_ADMISSION_NEW_ATTEMPT_ONCE",
   "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "READ_ONLY",
   "project": "GLOBAL",
-  "method_id": null,
+  "method_id": "R17R9_11_EXISTING_R25R7_SUCCESSOR_V1",
+  "attempt_id": "R17R9_11_TECHLIT_PATH_DIAG_E2E_02",
   "operations": [
     "GOVERNANCE_UPGRADE",
-    "PATCH"
+    "PATCH",
+    "UPLOAD_OFFICIAL",
+    "STATE_TRANSITION",
+    "AUTHORITY_UPDATE"
   ],
   "target_scope_ids": [
     "broker/gen34_r25r7_bridge.py",
     "gate/transition_guard.py",
+    "gate/publication_gate.py",
     "tests/test_r17r9_11_successor.py",
     "scripts/ci_validate_pr.py",
-    "request/ACTION_REQUEST.json"
+    "request/ACTION_REQUEST.json",
+    "request/STATE_TRANSITION.json",
+    "authority/CURRENT.json",
+    "authority/CURRENT.sha256",
+    "reports/R17R9_TECHLIT_SOURCE_ADMISSION_RECEIPT.json",
+    "PRIVATE_CUSTODY:davoodsahraie-pi/global-publication-authority:R17R9_11_TECHLIT_PATH_DIAG_E2E_02",
+    "PRIVATE_PAYLOAD:R17R9_11_TECHLIT_PATH_DIAG_E2E_02",
+    "R17R9_11_TECHLIT_PATH_DIAG_E2E_02"
   ],
-  "authorization_run_id": 41324860418,
+  "authorization_run_id": 41332286159,
   "user_explicit_authorization": true
 }
