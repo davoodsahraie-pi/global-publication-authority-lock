@@ -1,0 +1,19 @@
+{
+  "schema": "R17R9_TECHLIT_GEN40_SOURCE_ADMISSION_RECEIPT/1.0",
+  "status": "PRIVATE_GIT_BLOB_METADATA_VERIFIED_PENDING_PROTECTED_TRANSITION",
+  "authorization_run_id": 41332286159,
+  "private_repository": "davoodsahraie-pi/global-publication-authority",
+  "private_upload_commit": "dff3f3d74c07b4f4f160f0155b1d5aae7c48b34c",
+  "bundle_blob_sha1": "13d28cd90e83f65c625eff90c84e54a30c07cc24",
+  "bundle_sha256": "e1d2bef6c6b663f0ca619dad428963b4ad91f21809b1a8f8cc6f5140e496a3ae",
+  "bundle_bytes": 6731358,
+  "private_state_sha256": "60f74349af42e0816d445fb198b372453060bb57663e413496169792b146c90d",
+  "manifest_sha256": "fbc8f598e69bc8bb5ef0246b7694931863a40daa980bc78ba8b79a9d9a284e53",
+  "generator_sha256": "028222d542c7628a87a20c313f8930260001983d06d4f9c3126ef708639948e4",
+  "source_sha256": "fbbd4d43367545d14c988d60604ed4523fbe5311fbce7f02b65f7cb742782b40",
+  "driver_sha256": "b6ff959711cb3f3b9d103cb627bcc54e11de336b4ea2a4d862aa916ed2cb9191",
+  "runtime_code_sha256": "9f5592625a85fe99bc3648dc3bfaeabc69fc811aff47f29ae30d1069ca71cb78",
+  "attempt_id": "R17R9_11_TECHLIT_PATH_DIAG_E2E_02",
+  "binary_readback": "Git metadata content-addressed SHA+size verified; exact bytes must be verified separately by trusted Broker before any execute",
+  "official_execute_authorized": false
+}

@@ -533,3 +533,32 @@ class Gen39TechlitPendingCodeOnly(unittest.TestCase):
                          bridge.r17r9_11_pins,bridge.prepare_payload):
             self.assertNotIn("r17r9_11_techlit_pending_identity",inspect.getsource(function))
             self.assertNotIn("R17R9_11_TECHLIT_PENDING_GENERATOR_SHA256",inspect.getsource(function))
+
+
+class Gen40TechlitBoundAdmission(unittest.TestCase):
+    def test_identity_and_generator(self):
+        state=gate.load_json(ROOT/"authority/CURRENT.json");p=state["r17r9_11_successor"]
+        self.assertEqual(state["generation"],40)
+        self.assertEqual(p["generator_sha256"],"028222d542c7628a87a20c313f8930260001983d06d4f9c3126ef708639948e4")
+        self.assertEqual(p["attempt_id"],"R17R9_11_TECHLIT_PATH_DIAG_E2E_02")
+        self.assertEqual(p["bundle_blob_sha"],"13d28cd90e83f65c625eff90c84e54a30c07cc24")
+        self.assertEqual(p["runtime_code_sha256"],"9f5592625a85fe99bc3648dc3bfaeabc69fc811aff47f29ae30d1069ca71cb78")
+        self.assertEqual(guard.r17r9_11_successor_activation_errors(p),[])
+        self.assertEqual(bridge.r17r9_11_pins(p)["generator_sha256"],"028222d542c7628a87a20c313f8930260001983d06d4f9c3126ef708639948e4")
+    def test_old_digest_and_attempt_denied(self):
+        p=dict(gate.load_json(ROOT/"authority/CURRENT.json")["r17r9_11_successor"])
+        for k,v in (("generator_sha256","2ee4fabe98066c78dc5be0017c0c84ab4885ab582ca0cf66fdd32005e91dd8e9"),("attempt_id","R17R9_11_SOURCE_BOUND_E2E_01")):
+            alt=dict(p);alt[k]=v
+            self.assertTrue(guard.r17r9_11_successor_activation_errors(alt))
+        p["generator_sha256"]="2ee4fabe98066c78dc5be0017c0c84ab4885ab582ca0cf66fdd32005e91dd8e9"
+        with self.assertRaises(bridge.Denied):bridge.r17r9_11_pins(p)
+    def test_immutable_reservation_and_separate_exec(self):
+        s=gate.load_json(ROOT/"authority/CURRENT.json")
+        self.assertEqual(s["private_execution_state_sha256"],"60f74349af42e0816d445fb198b372453060bb57663e413496169792b146c90d")
+        self.assertEqual(s["attempt_ledger"][-1]["event"],"RESERVE")
+        self.assertEqual(s["attempt_ledger"][-1]["attempt_id"],"R17R9_11_TECHLIT_PATH_DIAG_E2E_02")
+        self.assertEqual(s["attempt_ledger"][-1]["reservation_source_public_sha256"],"3fa91dbe1fa4bf51f35fe7172f6eba6ebc979c6f4e02be3757c5a24bdf71a02e")
+        import inspect
+        src=inspect.getsource(bridge.execute_r17r9_11_successor)
+        for marker in ("authenticate_owner","validate_r17r9_11_successor_admission","prepare_payload","complete_claimed"):
+            self.assertIn(marker,src)

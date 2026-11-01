@@ -378,6 +378,8 @@ R17R9_11_MANIFEST_SHA256 = "4bf88aa6ab1632b9bde6757cdd6aac195542d33bfc1940d8ca52
 R17R9_11_OWNER_VOTE_ID = 6553602646
 R17R9_11_LAB_INPUT_SHA256 = "9ec2a4aecb320c48adfb9e8be0fd6101ebdab4da27cc007e85655d3ea09106a6"  # old private state: NOT executable
 R17R9_11_NEW_ATTEMPT = "R17R9_11_SOURCE_BOUND_E2E_01"
+# Historical attempt retained; distinct protected GEN40 successor.
+R17R9_11_TECHLIT_ACTIVE_ATTEMPT = "R17R9_11_TECHLIT_PATH_DIAG_E2E_02"
 R17R9_11_RUNTIME_KEYS = {
     "schema","enabled","runtime_profile","action_id","project","method_id",
     "attempt_id","executor_id","operations","target_scope_ids","max_seconds",
@@ -409,12 +411,12 @@ def r17r9_11_successor_activation_errors(profile):
         reasons.append("R17R9_LIBRARY_MUST_BE_ARCHIVE_ONLY")
     for key,value in {
         "source_sha256":R17R9_11_SOURCE_SHA256,
-        "generator_sha256":R17R9_11_CLI_GENERATOR_SHA256,
+        "generator_sha256":R17R9_11_TECHLIT_PENDING_GENERATOR_SHA256,
         "driver_sha256":GEN34_PINS["driver_sha256"],
         "c1_sha256":GEN34_PINS["c1_sha256"],
         "grammar_sha256":GEN34_PINS["grammar_sha256"],
         "ppges_sha256":GEN34_PINS["ppges_sha256"],
-        "attempt_id":R17R9_11_NEW_ATTEMPT,
+        "attempt_id":R17R9_11_TECHLIT_ACTIVE_ATTEMPT,
         "project":"GLOBAL",
         "private_repository":"davoodsahraie-pi/global-publication-authority",
         "environment":"gen34-r25r7-production",
@@ -422,7 +424,7 @@ def r17r9_11_successor_activation_errors(profile):
         "owner_source_adoption_comment_id":R17R9_11_OWNER_VOTE_ID,
     }.items():
         if profile.get(key)!=value: reasons.append("R17R9_PIN_INVALID:"+key)
-    if profile["operations"]!=["BUILD","GENERATE_DOCX"] or profile["target_scope_ids"]!=["R17R9_11_APPROVED_FULLBOOK_SUCCESSOR_ONCE"]:
+    if profile["operations"]!=["BUILD","GENERATE_DOCX"] or profile["target_scope_ids"]!=["R17R9_11_TECHLIT_PATH_DIAG_E2E_02"]:
         reasons.append("R17R9_PRODUCTION_SCOPE_INVALID")
     for k in ("action_id","method_id","executor_id"):
         if not isinstance(profile.get(k),str) or not re.fullmatch(r"[A-Za-z0-9_.-]{1,128}",profile[k]):
