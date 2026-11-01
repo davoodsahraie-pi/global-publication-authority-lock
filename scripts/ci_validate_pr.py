@@ -691,6 +691,44 @@ def validate_r17r9_manifest_cycle_code_only_scope(changes,req,base_lock,base_roo
 
 # R17R9 single-private-authority code-only proposal; not a source admission,
 # Library mutation, protected CURRENT transition, Claim or EXECUTE.
+
+
+# PR82 follow-up: bridge's old LAB Manifest pin must not block future actual
+# successor Manifest. Authorized scope is exactly these four code-only files.
+R17R9_BROKER_MANIFEST_FIX_ACTION="GLOBAL_PUBLICATION_GEN38_R17R9_11_BROKER_MANIFEST_RUNTIME_PIN_CODE_ONLY"
+R17R9_BROKER_MANIFEST_FIX_PATHS={
+    "broker/gen34_r25r7_bridge.py",
+    "tests/test_r17r9_11_successor.py",
+    "scripts/ci_validate_pr.py",
+    "request/ACTION_REQUEST.json",
+}
+def validate_r17r9_broker_manifest_fix(changes,req,base_lock,base_root,head_root):
+    if req.get("requested_action_id") != R17R9_BROKER_MANIFEST_FIX_ACTION:
+        return []
+    reasons=[]
+    if set(changes)!=R17R9_BROKER_MANIFEST_FIX_PATHS or len(changes)!=4:
+        reasons.append("R17R9_BROKER_MANIFEST_EXACT_FOUR_PATHS_REQUIRED")
+    if set(req.get("target_scope_ids") or [])!=R17R9_BROKER_MANIFEST_FIX_PATHS:
+        reasons.append("R17R9_BROKER_MANIFEST_OWNER_SCOPE_INVALID")
+    if req.get("action_kind")!="GOVERNANCE_UPGRADE" or req.get("mode")!="READ_ONLY" or req.get("operations")!=["GOVERNANCE_UPGRADE","PATCH"]:
+        reasons.append("R17R9_BROKER_MANIFEST_CODE_ONLY_REQUIRED")
+    if (base_lock.get("generation")!=38 or
+        base_lock.get("execution_authorized_now") is not False or
+        base_lock.get("private_execution_state_sha256")!=R17R9_11_CODE_PRIVATE or
+        sha(base_root/LOCK)!=R17R9_11_CODE_PUBLIC):
+        reasons.append("R17R9_BROKER_MANIFEST_READONLY_BASE_REQUIRED")
+    if req.get("input_public_lock_sha256")!=R17R9_11_CODE_PUBLIC or req.get("input_private_state_sha256")!=R17R9_11_CODE_PRIVATE:
+        reasons.append("R17R9_BROKER_MANIFEST_STALE_INPUT")
+    old=(base_root/"broker/gen34_r25r7_bridge.py").read_text(encoding="utf-8")
+    new=(head_root/"broker/gen34_r25r7_bridge.py").read_text(encoding="utf-8")
+    a="def r17r9_11_pins(profile):"
+    b="def run_r17r9_11_seven_batches("
+    if a not in old or a not in new or b not in old or b not in new:
+        reasons.append("R17R9_BROKER_MANIFEST_FUNCTION_BOUNDARY_MISSING")
+    elif old.split(a,1)[0]!=new.split(a,1)[0] or old.split(b,1)[1]!=new.split(b,1)[1]:
+        reasons.append("R17R9_BROKER_MANIFEST_UNAUTHORIZED_CODE_MODIFICATION")
+    return reasons
+
 R17R9_BLOB_AUTHORITY_ACTION="GLOBAL_PUBLICATION_GEN38_R17R9_11_PRIVATE_GITHUB_BLOB_AUTHORITY_CODE_ONLY"
 R17R9_BLOB_AUTHORITY_OWNER_RUN=41288491850
 R17R9_BLOB_AUTHORITY_PATHS={
@@ -785,6 +823,18 @@ def main():
 
     reasons += validate_r17r9_manifest_cycle_code_only_scope(changes,req,load_json(base/LOCK),base,head)
     reasons += validate_r17r9_private_blob_code_only_scope(changes,req,load_json(base/LOCK),base,head)
+    reasons += validate_r17r9_broker_manifest_fix(changes,req,load_json(base/LOCK),base,head)
+    if req.get("requested_action_id")==R17R9_BROKER_MANIFEST_FIX_ACTION:
+        import subprocess
+        result=subprocess.run(
+            [sys.executable,"-I","-B","-m","unittest","discover",
+             "-s","tests","-p","test_r17r9_11_successor.py","-v"],
+            cwd=head,timeout=120,check=False)
+        if result.returncode:
+            reasons.append("R17R9_BROKER_MANIFEST_FIX_TESTS_FAILED")
+        else:
+            print("R17R9_BROKER_MANIFEST_FIX_TESTS: PASS")
+
     if req.get("requested_action_id")==R17R9_BLOB_AUTHORITY_ACTION:
         import subprocess
         result=subprocess.run(

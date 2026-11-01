@@ -478,9 +478,15 @@ R17R9_11_BATCHES = (
 )
 
 def r17r9_11_pins(profile):
-    from transition_guard import R17R9_11_SOURCE_SHA256, R17R9_11_MANIFEST_SHA256
+    """Source remains immutable; executable Manifest is the NEW protected SHA.
+
+    Never bind the historical LAB manifest to the successor. prepare_payload()
+    independently checks actual Manifest bytes and all embedded member SHA-256.
+    """
+    from transition_guard import R17R9_11_SOURCE_SHA256, R17R9_11_MANIFEST_SHA256, is_sha256
     require(profile["source_sha256"]==R17R9_11_SOURCE_SHA256 and
-            profile["manifest_sha256"]==R17R9_11_MANIFEST_SHA256,
+            is_sha256(profile.get("manifest_sha256")) and
+            profile["manifest_sha256"]!=R17R9_11_MANIFEST_SHA256,
             "R17R9_SOURCE_MANIFEST_PIN_MISMATCH")
     return {**GEN34_PINS,"source_sha256":profile["source_sha256"]}
 
