@@ -482,3 +482,9 @@ def main():
         return 2
 
 if __name__=="__main__": raise SystemExit(main())
+
+
+# Exposed solely for read-only successor review. No operational caller in execute().
+def preview_r17r9_11_successor_code_only(lock, candidate):
+    from publication_gate import review_r17r9_11_successor_code_only
+    return review_r17r9_11_successor_code_only(lock, candidate)

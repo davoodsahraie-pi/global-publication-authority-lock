@@ -182,3 +182,23 @@ def validate(lock_path, sidecar_path, request_path, authorization=None):
       "reasons":reasons,
       "official_effect":"NO_OFFICIAL_EXECUTION" if reasons else "AUTHORIZED_FOR_THIS_EXACT_LOCK_STATE_AND_ACTION_ONLY"
     }
+
+
+# R17R9 11-delta code-only review. It never modifies active authorization.
+def review_r17r9_11_successor_code_only(lock, candidate):
+    from transition_guard import audit_r17r9_11_successor_draft, GEN34_PINS
+    checked = audit_r17r9_11_successor_draft(candidate)
+    reasons = list(checked["reasons"])
+    if not isinstance(lock, dict):
+        reasons.append("PUBLIC_LOCK_REQUIRED")
+    else:
+        if lock.get("execution_authorized_now") is not False:
+            reasons.append("READ_ONLY_LOCK_REQUIRED")
+        if (lock.get("current_action") or {}).get("mode") != "READ_ONLY":
+            reasons.append("READ_ONLY_CURRENT_ACTION_REQUIRED")
+        profile = lock.get("gen34_r25r7_bridge") or {}
+        if profile.get("source_sha256") != GEN34_PINS["source_sha256"]:
+            reasons.append("HISTORICAL_GEN34_PROFILE_CHANGED")
+    return {"status": "DENY" if reasons else "DRAFT_VALID_NOT_ADMITTED",
+            "reasons": sorted(set(reasons)), "source_admitted": False,
+            "launch_allowed": False, "claim_allowed": False}

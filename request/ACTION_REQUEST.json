@@ -1,9 +1,9 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "GEN38_STAGE3_CODE_ONLY_RUN_41214566958",
+  "request_id": "GEN38_R17R9_11_SUCCESSOR_CODE_ONLY_RUN_41270302143",
   "input_public_lock_sha256": "e972e0293128c7d223079603ceaf62db9d0fe96afcc2844fa947af6dc2a562ab",
   "input_private_state_sha256": "a25c71c8c4dbfd54052fad46989fa5a43ac7fc89a9b88eb906822b24006e5124",
-  "requested_action_id": "GLOBAL_PUBLICATION_GEN38_ENGSEQ_STAGE3_CODE_ONLY_PREQUALIFICATION_INSTALL",
+  "requested_action_id": "GLOBAL_PUBLICATION_GEN38_R17R9_11_SUCCESSOR_BINDING_CODE_ONLY",
   "action_kind": "GOVERNANCE_UPGRADE",
   "mode": "READ_ONLY",
   "project": "GLOBAL",
@@ -13,18 +13,13 @@
     "PATCH"
   ],
   "target_scope_ids": [
-    "stage3/engseq_stage3_trust.py",
-    "stage3/engseq_stage3_roles.py",
-    "stage3/trust_policy.json",
-    "stage3/trust_anchors.json",
-    "stage3/role_evidence.json",
-    "stage3/staged_profile.json",
-    "stage3/README.md",
-    "tests/test_stage3_prequalification.py",
-    ".github/workflows/gen38-engseq-stage3-staged-qa.yml",
+    "broker/gen34_r25r7_bridge.py",
+    "gate/transition_guard.py",
+    "gate/publication_gate.py",
     "scripts/ci_validate_pr.py",
+    "tests/test_r17r9_11_successor.py",
     "request/ACTION_REQUEST.json"
   ],
-  "authorization_run_id": 41214566958,
+  "authorization_run_id": 41270302143,
   "user_explicit_authorization": true
 }
