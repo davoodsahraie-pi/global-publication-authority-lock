@@ -515,6 +515,63 @@ def fetch_manual_authorization(run_id):
     if (auth.get("github_actor") or "").lower()!=owner.lower(): raise ValueError("authorization artifact actor mismatch")
     return auth
 
+
+
+# A distinct owner-approved CODE-ONLY scope; never accept source or execution.
+R17R9_11_CODE_ACTION = "GLOBAL_PUBLICATION_GEN38_R17R9_11_SUCCESSOR_BINDING_CODE_ONLY"
+R17R9_11_CODE_RUN = 41270302143
+R17R9_11_CODE_PUBLIC = "e972e0293128c7d223079603ceaf62db9d0fe96afcc2844fa947af6dc2a562ab"
+R17R9_11_CODE_PRIVATE = "a25c71c8c4dbfd54052fad46989fa5a43ac7fc89a9b88eb906822b24006e5124"
+R17R9_11_CODE_PATHS = {
+    "broker/gen34_r25r7_bridge.py", "gate/transition_guard.py",
+    "gate/publication_gate.py", "scripts/ci_validate_pr.py",
+    "tests/test_r17r9_11_successor.py", "request/ACTION_REQUEST.json"
+}
+
+def validate_r17r9_11_code_only_scope(changes, req, base_lock, base_root, head_root):
+    if req.get("requested_action_id") != R17R9_11_CODE_ACTION:
+        return []
+    reasons = []
+    if set(changes) != R17R9_11_CODE_PATHS or len(changes) != 6:
+        reasons.append("R17R9_11_EXACT_SIX_PATHS_REQUIRED")
+    if set(req.get("target_scope_ids") or []) != R17R9_11_CODE_PATHS:
+        reasons.append("R17R9_11_EXACT_OWNER_SCOPE_REQUIRED")
+    if (req.get("action_kind") != "GOVERNANCE_UPGRADE" or
+            req.get("mode") != "READ_ONLY" or
+            req.get("operations") != ["GOVERNANCE_UPGRADE", "PATCH"]):
+        reasons.append("R17R9_11_CODE_ONLY_KIND_REQUIRED")
+    if req.get("authorization_run_id") != R17R9_11_CODE_RUN:
+        reasons.append("R17R9_11_OWNER_RUN_MISMATCH")
+    if (base_lock.get("generation") != 38 or
+            base_lock.get("private_execution_state_sha256") != R17R9_11_CODE_PRIVATE or
+            base_lock.get("execution_authorized_now") is not False):
+        reasons.append("R17R9_11_READ_ONLY_BASE_REQUIRED")
+    if (req.get("input_public_lock_sha256") != R17R9_11_CODE_PUBLIC or
+            req.get("input_private_state_sha256") != R17R9_11_CODE_PRIVATE or
+            base_root is None or sha(base_root / LOCK) != R17R9_11_CODE_PUBLIC):
+        reasons.append("R17R9_11_SOURCE_LOCK_SHA_MISMATCH")
+    # Narrow proof that this PR does not rewrite the old active path.
+    for path, start, end in (
+        ("gate/transition_guard.py", "GEN34_PINS={", "GEN34_SHA_FIELDS="),
+        ("gate/publication_gate.py", "def validate_gen34_admission(", "def validate("),
+        ("broker/gen34_r25r7_bridge.py", "def prepare_payload(", "def clean_env("),
+        ("broker/gen34_r25r7_bridge.py", "def execute(", "def main("),
+    ):
+        if not (base_root / path).exists() or not (head_root / path).exists():
+            reasons.append("R17R9_11_MISSING_RUNTIME_FILE:" + path)
+            continue
+        before = (base_root / path).read_text(encoding="utf-8")
+        after = (head_root / path).read_text(encoding="utf-8")
+        if (start not in before or end not in before or
+                start not in after or end not in after):
+            reasons.append("R17R9_11_MISSING_IMMUTABLE_REGION:" + path)
+            continue
+        old = before.split(start, 1)[1].split(end, 1)[0]
+        new = after.split(start, 1)[1].split(end, 1)[0]
+        if old != new:
+            reasons.append("R17R9_11_HISTORICAL_RUNTIME_REWRITE:" + path)
+    return reasons
+
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument("--base",required=True); ap.add_argument("--head",required=True)
     args=ap.parse_args(); base=Path(args.base); head=Path(args.head); reasons=[]
@@ -566,6 +623,7 @@ def main():
     reasons += validate_gen34_code_scope(changes,req,load_json(base/LOCK),base)
     reasons += validate_gen38_engseq_code_scope(changes,req,load_json(base/LOCK),base)
     reasons += validate_stage3_code_only_scope(changes,req,load_json(base/LOCK),base,head)
+    reasons += validate_r17r9_11_code_only_scope(changes,req,load_json(base/LOCK),base,head)
 
     runtime_changed=[p for p in changes if p in PROTECTED_RUNTIME_FILES or p.startswith(PROTECTED_RUNTIME_PREFIXES)]
     if runtime_changed and req.get("action_kind")!="GOVERNANCE_UPGRADE":

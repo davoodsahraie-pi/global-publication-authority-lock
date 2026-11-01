@@ -312,3 +312,52 @@ def validate_transition(current_path, proposed_path, request):
       "proposed_public_lock_sha256":sha_file(proposed_path),
       "reasons":reasons
     }
+
+
+# ENGSEQ 11-delta successor — owner Run 41270302143 CODE-ONLY.
+# Audit functions are deliberately NOT an activation, reservation or Producer path.
+# Never mutate GEN34_PINS or replay the completed GEN34_R25R7_E2E_01.
+R17R9_11_SUCCESSOR_DRAFT = {
+    "schema": "R17R9_ENGSEQ_11_SOURCE_BOUND_DRAFT/1.0",
+    "source_original_sha256": "360ee8a7db0cfead8576b68b768bfa9e0f4038fd9f2892102e801541abc272d5",
+    "source_successor_lab_sha256": "fbbd4d43367545d14c988d60604ed4523fbe5311fbce7f02b65f7cb742782b40",
+    "generator_sha256": "646cf341c774953baa99da400ee3aa6e992fbbd8d0af95f36144f72c0fa5980c",
+    "driver_sha256": "b6ff959711cb3f3b9d103cb627bcc54e11de336b4ea2a4d862aa916ed2cb9191",
+    "record_count": 21529,
+    "changed_publication_ids": [35, 38, 637, 647, 1558, 1596, 1638, 1783, 3067, 5583, 21473],
+    "unchanged_record_count": 21518,
+    "legacy_attempt_id": "GEN34_R25R7_E2E_01",
+    "candidate_attempt_id": None,
+    "bundle_sha256": None,
+    "official_source_admitted": False,
+    "reserved_attempt_confirmed": False,
+    "execution_authorized": False,
+    "enabled": False,
+    "status": "DRAFT_SOURCE_BOUND_REVIEW_ONLY",
+}
+
+def audit_r17r9_11_successor_draft(candidate):
+    """Validate one exact inactive dossier, NEVER grant source admission or EXECUTE.
+
+    No client-provided 'approved' field can promote the frozen LAB candidate.
+    An actual successor requires a separately governed protected activation,
+    new private bundle, distinct attempt, and owner EXECUTE authorization.
+    """
+    if not isinstance(candidate, dict):
+        return {"status": "DENY", "reasons": ["DRAFT_NOT_OBJECT"],
+                "source_admitted": False, "launch_allowed": False}
+    reasons = []
+    if set(candidate) != set(R17R9_11_SUCCESSOR_DRAFT):
+        reasons.append("EXACT_DRAFT_FIELD_SET_REQUIRED")
+    for key, expected in R17R9_11_SUCCESSOR_DRAFT.items():
+        if candidate.get(key) != expected or type(candidate.get(key)) is not type(expected):
+            reasons.append("DRAFT_PIN_OR_SCOPE_MISMATCH:" + key)
+    if GEN34_PINS["source_sha256"] != R17R9_11_SUCCESSOR_DRAFT["source_original_sha256"]:
+        reasons.append("LEGACY_SOURCE_PIN_CHANGED")
+    if GEN34_PINS["generator_sha256"] != R17R9_11_SUCCESSOR_DRAFT["generator_sha256"]:
+        reasons.append("GENERATOR_PIN_CHANGED")
+    if GEN34_PINS["driver_sha256"] != R17R9_11_SUCCESSOR_DRAFT["driver_sha256"]:
+        reasons.append("DRIVER_PIN_CHANGED")
+    return {"status": "DENY" if reasons else "DRAFT_VALID_NOT_ADMITTED",
+            "reasons": sorted(set(reasons)), "source_admitted": False,
+            "launch_allowed": False}
