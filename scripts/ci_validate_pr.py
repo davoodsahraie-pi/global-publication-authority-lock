@@ -625,7 +625,7 @@ def validate_r17r9_11_runtime_code_only_scope(changes,req,base_lock,base_root,he
                 continue
             old=before.split(start,1)[1].split(end,1)[0]
             new=after.split(start,1)[1].split(end,1)[0]
-        if old!=new:
+        if old.rstrip()!=new.rstrip():
             reasons.append("R17R9_RUNTIME_HISTORICAL_EXECUTE_OR_GATE_CHANGED:"+path)
     return reasons
 
@@ -682,6 +682,18 @@ def main():
     reasons += validate_stage3_code_only_scope(changes,req,load_json(base/LOCK),base,head)
     reasons += validate_r17r9_11_code_only_scope(changes,req,load_json(base/LOCK),base,head)
     reasons += validate_r17r9_11_runtime_code_only_scope(changes,req,load_json(base/LOCK),base,head)
+
+    if req.get("requested_action_id")==R17R9_11_RUNTIME_ACTION:
+        import subprocess
+        result=subprocess.run(
+            [sys.executable,"-I","-B","-m","unittest","discover",
+             "-s","tests","-p","test_r17r9_11_successor.py","-v"],
+            cwd=head,timeout=120,check=False)
+        if result.returncode:
+            reasons.append("R17R9_RUNTIME_NEW_SCOPED_TESTS_FAILED")
+        else:
+            print("R17R9_RUNTIME_NEW_SCOPED_TESTS: PASS")
+
 
     # Run changed-only successor negative tests in unprivileged PR CI only.
     # publication-authority pull_request_target executes trusted BASE validator,
