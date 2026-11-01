@@ -692,6 +692,7 @@ def validate_r17r9_manifest_cycle_code_only_scope(changes,req,base_lock,base_roo
 # R17R9 single-private-authority code-only proposal; not a source admission,
 # Library mutation, protected CURRENT transition, Claim or EXECUTE.
 R17R9_BLOB_AUTHORITY_ACTION="GLOBAL_PUBLICATION_GEN38_R17R9_11_PRIVATE_GITHUB_BLOB_AUTHORITY_CODE_ONLY"
+R17R9_BLOB_AUTHORITY_OWNER_RUN=41288491850
 R17R9_BLOB_AUTHORITY_PATHS={
     "broker/gen34_r25r7_bridge.py","gate/transition_guard.py",
     "tests/test_r17r9_11_successor.py","scripts/ci_validate_pr.py",
@@ -708,6 +709,8 @@ def validate_r17r9_private_blob_code_only_scope(changes,req,base_lock,base_root,
         reasons.append("R17R9_PRIVATE_BLOB_OWNER_SCOPE_MISMATCH")
     if req.get("action_kind")!="GOVERNANCE_UPGRADE" or req.get("mode")!="READ_ONLY" or req.get("operations")!=["GOVERNANCE_UPGRADE","PATCH"]:
         reasons.append("R17R9_PRIVATE_BLOB_CODE_ONLY_ACTION_REQUIRED")
+    if req.get("authorization_run_id")!=R17R9_BLOB_AUTHORITY_OWNER_RUN:
+        reasons.append("R17R9_PRIVATE_BLOB_OWNER_RUN_MISMATCH")
     if (base_lock.get("generation")!=38 or base_lock.get("execution_authorized_now") is not False or
             (base_lock.get("current_action") or {}).get("mode")!="READ_ONLY" or
             base_lock.get("private_execution_state_sha256")!=R17R9_11_CODE_PRIVATE or

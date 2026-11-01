@@ -1,6 +1,6 @@
 {
   "schema": "GLOBAL_PUBLICATION_PUBLIC_ACTION_REQUEST/1.0.0",
-  "request_id": "GEN38_R17R9_11_PRIVATE_GITHUB_BLOB_AUTHORITY_CODE_ONLY_AWAITING_OWNER_RUN",
+  "request_id": "GEN38_R17R9_11_PRIVATE_GITHUB_BLOB_AUTHORITY_CODE_ONLY_RUN_41288491850",
   "input_public_lock_sha256": "e972e0293128c7d223079603ceaf62db9d0fe96afcc2844fa947af6dc2a562ab",
   "input_private_state_sha256": "a25c71c8c4dbfd54052fad46989fa5a43ac7fc89a9b88eb906822b24006e5124",
   "requested_action_id": "GLOBAL_PUBLICATION_GEN38_R17R9_11_PRIVATE_GITHUB_BLOB_AUTHORITY_CODE_ONLY",
@@ -19,6 +19,6 @@
     "scripts/ci_validate_pr.py",
     "request/ACTION_REQUEST.json"
   ],
-  "authorization_run_id": null,
-  "user_explicit_authorization": false
+  "authorization_run_id": 41288491850,
+  "user_explicit_authorization": true
 }

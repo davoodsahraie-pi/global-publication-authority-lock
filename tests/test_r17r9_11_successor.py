@@ -328,6 +328,9 @@ class ManifestCycleContractFix(unittest.TestCase):
 
 
 class PrivateGitBlobSingleAuthorityCodeOnly(unittest.TestCase):
+    def test_exact_owner_workflow_run(self):
+        self.assertEqual(ci.R17R9_BLOB_AUTHORITY_OWNER_RUN, 41288491850)
+
     """Owner approved design review: no official activation or private payload release."""
 
     def active_shape(self):
