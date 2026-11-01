@@ -817,6 +817,57 @@ def validate_r17r9_cli_generator_code_only(changes,req,base_lock,base_root,head_
     if newb!=expectedb: reasons.append("R17R9_CLI_UNAUTHORIZED_BROKER_DIFF")
     return reasons
 
+
+# GEN39 owner Run 41324860418: exact five-path TECHLIT successor CODE ONLY.
+# Active GEN39 and previous successful Producer identities MUST remain frozen.
+GEN39_TECHLIT_ACTION="GLOBAL_PUBLICATION_GEN39_R17R9_TECHLIT_PATH_DIAG_ATOM_SUCCESSOR_CODE_ONLY"
+GEN39_TECHLIT_RUN=41324860418
+GEN39_TECHLIT_PATHS={
+    "broker/gen34_r25r7_bridge.py","gate/transition_guard.py",
+    "tests/test_r17r9_11_successor.py","scripts/ci_validate_pr.py",
+    "request/ACTION_REQUEST.json",
+}
+def validate_gen39_techlit_code_only(changes,req,base_lock,base_root,head_root):
+    if req.get("requested_action_id")!=GEN39_TECHLIT_ACTION: return []
+    reasons=[]
+    if set(changes)!=GEN39_TECHLIT_PATHS or set(req.get("target_scope_ids") or [])!=GEN39_TECHLIT_PATHS:
+        reasons.append("GEN39_TECHLIT_EXACT_FIVE_PATHS_REQUIRED")
+    if (req.get("action_kind")!="GOVERNANCE_UPGRADE" or
+        req.get("mode")!="READ_ONLY" or
+        req.get("operations")!=["GOVERNANCE_UPGRADE","PATCH"] or
+        req.get("authorization_run_id")!=GEN39_TECHLIT_RUN or
+        req.get("user_explicit_authorization") is not True or
+        req.get("project")!="GLOBAL"):
+        reasons.append("GEN39_TECHLIT_OWNER_SCOPE_MISMATCH")
+    if (base_lock.get("generation")!=39 or
+        base_lock.get("private_execution_state_sha256")!="e08f305d3c9980a0177435bb22274fee84a9fe1aee462f33aaa62818fcff64f9" or
+        sha(base_root/LOCK)!="3fa91dbe1fa4bf51f35fe7172f6eba6ebc979c6f4e02be3757c5a24bdf71a02e" or
+        (base_lock.get("r17r9_11_successor") or {}).get("generator_sha256")!="2ee4fabe98066c78dc5be0017c0c84ab4885ab582ca0cf66fdd32005e91dd8e9" or
+        (base_lock.get("current_action") or {}).get("id")!="GLOBAL_PUBLICATION_R17R9_11_SOURCE_BOUND_FULLBOOK_BUILD_ONCE"):
+        reasons.append("GEN39_TECHLIT_BASE_AUTHORITY_MISMATCH")
+    if (req.get("input_public_lock_sha256")!="3fa91dbe1fa4bf51f35fe7172f6eba6ebc979c6f4e02be3757c5a24bdf71a02e" or
+        req.get("input_private_state_sha256")!="e08f305d3c9980a0177435bb22274fee84a9fe1aee462f33aaa62818fcff64f9"):
+        reasons.append("GEN39_TECHLIT_PREIMAGE_NOT_CURRENT")
+    old_guard=(base_root/"gate/transition_guard.py").read_text(encoding="utf-8")
+    new_guard=(head_root/"gate/transition_guard.py").read_text(encoding="utf-8")
+    expected_guard=old_guard.replace(
+       'R17R9_11_CLI_GENERATOR_SHA256 = "2ee4fabe98066c78dc5be0017c0c84ab4885ab582ca0cf66fdd32005e91dd8e9"',
+       'R17R9_11_CLI_GENERATOR_SHA256 = "2ee4fabe98066c78dc5be0017c0c84ab4885ab582ca0cf66fdd32005e91dd8e9"\n# Owner Run 41324860418: nonexecutable TECHLIT successor candidate, not Current.\nR17R9_11_TECHLIT_PENDING_GENERATOR_SHA256 = "028222d542c7628a87a20c313f8930260001983d06d4f9c3126ef708639948e4"',1)
+    if expected_guard==old_guard or new_guard!=expected_guard:
+        reasons.append("GEN39_TECHLIT_GUARD_UNAUTHORIZED_DIFF")
+    old_broker=(base_root/"broker/gen34_r25r7_bridge.py").read_text(encoding="utf-8")
+    new_broker=(head_root/"broker/gen34_r25r7_bridge.py").read_text(encoding="utf-8")
+    expected_broker=old_broker.replace(
+        '\ndef run_r17r9_11_seven_batches(python,payload,work,seconds,pins):',
+        '\nR17R9_11_ACTIVE_GENERATOR_SHA_PROOF = "2ee4fabe98066c78dc5be0017c0c84ab4885ab582ca0cf66fdd32005e91dd8e9"\n\ndef r17r9_11_techlit_pending_identity():\n    """Code-only proposal; NEVER a runtime selector, claim, or owner EXECUTE."""\n    from transition_guard import (\n        R17R9_11_CLI_GENERATOR_SHA256,\n        R17R9_11_TECHLIT_PENDING_GENERATOR_SHA256,\n        R17R9_11_SOURCE_SHA256,\n    )\n    require(R17R9_11_CLI_GENERATOR_SHA256==R17R9_11_ACTIVE_GENERATOR_SHA_PROOF,\n            "R17R9_ACTIVE_GENERATOR_PREIMAGE_CHANGED")\n    return {\n        "status": "CODE_ONLY_NOT_ADMITTED",\n        "active_generator_sha256": R17R9_11_CLI_GENERATOR_SHA256,\n        "pending_generator_sha256": R17R9_11_TECHLIT_PENDING_GENERATOR_SHA256,\n        "source_sha256": R17R9_11_SOURCE_SHA256,\n        "scope": ["WINDOWS_PATH", "QUOTED_DIAGNOSTIC", "ESCAPED_CONTROL"],\n        "execute_allowed": False,\n        "claim_allowed": False,\n        "producer_allowed": False,\n    }\n\ndef run_r17r9_11_seven_batches(python,payload,work,seconds,pins):',1)
+    if expected_broker==old_broker or new_broker!=expected_broker:
+        reasons.append("GEN39_TECHLIT_BROKER_UNAUTHORIZED_DIFF")
+    if (head_root/LOCK).read_bytes()!=(base_root/LOCK).read_bytes():
+        reasons.append("GEN39_TECHLIT_AUTHORITY_CHANGED")
+    if (head_root/SIDE).read_bytes()!=(base_root/SIDE).read_bytes():
+        reasons.append("GEN39_TECHLIT_AUTHORITY_SIDECAR_CHANGED")
+    return reasons
+
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument("--base",required=True); ap.add_argument("--head",required=True)
     args=ap.parse_args(); base=Path(args.base); head=Path(args.head); reasons=[]
@@ -875,6 +926,12 @@ def main():
     reasons += validate_r17r9_private_blob_code_only_scope(changes,req,load_json(base/LOCK),base,head)
     reasons += validate_r17r9_broker_manifest_fix(changes,req,load_json(base/LOCK),base,head)
     reasons += validate_r17r9_cli_generator_code_only(changes,req,load_json(base/LOCK),base,head)
+    reasons += validate_gen39_techlit_code_only(changes,req,load_json(base/LOCK),base,head)
+    if req.get("requested_action_id")==GEN39_TECHLIT_ACTION:
+        import subprocess
+        runner='import sys,unittest; sys.path.insert(0,"tests"); import test_r17r9_11_successor as t; suite=unittest.defaultTestLoader.loadTestsFromTestCase(t.Gen39TechlitPendingCodeOnly); result=unittest.TextTestRunner(verbosity=2).run(suite); sys.exit(0 if result.wasSuccessful() else 1)'
+        p=subprocess.run([sys.executable,"-I","-B","-c",runner],cwd=head,timeout=120,check=False)
+        if p.returncode: reasons.append("GEN39_TECHLIT_PENDING_CODE_TESTS_FAILED")
     if req.get("requested_action_id")==R17R9_CLI_ACTION:
         import subprocess
         cp=subprocess.run([sys.executable,"-I","-B","-m","unittest","discover",

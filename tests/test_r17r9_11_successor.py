@@ -491,3 +491,45 @@ class CLIOptionGeneratorSuccessorCodeOnly(unittest.TestCase):
         stages=inspect.getsource(bridge.run_r17r9_11_seven_batches)
         self.assertIn('file_sha(payload/GENERATOR)==pins["generator_sha256"]',stages)
         self.assertIn("PAYLOAD_FILE_SHA_MISMATCH", source)
+
+
+class Gen39TechlitPendingCodeOnly(unittest.TestCase):
+    """Run 41324860418: fixture-backed candidate is nonexecutable until separately admitted."""
+    def test_exact_prospective_digest_and_frozen_live_generator(self):
+        self.assertEqual(guard.R17R9_11_TECHLIT_PENDING_GENERATOR_SHA256, "028222d542c7628a87a20c313f8930260001983d06d4f9c3126ef708639948e4")
+        self.assertEqual(guard.R17R9_11_CLI_GENERATOR_SHA256, "2ee4fabe98066c78dc5be0017c0c84ab4885ab582ca0cf66fdd32005e91dd8e9")
+        self.assertNotEqual(guard.R17R9_11_TECHLIT_PENDING_GENERATOR_SHA256,
+                            guard.R17R9_11_CLI_GENERATOR_SHA256)
+
+    def test_readonly_descriptor_cannot_issue_claim(self):
+        d=bridge.r17r9_11_techlit_pending_identity()
+        self.assertEqual(d["status"], "CODE_ONLY_NOT_ADMITTED")
+        self.assertEqual(d["scope"], ["WINDOWS_PATH", "QUOTED_DIAGNOSTIC", "ESCAPED_CONTROL"])
+        self.assertFalse(d["execute_allowed"])
+        self.assertFalse(d["claim_allowed"])
+        self.assertFalse(d["producer_allowed"])
+        self.assertEqual(d["pending_generator_sha256"], guard.R17R9_11_TECHLIT_PENDING_GENERATOR_SHA256)
+
+    def test_current_gen39_profile_and_legacy_pins_unchanged(self):
+        lock=gate.load_json(ROOT/"authority/CURRENT.json")
+        self.assertEqual(lock["generation"],39)
+        p=lock["r17r9_11_successor"]
+        self.assertEqual(p["generator_sha256"], "2ee4fabe98066c78dc5be0017c0c84ab4885ab582ca0cf66fdd32005e91dd8e9")
+        self.assertEqual(guard.r17r9_11_successor_activation_errors(p),[])
+        self.assertEqual(bridge.r17r9_11_pins(p)["generator_sha256"], "2ee4fabe98066c78dc5be0017c0c84ab4885ab582ca0cf66fdd32005e91dd8e9")
+        self.assertEqual(guard.GEN34_PINS["generator_sha256"], "646cf341c774953baa99da400ee3aa6e992fbbd8d0af95f36144f72c0fa5980c")
+
+    def test_pending_digest_not_usable_with_current_runtime(self):
+        p=dict(gate.load_json(ROOT/"authority/CURRENT.json")["r17r9_11_successor"])
+        p["generator_sha256"]=guard.R17R9_11_TECHLIT_PENDING_GENERATOR_SHA256
+        self.assertIn("R17R9_PIN_INVALID:generator_sha256",
+                      guard.r17r9_11_successor_activation_errors(p))
+        with self.assertRaises(bridge.Denied):
+            bridge.r17r9_11_pins(p)
+
+    def test_producer_and_manifest_paths_have_no_pending_selector(self):
+        import inspect
+        for function in (bridge.execute_r17r9_11_successor,
+                         bridge.r17r9_11_pins,bridge.prepare_payload):
+            self.assertNotIn("r17r9_11_techlit_pending_identity",inspect.getsource(function))
+            self.assertNotIn("R17R9_11_TECHLIT_PENDING_GENERATOR_SHA256",inspect.getsource(function))
