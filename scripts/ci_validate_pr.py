@@ -629,6 +629,65 @@ def validate_r17r9_11_runtime_code_only_scope(changes,req,base_lock,base_root,he
             reasons.append("R17R9_RUNTIME_HISTORICAL_EXECUTE_OR_GATE_CHANGED:"+path)
     return reasons
 
+
+# Owner-authorized manifest-cycle CODE ONLY repair: Run 41280688586.
+R17R9_MANIFEST_CYCLE_ACTION = "GLOBAL_PUBLICATION_GEN38_R17R9_11_MANIFEST_CYCLE_CODE_ONLY_FIX"
+R17R9_MANIFEST_CYCLE_OWNER_RUN = 41280688586
+R17R9_MANIFEST_CYCLE_PATHS = {
+    "gate/transition_guard.py",
+    "gate/publication_gate.py",
+    "tests/test_r17r9_11_successor.py",
+    "scripts/ci_validate_pr.py",
+    "request/ACTION_REQUEST.json",
+}
+
+def validate_r17r9_manifest_cycle_code_only_scope(changes,req,base_lock,base_root,head_root):
+    if req.get("requested_action_id")!=R17R9_MANIFEST_CYCLE_ACTION:
+        return []
+    reasons=[]
+    if set(changes)!=R17R9_MANIFEST_CYCLE_PATHS or len(changes)!=5:
+        reasons.append("R17R9_CYCLE_EXACT_FIVE_PATHS_REQUIRED")
+    if set(req.get("target_scope_ids") or [])!=R17R9_MANIFEST_CYCLE_PATHS:
+        reasons.append("R17R9_CYCLE_OWNER_SCOPES_MISMATCH")
+    if (req.get("action_kind")!="GOVERNANCE_UPGRADE" or
+            req.get("operations")!=["GOVERNANCE_UPGRADE","PATCH"] or
+            req.get("mode")!="READ_ONLY" or
+            req.get("authorization_run_id")!=R17R9_MANIFEST_CYCLE_OWNER_RUN):
+        reasons.append("R17R9_CYCLE_OWNER_CODE_ONLY_AUTH_MISMATCH")
+    if (base_lock.get("generation")!=38 or
+            base_lock.get("execution_authorized_now") is not False or
+            (base_lock.get("current_action") or {}).get("mode")!="READ_ONLY" or
+            base_lock.get("private_execution_state_sha256")!=R17R9_11_CODE_PRIVATE or
+            sha(base_root/LOCK)!=R17R9_11_CODE_PUBLIC):
+        reasons.append("R17R9_CYCLE_READ_ONLY_BASE_IDENTITY_MISMATCH")
+    if (req.get("input_public_lock_sha256")!=R17R9_11_CODE_PUBLIC or
+            req.get("input_private_state_sha256")!=R17R9_11_CODE_PRIVATE):
+        reasons.append("R17R9_CYCLE_REQUEST_STALE_IDENTITY")
+    # Two predeclared, exact-text transformations; forbids unrelated gate edits.
+    field='        "manifest_sha256":R17R9_11_MANIFEST_SHA256,\n'
+    anchor='    if not isinstance(profile.get("bundle_blob_sha"),str) or not re.fullmatch(r"[0-9a-f]{40}",profile["bundle_blob_sha"]):'
+    added=(
+        '    # LAB Manifest was generated with the old private state. The executable\n'
+        '    # Manifest must be newly SHA-pinned by protected CURRENT, outside private-state.json.\n'
+        '    if not is_sha256(profile.get("manifest_sha256")):\n'
+        '        reasons.append("R17R9_EXECUTABLE_MANIFEST_DIGEST_INVALID")\n'
+        '    elif profile["manifest_sha256"]==R17R9_11_MANIFEST_SHA256:\n'
+        '        reasons.append("R17R9_LAB_MANIFEST_IS_NOT_EXECUTABLE")\n'
+    )
+    old_guard=(base_root/"gate/transition_guard.py").read_text(encoding="utf-8")
+    new_guard=(head_root/"gate/transition_guard.py").read_text(encoding="utf-8")
+    if old_guard.count(field)!=1 or old_guard.count(anchor)!=1:
+        reasons.append("R17R9_CYCLE_GUARD_PREIMAGE_UNEXPECTED")
+    elif new_guard!=old_guard.replace(field,"").replace(anchor,added+anchor):
+        reasons.append("R17R9_CYCLE_GUARD_SCOPE_DRIFT")
+    old_gate=(base_root/"gate/publication_gate.py").read_text(encoding="utf-8")
+    new_gate=(head_root/"gate/publication_gate.py").read_text(encoding="utf-8")
+    if old_gate.count(field)!=1:
+        reasons.append("R17R9_CYCLE_ADMISSION_PREIMAGE_UNEXPECTED")
+    elif new_gate!=old_gate.replace(field,""):
+        reasons.append("R17R9_CYCLE_ADMISSION_SCOPE_DRIFT")
+    return reasons
+
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument("--base",required=True); ap.add_argument("--head",required=True)
     args=ap.parse_args(); base=Path(args.base); head=Path(args.head); reasons=[]
@@ -682,6 +741,19 @@ def main():
     reasons += validate_stage3_code_only_scope(changes,req,load_json(base/LOCK),base,head)
     reasons += validate_r17r9_11_code_only_scope(changes,req,load_json(base/LOCK),base,head)
     reasons += validate_r17r9_11_runtime_code_only_scope(changes,req,load_json(base/LOCK),base,head)
+
+    reasons += validate_r17r9_manifest_cycle_code_only_scope(changes,req,load_json(base/LOCK),base,head)
+    if req.get("requested_action_id")==R17R9_MANIFEST_CYCLE_ACTION:
+        import subprocess
+        result=subprocess.run(
+            [sys.executable,"-I","-B","-m","unittest","discover",
+             "-s","tests","-p","test_r17r9_11_successor.py","-v"],
+            cwd=head,timeout=120,check=False)
+        if result.returncode:
+            reasons.append("R17R9_CYCLE_NEW_SCOPED_TESTS_FAILED")
+        else:
+            print("R17R9_CYCLE_NEW_SCOPED_TESTS: PASS")
+
 
     if req.get("requested_action_id")==R17R9_11_RUNTIME_ACTION:
         import subprocess

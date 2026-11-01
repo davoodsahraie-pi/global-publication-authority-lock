@@ -196,3 +196,129 @@ class RuntimeSuccessorNoExecution(unittest.TestCase):
         self.assertEqual(state.get("generation"),38)
         self.assertIsNone(state.get("r17r9_11_successor"))
         self.assertFalse(state["execution_authorized_now"])
+
+
+
+class ManifestCycleContractFix(unittest.TestCase):
+    """Approval 41280688586: cycle-free digest binding, no execution."""
+    def make_profile(self, digest="1"*64):
+        legacy=guard.GEN34_PINS
+        p={
+            "schema":guard.R17R9_11_RUNTIME_SCHEMA,"enabled":True,
+            "runtime_profile":"R17R9_11_UNMODIFIED_R25R7_DRIVER",
+            "action_id":"R17R9_11_SOURCE_BOUND_FULLBOOK_BUILD_ONCE",
+            "project":"GLOBAL","method_id":"R17R9_11_ORIGINAL_DRIVER_SUCCESSOR",
+            "attempt_id":guard.R17R9_11_NEW_ATTEMPT,
+            "executor_id":"GITHUB_ACTIONS_PROTECTED_MAIN",
+            "operations":["BUILD","GENERATE_DOCX"],
+            "target_scope_ids":["R17R9_11_APPROVED_FULLBOOK_SUCCESSOR_ONCE"],
+            "max_seconds":3000,
+            "private_repository":"davoodsahraie-pi/global-publication-authority",
+            "environment":"gen34-r25r7-production",
+            "source_sha256":guard.R17R9_11_SOURCE_SHA256,
+            "manifest_sha256":digest,
+            "generator_sha256":legacy["generator_sha256"],
+            "driver_sha256":legacy["driver_sha256"],
+            "c1_sha256":legacy["c1_sha256"],
+            "grammar_sha256":legacy["grammar_sha256"],
+            "ppges_sha256":legacy["ppges_sha256"],
+            "dependency_lock_sha256":legacy["source_sha256"],
+            "bundle_sha256":"2"*64,"bundle_blob_sha":"3"*40,
+            "receipt_key_sha256":"4"*64,
+            "runtime_code_sha256":"5"*64,
+            "runtime_workflow_sha256":"6"*64,
+            "source_admission_status":"FORMALLY_ADMITTED",
+            "source_admission_receipt_sha256":"7"*64,
+            "owner_source_adoption_comment_id":6553602646,
+        }
+        self.assertEqual(set(p),guard.R17R9_11_RUNTIME_KEYS)
+        return p
+
+    def make_private(self,profile):
+        return {"next_action_contract":{
+            "id":profile["action_id"],"mode":"MUTATING",
+            "source_sha256":profile["source_sha256"],
+            "attempt_id":profile["attempt_id"],
+            "method_id":profile["method_id"],
+            "owner_source_adoption_comment_id":6553602646,
+            "source_admission_status":"FORMALLY_ADMITTED",
+            "build_authorized":True,
+            "private_payload_delivery_allowed":True,
+            "real_claim_authorized":True
+        }}
+
+    def test_real_executable_digest_structurally_valid_no_claim(self):
+        p=self.make_profile()
+        self.assertEqual(guard.r17r9_11_successor_activation_errors(p),[])
+        self.assertNotEqual(p["manifest_sha256"],guard.R17R9_11_MANIFEST_SHA256)
+
+    def test_multiple_future_digest_preimages_have_no_fixpoint_constraint(self):
+        for digest in ("1"*64,"8"*64):
+            with self.subTest(digest=digest):
+                p=self.make_profile(digest)
+                self.assertEqual(guard.r17r9_11_successor_activation_errors(p),[])
+
+    def test_lab_old_private_manifest_fails_closed(self):
+        p=self.make_profile(guard.R17R9_11_MANIFEST_SHA256)
+        self.assertIn("R17R9_LAB_MANIFEST_IS_NOT_EXECUTABLE",
+                      guard.r17r9_11_successor_activation_errors(p))
+
+    def test_invalid_manifest_pin_fails_closed(self):
+        for value in ("",None,"invalid-manifest", "a"*63, "g"*64):
+            with self.subTest(value=value):
+                p=self.make_profile(value)
+                self.assertIn("R17R9_EXECUTABLE_MANIFEST_DIGEST_INVALID",
+                              guard.r17r9_11_successor_activation_errors(p))
+
+    def test_private_contract_never_embeds_manifest_digest(self):
+        p=self.make_profile()
+        private=self.make_private(p)
+        self.assertNotIn("manifest_sha256",private["next_action_contract"])
+        lock={"r17r9_11_successor":p,
+              "execution_authorized_now":True,
+              "current_action":{"id":p["action_id"],"mode":"MUTATING"},
+              "private_execution_state_sha256":"9"*64,
+              "attempt_ledger":[],"ledger_hashes":{}}
+        request={"schema":gate.REQ_SCHEMA,"action_kind":"EXECUTE",
+                 "mode":"MUTATING","user_explicit_authorization":True,
+                 "requested_action_id":p["action_id"],
+                 "input_public_lock_sha256":"0"*64,
+                 "input_private_state_sha256":"9"*64,
+                 "authorization_run_id":41280688586,
+                 **{k:p[k] for k in ("project","method_id","attempt_id",
+                                    "executor_id","operations","target_scope_ids")}}
+        result=gate.validate_r17r9_11_successor_admission(
+            lock,private,request,None,"0"*64)
+        self.assertNotIn("R17R9_PRIVATE_SOURCE_BINDING_OR_ADMISSION_MISSING",
+                         result["reasons"])
+        # Authorization and protected reservation are still required.
+        self.assertEqual(result["status"],"DENY")
+        self.assertFalse(result["launch_allowed"])
+        self.assertIn("R17R9_NEW_UNSPENT_RESERVATION_REQUIRED",
+                      result["reasons"])
+
+    def test_old_manifest_not_authorized_by_forged_private_contract(self):
+        p=self.make_profile(guard.R17R9_11_MANIFEST_SHA256)
+        private=self.make_private(p)
+        result=gate.validate_r17r9_11_successor_admission(
+            {"r17r9_11_successor":p},private,{},None,"0"*64)
+        self.assertEqual(result["status"],"DENY")
+        self.assertIn("R17R9_LAB_MANIFEST_IS_NOT_EXECUTABLE",result["reasons"])
+
+    def test_legacy_gen34_still_pins_original_source(self):
+        self.assertEqual(guard.GEN34_PINS["source_sha256"],SOURCE_OLD)
+        self.assertEqual(guard.R17R9_11_SOURCE_SHA256,SOURCE_NEW)
+        self.assertNotEqual(guard.GEN34_PINS["source_sha256"],SOURCE_NEW)
+
+    def test_manifest_digest_remains_checked_in_existing_broker(self):
+        import inspect
+        body=inspect.getsource(bridge.prepare_payload)
+        self.assertIn('profile["manifest_sha256"]',body)
+        self.assertIn('MANIFEST_SHA_MISMATCH',body)
+        self.assertIn('"private-state.json":private_sha',body)
+
+    def test_no_executable_state_mutation_from_tests(self):
+        lock=gate.load_json(ROOT/"authority/CURRENT.json")
+        self.assertEqual(lock["generation"],38)
+        self.assertFalse(lock["execution_authorized_now"])
+        self.assertNotIn("r17r9_11_successor",lock)

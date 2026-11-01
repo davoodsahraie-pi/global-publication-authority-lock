@@ -223,7 +223,6 @@ def validate_r17r9_11_successor_admission(lock, private_state, request, auth, pu
     required={
         "id":profile["action_id"],"mode":"MUTATING",
         "source_sha256":R17R9_11_SOURCE_SHA256,
-        "manifest_sha256":R17R9_11_MANIFEST_SHA256,
         "attempt_id":R17R9_11_NEW_ATTEMPT,
         "method_id":profile["method_id"],
         "owner_source_adoption_comment_id":R17R9_11_OWNER_VOTE_ID,
