@@ -560,6 +560,10 @@ def execute_r17r9_11_successor(api,private_api,env,authorization_run_id,key_hex,
             "PUBLIC_SIDECAR_MISMATCH")
     profile=lock.get("r17r9_11_successor")
     require(not r17r9_11_successor_activation_errors(profile),"R17R9_SUCCESSOR_INACTIVE")
+    from transition_guard import R17R9_PRIVATE_AUTHORITY_MODE, R17R9_LIBRARY_ARCHIVE_ROLE
+    require(profile["private_authority_mode"]==R17R9_PRIVATE_AUTHORITY_MODE and
+            profile["library_current_role"]==R17R9_LIBRARY_ARCHIVE_ROLE,
+            "R17R9_PRIVATE_AUTHORITY_NOT_BOUND")
     require(lock.get("execution_authorized_now") is True and
             lock.get("current_action")=={"id":profile["action_id"],"mode":"MUTATING"},
             "R17R9_PUBLIC_EXECUTE_NOT_SELECTED")

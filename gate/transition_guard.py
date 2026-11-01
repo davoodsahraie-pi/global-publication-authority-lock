@@ -364,6 +364,10 @@ def audit_r17r9_11_successor_draft(candidate):
 
 
 # ENGSEQ R17R9 11-delta: independent successor, never overwrite legacy GEN34_PINS.
+
+# R17R9 successor-only private custody contract. No public CURRENT mutation here.
+R17R9_PRIVATE_AUTHORITY_MODE = "R17R9_PRIVATE_GITHUB_IMMUTABLE_BLOB/1.0"
+R17R9_LIBRARY_ARCHIVE_ROLE = "ARCHIVE_ONLY_NOT_EXECUTION_AUTHORITY"
 R17R9_11_RUNTIME_SCHEMA = "R17R9_11_SOURCE_BOUND_RUNTIME/1.0"
 R17R9_11_SOURCE_SHA256 = "fbbd4d43367545d14c988d60604ed4523fbe5311fbce7f02b65f7cb742782b40"
 R17R9_11_MANIFEST_SHA256 = "4bf88aa6ab1632b9bde6757cdd6aac195542d33bfc1940d8ca52604d904ea980"
@@ -379,6 +383,7 @@ R17R9_11_RUNTIME_KEYS = {
     "receipt_key_sha256","runtime_code_sha256","runtime_workflow_sha256",
     "source_admission_status","source_admission_receipt_sha256",
     "owner_source_adoption_comment_id",
+    "private_authority_mode","library_current_role",
 }
 
 def r17r9_11_successor_activation_errors(profile):
@@ -391,6 +396,13 @@ def r17r9_11_successor_activation_errors(profile):
         reasons.append("R17R9_NOT_ACTIVATED")
     if profile["runtime_profile"]!="R17R9_11_UNMODIFIED_R25R7_DRIVER":
         reasons.append("R17R9_RUNTIME_PROFILE_INVALID")
+    # Immutable Git blob is the only future executable private snapshot.
+    # Library CURRENT is retained as a historical/archive file only; never read
+    # as an alternate runtime input or a fallback private authority.
+    if profile.get("private_authority_mode")!=R17R9_PRIVATE_AUTHORITY_MODE:
+        reasons.append("R17R9_PRIVATE_GITHUB_BLOB_AUTHORITY_REQUIRED")
+    if profile.get("library_current_role")!=R17R9_LIBRARY_ARCHIVE_ROLE:
+        reasons.append("R17R9_LIBRARY_MUST_BE_ARCHIVE_ONLY")
     for key,value in {
         "source_sha256":R17R9_11_SOURCE_SHA256,
         "generator_sha256":GEN34_PINS["generator_sha256"],
