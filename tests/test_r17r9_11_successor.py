@@ -488,5 +488,6 @@ class CLIOptionGeneratorSuccessorCodeOnly(unittest.TestCase):
         import inspect
         source=inspect.getsource(bridge.prepare_payload)
         self.assertIn('GENERATOR:pins["generator_sha256"]',source)
-        self.assertIn('file_sha(payload/GENERATOR)==pins["generator_sha256"]',source)
+        stages=inspect.getsource(bridge.run_r17r9_11_seven_batches)
+        self.assertIn('file_sha(payload/GENERATOR)==pins["generator_sha256"]',stages)
         self.assertIn("PAYLOAD_FILE_SHA_MISMATCH", source)
