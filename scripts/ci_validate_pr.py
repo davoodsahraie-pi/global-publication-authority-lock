@@ -688,6 +688,47 @@ def validate_r17r9_manifest_cycle_code_only_scope(changes,req,base_lock,base_roo
         reasons.append("R17R9_CYCLE_ADMISSION_SCOPE_DRIFT")
     return reasons
 
+
+# R17R9 single-private-authority code-only proposal; not a source admission,
+# Library mutation, protected CURRENT transition, Claim or EXECUTE.
+R17R9_BLOB_AUTHORITY_ACTION="GLOBAL_PUBLICATION_GEN38_R17R9_11_PRIVATE_GITHUB_BLOB_AUTHORITY_CODE_ONLY"
+R17R9_BLOB_AUTHORITY_OWNER_RUN=41288491850
+R17R9_BLOB_AUTHORITY_PATHS={
+    "broker/gen34_r25r7_bridge.py","gate/transition_guard.py",
+    "tests/test_r17r9_11_successor.py","scripts/ci_validate_pr.py",
+    "request/ACTION_REQUEST.json",
+}
+
+def validate_r17r9_private_blob_code_only_scope(changes,req,base_lock,base_root,head_root):
+    if req.get("requested_action_id")!=R17R9_BLOB_AUTHORITY_ACTION:
+        return []
+    reasons=[]
+    if set(changes)!=R17R9_BLOB_AUTHORITY_PATHS or len(changes)!=5:
+        reasons.append("R17R9_PRIVATE_BLOB_EXACT_FIVE_PATHS_REQUIRED")
+    if set(req.get("target_scope_ids") or [])!=R17R9_BLOB_AUTHORITY_PATHS:
+        reasons.append("R17R9_PRIVATE_BLOB_OWNER_SCOPE_MISMATCH")
+    if req.get("action_kind")!="GOVERNANCE_UPGRADE" or req.get("mode")!="READ_ONLY" or req.get("operations")!=["GOVERNANCE_UPGRADE","PATCH"]:
+        reasons.append("R17R9_PRIVATE_BLOB_CODE_ONLY_ACTION_REQUIRED")
+    if req.get("authorization_run_id")!=R17R9_BLOB_AUTHORITY_OWNER_RUN:
+        reasons.append("R17R9_PRIVATE_BLOB_OWNER_RUN_MISMATCH")
+    if (base_lock.get("generation")!=38 or base_lock.get("execution_authorized_now") is not False or
+            (base_lock.get("current_action") or {}).get("mode")!="READ_ONLY" or
+            base_lock.get("private_execution_state_sha256")!=R17R9_11_CODE_PRIVATE or
+            sha(base_root/LOCK)!=R17R9_11_CODE_PUBLIC):
+        reasons.append("R17R9_PRIVATE_BLOB_READ_ONLY_BASE_REQUIRED")
+    if req.get("input_public_lock_sha256")!=R17R9_11_CODE_PUBLIC or req.get("input_private_state_sha256")!=R17R9_11_CODE_PRIVATE:
+        reasons.append("R17R9_PRIVATE_BLOB_STALE_STATE")
+    # New feature cannot rewrite historical original GEN34 execute.
+    old=(base_root/"broker/gen34_r25r7_bridge.py").read_text(encoding="utf-8")
+    new=(head_root/"broker/gen34_r25r7_bridge.py").read_text(encoding="utf-8")
+    begin="def execute(api,private_api,env,authorization_run_id,key_hex,work):"
+    stop="def execute_r17r9_11_successor(api,private_api,env,authorization_run_id,key_hex,work):"
+    if begin not in old or begin not in new or stop not in old or stop not in new:
+        reasons.append("R17R9_PRIVATE_BLOB_LEGACY_EXECUTE_REGION_MISSING")
+    elif old.split(begin,1)[1].split(stop,1)[0]!=new.split(begin,1)[1].split(stop,1)[0]:
+        reasons.append("R17R9_PRIVATE_BLOB_LEGACY_EXECUTE_CHANGED")
+    return reasons
+
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument("--base",required=True); ap.add_argument("--head",required=True)
     args=ap.parse_args(); base=Path(args.base); head=Path(args.head); reasons=[]
@@ -743,6 +784,18 @@ def main():
     reasons += validate_r17r9_11_runtime_code_only_scope(changes,req,load_json(base/LOCK),base,head)
 
     reasons += validate_r17r9_manifest_cycle_code_only_scope(changes,req,load_json(base/LOCK),base,head)
+    reasons += validate_r17r9_private_blob_code_only_scope(changes,req,load_json(base/LOCK),base,head)
+    if req.get("requested_action_id")==R17R9_BLOB_AUTHORITY_ACTION:
+        import subprocess
+        result=subprocess.run(
+            [sys.executable,"-I","-B","-m","unittest","discover",
+             "-s","tests","-p","test_r17r9_11_successor.py","-v"],
+            cwd=head,timeout=120,check=False)
+        if result.returncode:
+            reasons.append("R17R9_PRIVATE_BLOB_CODE_ONLY_TESTS_FAILED")
+        else:
+            print("R17R9_PRIVATE_BLOB_CODE_ONLY_TESTS: PASS")
+
     if req.get("requested_action_id")==R17R9_MANIFEST_CYCLE_ACTION:
         import subprocess
         result=subprocess.run(

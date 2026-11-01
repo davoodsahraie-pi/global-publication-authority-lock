@@ -229,6 +229,8 @@ class ManifestCycleContractFix(unittest.TestCase):
             "runtime_workflow_sha256":"6"*64,
             "source_admission_status":"FORMALLY_ADMITTED",
             "source_admission_receipt_sha256":"7"*64,
+            "private_authority_mode":guard.R17R9_PRIVATE_AUTHORITY_MODE,
+            "library_current_role":guard.R17R9_LIBRARY_ARCHIVE_ROLE,
             "owner_source_adoption_comment_id":6553602646,
         }
         self.assertEqual(set(p),guard.R17R9_11_RUNTIME_KEYS)
@@ -322,3 +324,84 @@ class ManifestCycleContractFix(unittest.TestCase):
         self.assertEqual(lock["generation"],38)
         self.assertFalse(lock["execution_authorized_now"])
         self.assertNotIn("r17r9_11_successor",lock)
+
+
+
+class PrivateGitBlobSingleAuthorityCodeOnly(unittest.TestCase):
+    def test_exact_owner_workflow_run(self):
+        self.assertEqual(ci.R17R9_BLOB_AUTHORITY_OWNER_RUN, 41288491850)
+
+    """Owner approved design review: no official activation or private payload release."""
+
+    def active_shape(self):
+        return ManifestCycleContractFix().make_profile()
+
+    def test_only_immutable_private_git_blob_is_valid(self):
+        p=self.active_shape()
+        self.assertEqual(guard.r17r9_11_successor_activation_errors(p),[])
+        self.assertEqual(p["private_authority_mode"],
+                         "R17R9_PRIVATE_GITHUB_IMMUTABLE_BLOB/1.0")
+        self.assertEqual(p["library_current_role"],
+                         "ARCHIVE_ONLY_NOT_EXECUTION_AUTHORITY")
+
+    def test_private_authority_mode_must_be_exact(self):
+        for mode in ("LIBRARY_CURRENT","GITHUB_MAIN","LIVE_PRIVATE_BRANCH","",None):
+            with self.subTest(mode=mode):
+                p=self.active_shape();p["private_authority_mode"]=mode
+                self.assertIn("R17R9_PRIVATE_GITHUB_BLOB_AUTHORITY_REQUIRED",
+                    guard.r17r9_11_successor_activation_errors(p))
+
+    def test_library_cannot_become_runtime_fallback(self):
+        for role in ("EXECUTION_INPUT","PRIMARY","FALLBACK","",None):
+            with self.subTest(role=role):
+                p=self.active_shape();p["library_current_role"]=role
+                self.assertIn("R17R9_LIBRARY_MUST_BE_ARCHIVE_ONLY",
+                    guard.r17r9_11_successor_activation_errors(p))
+
+    def test_missing_profile_field_fails_closed(self):
+        for key in ("private_authority_mode","library_current_role"):
+            with self.subTest(key=key):
+                p=self.active_shape();del p[key]
+                self.assertIn("R17R9_SUCCESSOR_EXACT_PROFILE_KEYS_REQUIRED",
+                    guard.r17r9_11_successor_activation_errors(p))
+
+    def test_no_live_library_read_in_successor_execution(self):
+        import inspect
+        source=inspect.getsource(bridge.execute_r17r9_11_successor)
+        self.assertIn("blob_bytes(private_api",source)
+        self.assertIn("R17R9_PRIVATE_AUTHORITY_NOT_BOUND",source)
+        self.assertNotIn("files__",source)
+        self.assertNotIn("library_current.json",source.lower())
+        self.assertLess(source.find("R17R9_PRIVATE_AUTHORITY_NOT_BOUND"),
+                        source.find("blob_bytes(private_api"))
+
+    def test_git_blob_has_three_independent_pins(self):
+        import inspect
+        code=inspect.getsource(bridge.execute_r17r9_11_successor)
+        self.assertIn('profile["bundle_blob_sha"]',code)
+        self.assertIn('lock["private_execution_state_sha256"]',code)
+        self.assertIn("prepare_payload(",code)
+        payload_source=inspect.getsource(bridge.prepare_payload)
+        self.assertIn('profile["bundle_sha256"]',payload_source)
+        self.assertIn('profile["manifest_sha256"]',payload_source)
+        self.assertIn('"private-state.json":private_sha',payload_source)
+
+    def test_unactivated_gen38_denies_before_private_api(self):
+        from unittest.mock import Mock
+        private_api=Mock()
+        with self.assertRaises(bridge.Denied):
+            bridge.execute_r17r9_11_successor(Mock(),private_api,{},
+                                               "41280688586",None,ROOT)
+        private_api.assert_not_called()
+
+    def test_legacy_path_has_no_new_authority_mode(self):
+        import inspect
+        code=inspect.getsource(bridge.execute)
+        self.assertNotIn("R17R9_PRIVATE_AUTHORITY_NOT_BOUND",code)
+        self.assertNotIn("library_current_role",code)
+
+    def test_code_only_cannot_authorize_execution(self):
+        state=gate.load_json(ROOT/"authority/CURRENT.json")
+        self.assertEqual(state["generation"],38)
+        self.assertFalse(state["execution_authorized_now"])
+        self.assertNotIn("r17r9_11_successor",state)
