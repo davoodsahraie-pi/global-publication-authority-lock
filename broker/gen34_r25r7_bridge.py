@@ -270,7 +270,8 @@ def safe_extract(raw,destination,limit=512*1024*1024):
             with path.open("xb") as f: f.write(z.read(info))
     return seen
 
-def prepare_payload(raw,profile,private_sha,work):
+def prepare_payload(raw,profile,private_sha,work,pins=None):
+    pins=GEN34_PINS if pins is None else pins
     require(sha(raw)==profile["bundle_sha256"],"PRIVATE_BUNDLE_SHA_MISMATCH")
     payload=work/"payload";payload.mkdir()
     names=safe_extract(raw,payload)
@@ -281,9 +282,9 @@ def prepare_payload(raw,profile,private_sha,work):
     require(set(manifest["files"])==names-{"manifest.json"},"MANIFEST_MEMBERS_MISMATCH")
     for name,digest in manifest["files"].items():
         require(isinstance(digest,str) and HEX64.fullmatch(digest) and file_sha(payload/name)==digest,"PAYLOAD_FILE_SHA_MISMATCH")
-    fixed={GENERATOR:GEN34_PINS["generator_sha256"],DRIVER:GEN34_PINS["driver_sha256"],
-        "source.jsonl":GEN34_PINS["source_sha256"],"c1.json":GEN34_PINS["c1_sha256"],
-        "ppges.zip":GEN34_PINS["ppges_sha256"],"grammar.txt":GEN34_PINS["grammar_sha256"],
+    fixed={GENERATOR:pins["generator_sha256"],DRIVER:pins["driver_sha256"],
+        "source.jsonl":pins["source_sha256"],"c1.json":pins["c1_sha256"],
+        "ppges.zip":pins["ppges_sha256"],"grammar.txt":pins["grammar_sha256"],
         "private-state.json":private_sha,"dependency-lock.json":profile["dependency_lock_sha256"]}
     require(all(manifest["files"].get(k)==v for k,v in fixed.items()),"ORIGINAL_INPUT_OR_STATE_MISMATCH")
     deps=parse_json((payload/"dependency-lock.json").read_bytes())
@@ -349,7 +350,8 @@ def redeem(api,profile,run_id,descriptor,head,runner_id):
     create_once(api,attempt_ref,commit)
     return commit,record
 
-def run_driver(python,payload,work,seconds):
+def run_driver(python,payload,work,seconds,pins=None):
+    pins=GEN34_PINS if pins is None else pins
     output=work/"output.docx";report=work/"driver-report.json"
     command=[str(python),"-I","-B",str(payload/DRIVER),"--source",str(payload/"source.jsonl"),
         "--generator",str(payload/GENERATOR),"--ppges-root",str(payload/"ppges/PPGES_v1.3.5"),
@@ -357,15 +359,15 @@ def run_driver(python,payload,work,seconds):
     with (work/"driver-stdout.log").open("wb") as stdout,(work/"driver-stderr.log").open("wb") as stderr:
         subprocess.run(command,env=clean_env(),cwd=work,stdout=stdout,stderr=stderr,check=True,timeout=seconds)
     raw=output.read_bytes();r=parse_json(report.read_bytes())
-    require(r.get("status")=="PASS" and r.get("source_sha256")==GEN34_PINS["source_sha256"] and
-        r.get("generator_sha256")==GEN34_PINS["generator_sha256"] and r.get("output_sha256")==sha(raw) and
+    require(r.get("status")=="PASS" and r.get("source_sha256")==pins["source_sha256"] and
+        r.get("generator_sha256")==pins["generator_sha256"] and r.get("output_sha256")==sha(raw) and
         r.get("output_bytes")==len(raw) and r.get("batch_parts")==[1,25] and r.get("cumulative_records")==21529 and
         r.get("batch_records")==21529 and r.get("base_docx_sha256") is None and r.get("resume") is None,"DRIVER_REPORT_OR_OUTPUT_INVALID")
     rb=r.get("readback",{})
     require(rb.get("zip_bad") is None and rb.get("sections")==1 and rb.get("part_titles_present_through")==25 and rb.get("end_marker_present") is True,"DRIVER_READBACK_FAILED")
     with zipfile.ZipFile(io.BytesIO(raw)) as z:
         require(z.testzip() is None and {"[Content_Types].xml","word/document.xml"}.issubset(z.namelist()),"OUTPUT_OPC_INVALID")
-    require(file_sha(payload/GENERATOR)==GEN34_PINS["generator_sha256"] and file_sha(payload/DRIVER)==GEN34_PINS["driver_sha256"] and file_sha(payload/"source.jsonl")==GEN34_PINS["source_sha256"],"INPUT_CHANGED_DURING_DRIVER")
+    require(file_sha(payload/GENERATOR)==pins["generator_sha256"] and file_sha(payload/DRIVER)==pins["driver_sha256"] and file_sha(payload/"source.jsonl")==pins["source_sha256"],"INPUT_CHANGED_DURING_DRIVER")
     return {"output.docx":raw,"driver-report.json":report.read_bytes(),
         "driver-stdout.log":(work/"driver-stdout.log").read_bytes(),"driver-stderr.log":(work/"driver-stderr.log").read_bytes()}
 
@@ -388,11 +390,12 @@ def terminal_receipt(key,profile,run_id,descriptor,claim_commit,record,result,ou
     receipt["mac_sha256"]=hmac.new(key,canonical(receipt),hashlib.sha256).hexdigest()
     return receipt
 
-def persist_terminal(api,receipt,record,key,output_binding,profile):
+def persist_terminal(api,receipt,record,key,output_binding,profile,pins=None):
+    pins=GEN34_PINS if pins is None else pins
     expected={k:receipt[k] for k in ("issuer","attempt_key_sha256","dispatch_descriptor_sha256","claim_ref","claim_commit_sha","authorization_run_id")}
     require(verify_terminal_receipt(receipt,key,expected)["authenticated"],"RECEIPT_LOCAL_AUTHENTICATION_FAILED")
     files={"receipt.json":canonical(receipt),"binding.json":canonical({
-        "schema":"GEN34_TERMINAL_BINDING/1.0","source_sha256":GEN34_PINS["source_sha256"],
+        "schema":"GEN34_TERMINAL_BINDING/1.0","source_sha256":pins["source_sha256"],
         "profile_sha256":sha(canonical(profile)),"output":output_binding,
         "claim":record,"receipt_sha256":sha(canonical(receipt))})}
     commit=create_commit(api,files,"GEN34 immutable terminal receipt",receipt["claim_commit_sha"])
@@ -402,7 +405,8 @@ def persist_terminal(api,receipt,record,key,output_binding,profile):
     require(committed_file(api,commit,"binding.json")==files["binding.json"],"DURABLE_BINDING_READBACK_FAILED")
     return commit
 
-def complete_claimed(api,private_api,profile,auth_run,descriptor,head,runner_id,key,payload,python,work,deadline,runner=run_driver):
+def complete_claimed(api,private_api,profile,auth_run,descriptor,head,runner_id,key,payload,python,work,deadline,runner=run_driver,pins=None):
+    pins=GEN34_PINS if pins is None else pins
     claim_commit,record=redeem(api,profile,auth_run,descriptor,head,runner_id)
     result="NOT_LAUNCHED";output_binding=None;output_sha=None;launch_started=False
     try:
@@ -423,7 +427,7 @@ def complete_claimed(api,private_api,profile,auth_run,descriptor,head,runner_id,
         result="STARTED_NO_OUTPUT" if launch_started else "NOT_LAUNCHED"
         output_binding=None;output_sha=None
     receipt=terminal_receipt(key,profile,auth_run,descriptor,claim_commit,record,result,output_sha)
-    terminal_commit=persist_terminal(api,receipt,record,key,output_binding,profile)
+    terminal_commit=persist_terminal(api,receipt,record,key,output_binding,profile,pins=pins)
     return {"status":result,"receipt_sha256":sha(canonical(receipt)),
             "terminal_commit":terminal_commit,"terminal_ref":record["terminal_ref"],"output_sha256":output_sha}
 
@@ -463,9 +467,156 @@ def execute(api,private_api,env,authorization_run_id,key_hex,work):
     descriptor=gen34_descriptor(profile,public_sha,lock["private_execution_state_sha256"],authorization_run_id)
     return complete_claimed(api,private_api,profile,authorization_run_id,descriptor,head,env["GITHUB_RUN_ID"],key,payload,python,work,deadline)
 
+
+# R17R9 full-book successor: dormant unless exact future protected CURRENT
+# selects and activates this profile, private source contract is signed off,
+# a distinct physical attempt is RESERVED, and fresh owner EXECUTE matches.
+R17R9_11_BATCHES = (
+    (1,1,896,896),(2,5,3853,4749),(6,10,5525,10274),
+    (11,15,3558,13832),(16,17,1797,15629),
+    (18,20,1946,17575),(21,25,3954,21529),
+)
+
+def r17r9_11_pins(profile):
+    from transition_guard import R17R9_11_SOURCE_SHA256, R17R9_11_MANIFEST_SHA256
+    require(profile["source_sha256"]==R17R9_11_SOURCE_SHA256 and
+            profile["manifest_sha256"]==R17R9_11_MANIFEST_SHA256,
+            "R17R9_SOURCE_MANIFEST_PIN_MISMATCH")
+    return {**GEN34_PINS,"source_sha256":profile["source_sha256"]}
+
+def run_r17r9_11_seven_batches(python,payload,work,seconds,pins):
+    """One protected claimed attempt, seven bounded resumable Driver calls."""
+    started=time.monotonic()
+    logs=[];prev=None;rows=[];final=None
+    for start,end,count,cumulative in R17R9_11_BATCHES:
+        remaining=int(seconds-(time.monotonic()-started))
+        require(remaining>75,"R17R9_BATCH_DEADLINE_EXHAUSTED")
+        out=work/("r17r9-parts-%02d-%02d.docx"%(start,end))
+        report=work/("r17r9-parts-%02d-%02d-report.json"%(start,end))
+        stdout=work/("r17r9-parts-%02d-%02d.stdout"%(start,end))
+        stderr=work/("r17r9-parts-%02d-%02d.stderr"%(start,end))
+        cmd=[str(python),"-I","-B",str(payload/DRIVER),
+             "--source",str(payload/"source.jsonl"),
+             "--generator",str(payload/GENERATOR),
+             "--ppges-root",str(payload/"ppges/PPGES_v1.3.5"),
+             "--start-part",str(start),"--end-part",str(end)]
+        if prev is not None: cmd+=["--base",str(prev)]
+        cmd+=["--out",str(out),"--report",str(report)]
+        with stdout.open("wb") as so, stderr.open("wb") as se:
+            subprocess.run(cmd,env=clean_env(),cwd=work,stdout=so,stderr=se,
+                           check=True,timeout=remaining-45)
+        raw=out.read_bytes();r=parse_json(report.read_bytes())
+        require(r.get("status")=="PASS" and r.get("source_sha256")==pins["source_sha256"] and
+                r.get("generator_sha256")==pins["generator_sha256"] and
+                r.get("batch_parts")==[start,end] and
+                r.get("batch_records")==count and r.get("cumulative_records")==cumulative and
+                r.get("output_sha256")==sha(raw) and
+                r.get("output_bytes")==len(raw),"R17R9_STAGE_DRIVER_RECEIPT_INVALID")
+        require(r.get("base_docx_sha256")==(
+            None if prev is None else rows[-1]["sha256"]),
+            "R17R9_STAGE_CHAIN_IDENTITY_MISMATCH")
+        rb=r.get("readback") or {}
+        require(rb.get("zip_bad") is None and rb.get("sections")==1 and
+                rb.get("part_titles_present_through")==end and
+                rb.get("end_marker_present") is True,"R17R9_STAGE_READBACK_INVALID")
+        with zipfile.ZipFile(io.BytesIO(raw)) as z:
+            require(z.testzip() is None and "word/document.xml" in z.namelist(),
+                    "R17R9_STAGE_DOCX_CORRUPT")
+        if end==25:
+            require(r.get("resume") is None and rb.get("part_titles_present_through")==25,
+                    "R17R9_FINAL_PART_INCOMPLETE")
+        else:
+            require((r.get("resume") or {}).get("next_start_part")==end+1,
+                    "R17R9_STAGE_RESUME_INVALID")
+        rows.append({"parts":[start,end],"batch_records":count,
+                     "cumulative_records":cumulative,"sha256":sha(raw),
+                     "driver_report_sha256":sha(report.read_bytes())})
+        logs.append((stdout.read_bytes(),stderr.read_bytes()))
+        prev=out;final=raw
+    require(sum(x["batch_records"] for x in rows)==21529 and len(rows)==7,
+            "R17R9_FULLBOOK_COVERAGE_INVALID")
+    require(file_sha(payload/GENERATOR)==pins["generator_sha256"] and
+            file_sha(payload/DRIVER)==pins["driver_sha256"] and
+            file_sha(payload/"source.jsonl")==pins["source_sha256"],
+            "R17R9_SOURCE_CHANGED_DURING_BUILD")
+    receipt=canonical({"schema":"R17R9_11_SEVEN_STAGE_DRIVER/1.0",
+                       "status":"PASS","source_sha256":pins["source_sha256"],
+                       "generator_sha256":pins["generator_sha256"],
+                       "output_sha256":sha(final),"output_bytes":len(final),
+                       "batch_parts":[1,25],"cumulative_records":21529,
+                       "stages":rows})
+    return {"output.docx":final,"driver-report.json":receipt,
+            "driver-stdout.log":b"".join(v[0] for v in logs),
+            "driver-stderr.log":b"".join(v[1] for v in logs)}
+
+def execute_r17r9_11_successor(api,private_api,env,authorization_run_id,key_hex,work):
+    """No compatible active profile/current means denial BEFORE private input or claim."""
+    from transition_guard import r17r9_11_successor_activation_errors
+    from publication_gate import validate_r17r9_11_successor_admission,validate_authorization
+    started=time.monotonic();deadline=started+3300
+    raw=(ROOT/"authority/CURRENT.json").read_bytes()
+    lock=parse_json(raw);public_sha=sha(raw)
+    require((ROOT/"authority/CURRENT.sha256").read_text().split()[0]==public_sha,
+            "PUBLIC_SIDECAR_MISMATCH")
+    profile=lock.get("r17r9_11_successor")
+    require(not r17r9_11_successor_activation_errors(profile),"R17R9_SUCCESSOR_INACTIVE")
+    require(lock.get("execution_authorized_now") is True and
+            lock.get("current_action")=={"id":profile["action_id"],"mode":"MUTATING"},
+            "R17R9_PUBLIC_EXECUTE_NOT_SELECTED")
+    require(file_sha(ROOT/"broker/gen34_r25r7_bridge.py")==profile["runtime_code_sha256"] and
+            file_sha(ROOT/WORKFLOW)==profile["runtime_workflow_sha256"],
+            "R17R9_RUNTIME_BYTE_PIN_MISMATCH")
+    head,protection=verify_platform(api,env,profile)
+    require(committed_file(api,head,"authority/CURRENT.json")==raw,
+            "R17R9_PROTECTED_CURRENT_DRIFT")
+    auth=authenticate_owner(api,authorization_run_id,head)
+    request={"schema":REQ_SCHEMA,"requested_action_id":profile["action_id"],
+             "action_kind":"EXECUTE","mode":"MUTATING",
+             "user_explicit_authorization":True,
+             "authorization_run_id":authorization_run_id,
+             "input_public_lock_sha256":public_sha,
+             "input_private_state_sha256":lock["private_execution_state_sha256"],
+             **{k:profile[k] for k in
+                ("project","method_id","attempt_id","executor_id",
+                 "operations","target_scope_ids")}}
+    require(not validate_authorization(
+        auth,request,public_sha,lock["private_execution_state_sha256"]),
+        "R17R9_OWNER_EXECUTE_BINDING_MISMATCH")
+    # A public profile is not permission to read private data before owner auth.
+    require(re.fullmatch(r"[0-9a-fA-F]{64}",key_hex or ""),"R17R9_RECEIPT_KEY_MISSING")
+    key=bytes.fromhex(key_hex)
+    require(sha(key)==profile["receipt_key_sha256"],"R17R9_RECEIPT_KEY_MISMATCH")
+    require(private_api.get("").get("private") is True,"R17R9_INPUT_CUSTODY_NOT_PRIVATE")
+    pins=r17r9_11_pins(profile)
+    raw_bundle=blob_bytes(private_api,profile["bundle_blob_sha"])
+    payload,private_state,deps=prepare_payload(
+        raw_bundle,profile,lock["private_execution_state_sha256"],work,pins=pins)
+    # This will fail for the pre-admission LAB bundle (old private action).
+    require(not r17r9_11_successor_activation_errors(profile),
+            "R17R9_PROFILE_RECHECK_FAILED")
+    admission=validate_r17r9_11_successor_admission(
+        lock,private_state,request,auth,public_sha)
+    require(admission["status"]=="ELIGIBLE_FOR_PHYSICAL_CLAIM_ONLY",
+            "R17R9_SUCCESSOR_ADMISSION_DENIED")
+    from engseq_registry_v2_broker_glue import code_only_preclaim_guard
+    require(code_only_preclaim_guard(lock)["status"]=="UNSELECTED_CODE_ONLY",
+            "R17R9_IDENTITY_REGISTRY_NOT_ADMITTED")
+    python=prepare_python(payload,deps,work)
+    require(attested_ruleset(api.get("/rulesets/26070404"),26070404)==protection,
+            "R17R9_RULESET_DRIFT")
+    require(api.get("/git/ref/heads/main")["object"]["sha"]==head,
+            "R17R9_MAIN_HEAD_DRIFT")
+    descriptor=gen34_descriptor(
+        profile,public_sha,lock["private_execution_state_sha256"],authorization_run_id)
+    runner=lambda py,pl,wo,secs:run_r17r9_11_seven_batches(py,pl,wo,secs,pins)
+    return complete_claimed(
+        api,private_api,profile,authorization_run_id,descriptor,head,
+        env["GITHUB_RUN_ID"],key,payload,python,work,deadline,runner=runner,pins=pins)
+
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument("--authorization-run-id",required=True)
+    parser.add_argument("--source-profile",choices=["legacy","r17r9-11"],default="legacy")
     args=parser.parse_args()
     # Do not echo args, credentials, exceptions, subprocess logs or bundle paths.
     try:
@@ -473,8 +624,9 @@ def main():
         private_api=GitHub(PRIVATE_REPO,os.environ.get("GEN34_PRIVATE_TOKEN",""))
         os.umask(0o077)
         with tempfile.TemporaryDirectory(prefix="gen34-r25r7-") as directory:
-            result=execute(api,private_api,dict(os.environ),args.authorization_run_id,
-                           os.environ.get("GEN34_RECEIPT_KEY_HEX",""),Path(directory))
+            selected=execute_r17r9_11_successor if args.source_profile=="r17r9-11" else execute
+            result=selected(api,private_api,dict(os.environ),args.authorization_run_id,
+                            os.environ.get("GEN34_RECEIPT_KEY_HEX",""),Path(directory))
         print(json.dumps(result,sort_keys=True))
         return 0 if result["status"]=="COMPLETED" else 3
     except BaseException as exc:

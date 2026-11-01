@@ -2,6 +2,14 @@ name: gen34-r25r7-producer
 on:
   workflow_dispatch:
     inputs:
+      source_profile:
+        description: Select legacy or separately activated R17R9 successor (both require fresh EXECUTE)
+        required: true
+        type: choice
+        default: legacy
+        options:
+          - legacy
+          - r17r9-11
       owner_authorization_run_id:
         description: Separate owner EXECUTE authorization for the current activated authority
         required: true
@@ -35,4 +43,4 @@ jobs:
           GEN34_PRIVATE_TOKEN: ${{ secrets.GEN34_PRIVATE_TOKEN }}
           GEN34_RECEIPT_KEY_HEX: ${{ secrets.GEN34_RECEIPT_KEY_HEX }}
           OWNER_AUTHORIZATION_RUN_ID: ${{ inputs.owner_authorization_run_id }}
-        run: python -I -B broker/gen34_r25r7_bridge.py --authorization-run-id "$OWNER_AUTHORIZATION_RUN_ID"
+        run: python -I -B broker/gen34_r25r7_bridge.py --source-profile "${{ inputs.source_profile }}" --authorization-run-id "$OWNER_AUTHORIZATION_RUN_ID"
