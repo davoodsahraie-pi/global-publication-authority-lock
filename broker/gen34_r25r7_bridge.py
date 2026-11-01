@@ -483,12 +483,14 @@ def r17r9_11_pins(profile):
     Never bind the historical LAB manifest to the successor. prepare_payload()
     independently checks actual Manifest bytes and all embedded member SHA-256.
     """
-    from transition_guard import R17R9_11_SOURCE_SHA256, R17R9_11_MANIFEST_SHA256, is_sha256
+    from transition_guard import R17R9_11_SOURCE_SHA256, R17R9_11_MANIFEST_SHA256, R17R9_11_CLI_GENERATOR_SHA256, is_sha256
     require(profile["source_sha256"]==R17R9_11_SOURCE_SHA256 and
+            profile.get("generator_sha256")==R17R9_11_CLI_GENERATOR_SHA256 and
             is_sha256(profile.get("manifest_sha256")) and
             profile["manifest_sha256"]!=R17R9_11_MANIFEST_SHA256,
             "R17R9_SOURCE_MANIFEST_PIN_MISMATCH")
-    return {**GEN34_PINS,"source_sha256":profile["source_sha256"]}
+    return {**GEN34_PINS,"source_sha256":profile["source_sha256"],
+            "generator_sha256":R17R9_11_CLI_GENERATOR_SHA256}
 
 def run_r17r9_11_seven_batches(python,payload,work,seconds,pins):
     """One protected claimed attempt, seven bounded resumable Driver calls."""

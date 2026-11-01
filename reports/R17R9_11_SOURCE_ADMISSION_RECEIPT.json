@@ -2,16 +2,16 @@
   "activation_requirement": "Only protected GEN39 merge, plus exact private blob readback and separate fresh EXECUTE, can enable Producer; this candidate is not CURRENT.",
   "classification": "PROPOSED_UNTIL_PROTECTED_GEN39_MERGE_NO_EXECUTE_NO_PDF",
   "driver_sha256": "b6ff959711cb3f3b9d103cb627bcc54e11de336b4ea2a4d862aa916ed2cb9191",
-  "generator_sha256": "646cf341c774953baa99da400ee3aa6e992fbbd8d0af95f36144f72c0fa5980c",
+  "generator_sha256": "2ee4fabe98066c78dc5be0017c0c84ab4885ab582ca0cf66fdd32005e91dd8e9",
   "governance_authorization": {
     "action_id": "GLOBAL_PUBLICATION_GEN38_R17R9_11_FORMAL_SOURCE_ADMISSION_PRIVATE_BLOB_GEN39_RESERVE_ONCE",
     "action_kind": "GOVERNANCE_UPGRADE",
     "action_only_no_claim_or_execute": true,
     "owner": "davoodsahraie-pi",
     "private_preimage_sha256": "a25c71c8c4dbfd54052fad46989fa5a43ac7fc89a9b88eb906822b24006e5124",
-    "protected_main": "51e8cfed8b8665fed9254c0116a4cf0f45bfc9ea",
+    "protected_main": "329a301bf4779566ee92c81ca8d8dc96c0dfe503",
     "public_preimage_sha256": "e972e0293128c7d223079603ceaf62db9d0fe96afcc2844fa947af6dc2a562ab",
-    "run_id": 41295825771
+    "run_id": 41309061309
   },
   "modified_publication_ids": [
     35,
@@ -39,5 +39,12 @@
   "record_count": 21529,
   "schema": "R17R9_11_SOURCE_ADMISSION_RECEIPT/1.0",
   "source_sha256": "fbbd4d43367545d14c988d60604ed4523fbe5311fbce7f02b65f7cb742782b40",
-  "unchanged_record_count": 21518
+  "unchanged_record_count": 21518,
+  "private_custody_candidate": {
+    "status": "UNVERIFIED_NOT_UPLOADED_DO_NOT_MERGE",
+    "expected_bundle_sha256": "860db3d97b293111a73d95b952fa371a6ffd85e58f552a05f845fcf4d1526081",
+    "expected_git_blob_sha1": "8c070965786c4314a2a0a4acf3842b6e904fbdff",
+    "expected_manifest_sha256": "9755215495318e34e3eb49133160e3c43bac5f5f505b166c2afc4d8303407dca",
+    "expected_private_state_sha256": "e08f305d3c9980a0177435bb22274fee84a9fe1aee462f33aaa62818fcff64f9"
+  }
 }
