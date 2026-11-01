@@ -9,13 +9,23 @@
       "project_id": "GLOBAL",
       "reservation_source_public_sha256": "f70e7d9f9ae4178800bb62313fd9e61f027b49ebc03c5c8e45808c89c241eee2",
       "schema": "GLOBAL_PUBLICATION_ATTEMPT_EVENT/1.0.0"
+    },
+    {
+      "schema": "GLOBAL_PUBLICATION_ATTEMPT_EVENT/1.0.0",
+      "event": "RESERVE",
+      "project_id": "GLOBAL",
+      "method_id": "R17R9_11_EXISTING_R25R7_SUCCESSOR_V1",
+      "attempt_id": "R17R9_11_SOURCE_BOUND_E2E_01",
+      "reservation_source_public_sha256": "e972e0293128c7d223079603ceaf62db9d0fe96afcc2844fa947af6dc2a562ab",
+      "owner_authorization_run_id": "41309061309",
+      "candidate_sha256": null
     }
   ],
   "current_action": {
-    "id": "GLOBAL_PUBLICATION_GEN38_ENGSEQ_IDENTITY_V2_FORMAL_REVIEW_READ_ONLY",
-    "mode": "READ_ONLY"
+    "id": "GLOBAL_PUBLICATION_R17R9_11_SOURCE_BOUND_FULLBOOK_BUILD_ONCE",
+    "mode": "MUTATING"
   },
-  "execution_authorized_now": false,
+  "execution_authorized_now": true,
   "external_binding": {
     "activation_commit": "cb579f1b038aeb66fa15bf6d79ad58f0d986591e",
     "authorized_action_id": "GLOBAL_PUBLICATION_GEN34_R25R7_PRECLAIM_RULESET_COMPATIBILITY_CORRECTION",
@@ -416,7 +426,7 @@
       "GEN34_R25R7_ORIGINAL_FULL_BOOK_ONCE"
     ]
   },
-  "generation": 38,
+  "generation": 39,
   "gh1_execution_rule": "GEN24 registers completed GEN23 engineering and selects staged same-SHA Q1. execution_authorized_now is eligibility only; fresh owner EXECUTE on this exact current lock/state/action/two scopes/QUALIFY+EXPORT_PDF remains mandatory. Historical EXECUTE and governance do not authorize future device execution.",
   "ledger_hashes": {
     "blocked_project": [
@@ -959,8 +969,8 @@
     ],
     "word_mobile_new_sha_pending": true
   },
-  "previous_public_lock_sha256": "f4fd5e45669690ccf54f0dabcd06f2a935af10963e699adbf8f9111e2c46a2ab",
-  "private_execution_state_sha256": "a25c71c8c4dbfd54052fad46989fa5a43ac7fc89a9b88eb906822b24006e5124",
+  "previous_public_lock_sha256": "e972e0293128c7d223079603ceaf62db9d0fe96afcc2844fa947af6dc2a562ab",
+  "private_execution_state_sha256": "e08f305d3c9980a0177435bb22274fee84a9fe1aee462f33aaa62818fcff64f9",
   "qualification_policy": {
     "c1_profile_supplement_sha256": "0c5a4c03ca3f98d905af8cae9b3cce1ea1390753ad114b2df5ae7e4a052a1109",
     "explicit_profiles": [
@@ -1039,5 +1049,43 @@
     "source_record_count": 21529,
     "status": "SCOPE_SELECTED_ONLY",
     "word_profile": "WORD_MOBILE_ONLY"
+  },
+  "r17r9_11_successor": {
+    "schema": "R17R9_11_SOURCE_BOUND_RUNTIME/1.0",
+    "enabled": true,
+    "runtime_profile": "R17R9_11_UNMODIFIED_R25R7_DRIVER",
+    "action_id": "GLOBAL_PUBLICATION_R17R9_11_SOURCE_BOUND_FULLBOOK_BUILD_ONCE",
+    "project": "GLOBAL",
+    "method_id": "R17R9_11_EXISTING_R25R7_SUCCESSOR_V1",
+    "attempt_id": "R17R9_11_SOURCE_BOUND_E2E_01",
+    "executor_id": "GITHUB_ACTIONS_PROTECTED_MAIN",
+    "operations": [
+      "BUILD",
+      "GENERATE_DOCX"
+    ],
+    "target_scope_ids": [
+      "R17R9_11_APPROVED_FULLBOOK_SUCCESSOR_ONCE"
+    ],
+    "max_seconds": 3000,
+    "private_repository": "davoodsahraie-pi/global-publication-authority",
+    "environment": "gen34-r25r7-production",
+    "source_sha256": "fbbd4d43367545d14c988d60604ed4523fbe5311fbce7f02b65f7cb742782b40",
+    "manifest_sha256": "9755215495318e34e3eb49133160e3c43bac5f5f505b166c2afc4d8303407dca",
+    "generator_sha256": "2ee4fabe98066c78dc5be0017c0c84ab4885ab582ca0cf66fdd32005e91dd8e9",
+    "driver_sha256": "b6ff959711cb3f3b9d103cb627bcc54e11de336b4ea2a4d862aa916ed2cb9191",
+    "c1_sha256": "b215660f571e32c647186eba253c89b5255567c313c068c0898301ab9eb789d3",
+    "grammar_sha256": "182589531ab1f2b0302fbc567f93510183af20d4682b99318bf6e4efea364213",
+    "ppges_sha256": "8175f477e0d45c25db894fd00fb51cd3bd0ad78ea18b61aaa034a02f725a1371",
+    "dependency_lock_sha256": "9b244a0fe16fb42cf206bc1b602d8c6522dcf1c6709db66535c78fb3887ba5b2",
+    "bundle_sha256": "860db3d97b293111a73d95b952fa371a6ffd85e58f552a05f845fcf4d1526081",
+    "bundle_blob_sha": "8c070965786c4314a2a0a4acf3842b6e904fbdff",
+    "receipt_key_sha256": "585967e5f7fe822efc9b20c6b2840f5c936707c8d2528f6b8f9580cf3cd240a0",
+    "runtime_code_sha256": "c0e35a60273720a72b4a6fc105f9e1d5b89c4b6db6e97f83a782ec09652d3a37",
+    "runtime_workflow_sha256": "199b06426883f70c4010fe23e058368f9dce88c7525247c805014de87c5010b2",
+    "source_admission_status": "FORMALLY_ADMITTED",
+    "source_admission_receipt_sha256": "36b45180ec29486da2b7f894e5f16cc97b9c07b5724fa24ca9567a6d16cc2d83",
+    "owner_source_adoption_comment_id": 6553602646,
+    "private_authority_mode": "R17R9_PRIVATE_GITHUB_IMMUTABLE_BLOB/1.0",
+    "library_current_role": "ARCHIVE_ONLY_NOT_EXECUTION_AUTHORITY"
   }
 }
