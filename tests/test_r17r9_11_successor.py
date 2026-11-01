@@ -120,3 +120,79 @@ class SuccessorCodeOnly(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class RuntimeSuccessorNoExecution(unittest.TestCase):
+    def test_exact_owner_run_and_scope(self):
+        self.assertEqual(ci.R17R9_11_RUNTIME_RUN, 41279306481)
+        self.assertEqual(len(ci.R17R9_11_RUNTIME_PATHS), 7)
+
+    def test_new_source_manifest_and_driver_are_pinned(self):
+        self.assertEqual(guard.R17R9_11_SOURCE_SHA256, SOURCE_NEW)
+        self.assertEqual(guard.R17R9_11_MANIFEST_SHA256,
+                         "4bf88aa6ab1632b9bde6757cdd6aac195542d33bfc1940d8ca52604d904ea980")
+        self.assertEqual(guard.R17R9_11_OWNER_VOTE_ID, 6553602646)
+        self.assertEqual(guard.GEN34_PINS["source_sha256"], SOURCE_OLD)
+
+    def test_new_attempt_never_reuses_old_attempt(self):
+        self.assertEqual(guard.R17R9_11_NEW_ATTEMPT,"R17R9_11_SOURCE_BOUND_E2E_01")
+        self.assertNotEqual(guard.R17R9_11_NEW_ATTEMPT, "GEN34_R25R7_E2E_01")
+
+    def test_no_public_activation_denies_without_private_access(self):
+        with self.assertRaises(bridge.Denied):
+            from unittest.mock import Mock,patch
+            with patch.object(bridge,"ROOT",ROOT):
+                bridge.execute_r17r9_11_successor(
+                    Mock(),Mock(),{},"999999999",None,ROOT)
+
+    def test_new_profile_none_denied(self):
+        self.assertTrue(guard.r17r9_11_successor_activation_errors(None))
+
+    def test_forged_enabled_profile_denied(self):
+        p=dict(guard.R17R9_11_SUCCESSOR_DRAFT)
+        p["enabled"]=True
+        self.assertTrue(guard.r17r9_11_successor_activation_errors(p))
+
+    def test_inactive_lab_private_bundle_does_not_equal_run_bundle(self):
+        self.assertEqual(len(guard.R17R9_11_LAB_INPUT_SHA256),64)
+        self.assertNotEqual(guard.R17R9_11_LAB_INPUT_SHA256,
+                            guard.R17R9_11_SOURCE_SHA256)
+
+    def test_seven_stage_plan_exact_25_parts(self):
+        self.assertEqual(len(bridge.R17R9_11_BATCHES),7)
+        self.assertEqual(bridge.R17R9_11_BATCHES[0][:2],(1,1))
+        self.assertEqual(bridge.R17R9_11_BATCHES[-1][:2],(21,25))
+        self.assertEqual(sum(s[2] for s in bridge.R17R9_11_BATCHES),21529)
+        self.assertEqual(bridge.R17R9_11_BATCHES[-1][3],21529)
+        self.assertTrue(all(a[1]+1==b[0] for a,b in zip(
+            bridge.R17R9_11_BATCHES,bridge.R17R9_11_BATCHES[1:])))
+
+    def test_missing_private_state_always_denied(self):
+        result=gate.validate_r17r9_11_successor_admission({}, {}, {}, {}, "a"*64)
+        self.assertEqual(result["status"],"DENY")
+        self.assertFalse(result["launch_allowed"])
+
+    def test_old_canonical_profile_rejected_as_successor(self):
+        result=gate.validate_r17r9_11_successor_admission(
+            {"r17r9_11_successor":dict(guard.GEN34_PINS)},
+            {"next_action_contract":{}} ,{},{}, "a"*64)
+        self.assertEqual(result["status"],"DENY")
+
+    def test_no_legacy_success_path_change(self):
+        import inspect
+        s=inspect.getsource(bridge.execute)
+        self.assertNotIn("r17r9_11",s)
+        self.assertIn("GEN34_PROTECTED_ACTIVATION_REQUIRED",s)
+
+    def test_single_claimed_seven_batch_runner_fail_closed(self):
+        # No actual file or subprocess: expired deadline must deny before spawn.
+        from unittest.mock import Mock
+        with self.assertRaises(bridge.Denied):
+            bridge.run_r17r9_11_seven_batches(
+                "python",Mock(),ROOT,0,dict(guard.GEN34_PINS))
+
+    def test_successor_not_selected_in_current(self):
+        state=gate.load_json(ROOT/"authority/CURRENT.json")
+        self.assertEqual(state.get("generation"),38)
+        self.assertIsNone(state.get("r17r9_11_successor"))
+        self.assertFalse(state["execution_authorized_now"])

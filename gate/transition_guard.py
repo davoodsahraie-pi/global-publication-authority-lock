@@ -361,3 +361,64 @@ def audit_r17r9_11_successor_draft(candidate):
     return {"status": "DENY" if reasons else "DRAFT_VALID_NOT_ADMITTED",
             "reasons": sorted(set(reasons)), "source_admitted": False,
             "launch_allowed": False}
+
+
+# ENGSEQ R17R9 11-delta: independent successor, never overwrite legacy GEN34_PINS.
+R17R9_11_RUNTIME_SCHEMA = "R17R9_11_SOURCE_BOUND_RUNTIME/1.0"
+R17R9_11_SOURCE_SHA256 = "fbbd4d43367545d14c988d60604ed4523fbe5311fbce7f02b65f7cb742782b40"
+R17R9_11_MANIFEST_SHA256 = "4bf88aa6ab1632b9bde6757cdd6aac195542d33bfc1940d8ca52604d904ea980"
+R17R9_11_OWNER_VOTE_ID = 6553602646
+R17R9_11_LAB_INPUT_SHA256 = "9ec2a4aecb320c48adfb9e8be0fd6101ebdab4da27cc007e85655d3ea09106a6"  # old private state: NOT executable
+R17R9_11_NEW_ATTEMPT = "R17R9_11_SOURCE_BOUND_E2E_01"
+R17R9_11_RUNTIME_KEYS = {
+    "schema","enabled","runtime_profile","action_id","project","method_id",
+    "attempt_id","executor_id","operations","target_scope_ids","max_seconds",
+    "private_repository","environment","source_sha256","manifest_sha256",
+    "generator_sha256","driver_sha256","c1_sha256","grammar_sha256",
+    "ppges_sha256","dependency_lock_sha256","bundle_sha256","bundle_blob_sha",
+    "receipt_key_sha256","runtime_code_sha256","runtime_workflow_sha256",
+    "source_admission_status","source_admission_receipt_sha256",
+    "owner_source_adoption_comment_id",
+}
+
+def r17r9_11_successor_activation_errors(profile):
+    """Validate future protected-current identity, not owner EXECUTE or a Claim."""
+    import re
+    if not isinstance(profile,dict) or set(profile)!=R17R9_11_RUNTIME_KEYS:
+        return ["R17R9_SUCCESSOR_EXACT_PROFILE_KEYS_REQUIRED"]
+    reasons=[]
+    if profile["schema"]!=R17R9_11_RUNTIME_SCHEMA or profile["enabled"] is not True:
+        reasons.append("R17R9_NOT_ACTIVATED")
+    if profile["runtime_profile"]!="R17R9_11_UNMODIFIED_R25R7_DRIVER":
+        reasons.append("R17R9_RUNTIME_PROFILE_INVALID")
+    for key,value in {
+        "source_sha256":R17R9_11_SOURCE_SHA256,
+        "manifest_sha256":R17R9_11_MANIFEST_SHA256,
+        "generator_sha256":GEN34_PINS["generator_sha256"],
+        "driver_sha256":GEN34_PINS["driver_sha256"],
+        "c1_sha256":GEN34_PINS["c1_sha256"],
+        "grammar_sha256":GEN34_PINS["grammar_sha256"],
+        "ppges_sha256":GEN34_PINS["ppges_sha256"],
+        "attempt_id":R17R9_11_NEW_ATTEMPT,
+        "project":"GLOBAL",
+        "private_repository":"davoodsahraie-pi/global-publication-authority",
+        "environment":"gen34-r25r7-production",
+        "source_admission_status":"FORMALLY_ADMITTED",
+        "owner_source_adoption_comment_id":R17R9_11_OWNER_VOTE_ID,
+    }.items():
+        if profile.get(key)!=value: reasons.append("R17R9_PIN_INVALID:"+key)
+    if profile["operations"]!=["BUILD","GENERATE_DOCX"] or profile["target_scope_ids"]!=["R17R9_11_APPROVED_FULLBOOK_SUCCESSOR_ONCE"]:
+        reasons.append("R17R9_PRODUCTION_SCOPE_INVALID")
+    for k in ("action_id","method_id","executor_id"):
+        if not isinstance(profile.get(k),str) or not re.fullmatch(r"[A-Za-z0-9_.-]{1,128}",profile[k]):
+            reasons.append("R17R9_RUNTIME_ID_INVALID:"+k)
+    for k in ("bundle_sha256","dependency_lock_sha256","receipt_key_sha256",
+              "runtime_code_sha256","runtime_workflow_sha256","source_admission_receipt_sha256"):
+        if not is_sha256(profile.get(k)): reasons.append("R17R9_DIGEST_INVALID:"+k)
+    if not isinstance(profile.get("bundle_blob_sha"),str) or not re.fullmatch(r"[0-9a-f]{40}",profile["bundle_blob_sha"]):
+        reasons.append("R17R9_PRIVATE_BLOB_INVALID")
+    if profile.get("bundle_sha256")==R17R9_11_LAB_INPUT_SHA256:
+        reasons.append("R17R9_OLD_PRIVATE_STATE_BUNDLE_FORBIDDEN")
+    if type(profile.get("max_seconds")) is not int or not 1<=profile["max_seconds"]<=3000:
+        reasons.append("R17R9_BOUNDED_RUNTIME_REQUIRED")
+    return sorted(set(reasons))

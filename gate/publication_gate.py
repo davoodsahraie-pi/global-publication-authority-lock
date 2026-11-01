@@ -202,3 +202,69 @@ def review_r17r9_11_successor_code_only(lock, candidate):
     return {"status": "DENY" if reasons else "DRAFT_VALID_NOT_ADMITTED",
             "reasons": sorted(set(reasons)), "source_admitted": False,
             "launch_allowed": False, "claim_allowed": False}
+
+
+def validate_r17r9_11_successor_admission(lock, private_state, request, auth, public_sha):
+    """Eligibility for protected physical claim ONLY; never a launch grant."""
+    from transition_guard import (
+        r17r9_11_successor_activation_errors, R17R9_11_OWNER_VOTE_ID,
+        R17R9_11_SOURCE_SHA256, R17R9_11_MANIFEST_SHA256,
+        R17R9_11_NEW_ATTEMPT,
+    )
+    if not isinstance(lock,dict) or not isinstance(private_state,dict):
+        return {"status":"DENY","reasons":["R17R9_STATES_REQUIRED"],"launch_allowed":False}
+    profile=lock.get("r17r9_11_successor")
+    reasons=r17r9_11_successor_activation_errors(profile)
+    if reasons: return {"status":"DENY","reasons":reasons,"launch_allowed":False}
+    if lock.get("execution_authorized_now") is not True or lock.get("current_action")!={"id":profile["action_id"],"mode":"MUTATING"}:
+        reasons.append("R17R9_PUBLIC_EXECUTE_NOT_SELECTED")
+    contract=private_state.get("next_action_contract") or {}
+    if not isinstance(contract,dict): contract={}
+    required={
+        "id":profile["action_id"],"mode":"MUTATING",
+        "source_sha256":R17R9_11_SOURCE_SHA256,
+        "manifest_sha256":R17R9_11_MANIFEST_SHA256,
+        "attempt_id":R17R9_11_NEW_ATTEMPT,
+        "method_id":profile["method_id"],
+        "owner_source_adoption_comment_id":R17R9_11_OWNER_VOTE_ID,
+        "source_admission_status":"FORMALLY_ADMITTED",
+    }
+    if any(contract.get(k)!=v for k,v in required.items()) or any(
+        contract.get(k) is not True for k in (
+        "build_authorized","private_payload_delivery_allowed","real_claim_authorized")):
+        reasons.append("R17R9_PRIVATE_SOURCE_BINDING_OR_ADMISSION_MISSING")
+    if not isinstance(request,dict) or request.get("schema")!=REQ_SCHEMA or request.get("action_kind")!="EXECUTE" or request.get("mode")!="MUTATING" or request.get("user_explicit_authorization") is not True:
+        reasons.append("R17R9_EXECUTE_REQUEST_INVALID")
+    else:
+        for k in ("project","method_id","attempt_id","executor_id","operations","target_scope_ids"):
+            if request.get(k)!=profile[k]: reasons.append("R17R9_REQUEST_BINDING:"+k)
+        if request.get("requested_action_id")!=profile["action_id"]:
+            reasons.append("R17R9_ACTION_BINDING_MISMATCH")
+        if request.get("input_public_lock_sha256")!=public_sha or request.get("input_private_state_sha256")!=lock.get("private_execution_state_sha256"):
+            reasons.append("R17R9_STALE_STATE_REQUEST")
+        reasons+=validate_authorization(auth,request,public_sha,lock.get("private_execution_state_sha256"))
+    try:
+        attempts,runs=attempt_snapshot(lock.get("attempt_ledger",[]))
+        key=(profile["project"],profile["method_id"],profile["attempt_id"])
+        reserved=attempts.get(key)
+        if not reserved or reserved["state"]!="RESERVED":
+            reasons.append("R17R9_NEW_UNSPENT_RESERVATION_REQUIRED")
+        if str(request.get("authorization_run_id") or "") in runs:
+            reasons.append("R17R9_AUTHORIZATION_REPLAY_FORBIDDEN")
+        if reserved and reserved["source"] not in {public_sha,lock.get("previous_public_lock_sha256")}:
+            reasons.append("R17R9_ATTEMPT_SOURCE_LOCK_MISMATCH")
+        if key[2]=="GEN34_R25R7_E2E_01":
+            reasons.append("R17R9_HISTORICAL_ATTEMPT_REPLAY_FORBIDDEN")
+    except (ValueError,TypeError,AttributeError):
+        reasons.append("R17R9_ATTEMPT_LEDGER_INVALID")
+    ledger=lock.get("ledger_hashes") or {}
+    if digest_id("FAIL:",profile["method_id"]) in ledger.get("method_fail",[]):
+        reasons.append("R17R9_FAILED_METHOD_FORBIDDEN")
+    if any(digest_id(tag,profile["project"]) in ledger.get(name,[])
+           for tag,name in (("FROZEN:","frozen_project"),("BLOCKED:","blocked_project"))):
+        reasons.append("R17R9_PROJECT_BLOCKED")
+    if any(digest_id("PASS:",s) in ledger.get("immutable_pass",[])
+           for s in profile["target_scope_ids"]):
+        reasons.append("R17R9_PREVIOUS_PASS_FORBIDS_REPLAY")
+    return {"status":"DENY" if reasons else "ELIGIBLE_FOR_PHYSICAL_CLAIM_ONLY",
+            "reasons":sorted(set(reasons)),"launch_allowed":False}

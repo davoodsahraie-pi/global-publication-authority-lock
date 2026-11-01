@@ -572,6 +572,63 @@ def validate_r17r9_11_code_only_scope(changes, req, base_lock, base_root, head_r
             reasons.append("R17R9_11_HISTORICAL_RUNTIME_REWRITE:" + path)
     return reasons
 
+
+
+# Fresh owner approval Run 41279306481. Protect exact seven-path code-only install.
+R17R9_11_RUNTIME_ACTION = "GLOBAL_PUBLICATION_GEN38_R17R9_11_SOURCE_BOUND_SUCCESSOR_RUNTIME_CODE_ONLY"
+R17R9_11_RUNTIME_RUN = 41279306481
+R17R9_11_RUNTIME_PATHS = {
+    "broker/gen34_r25r7_bridge.py", "gate/transition_guard.py",
+    "gate/publication_gate.py", "scripts/ci_validate_pr.py",
+    ".github/workflows/gen34-r25r7-producer.yml",
+    "tests/test_r17r9_11_successor.py", "request/ACTION_REQUEST.json",
+}
+
+def validate_r17r9_11_runtime_code_only_scope(changes,req,base_lock,base_root,head_root):
+    if req.get("requested_action_id")!=R17R9_11_RUNTIME_ACTION:
+        return []
+    reasons=[]
+    if set(changes)!=R17R9_11_RUNTIME_PATHS or len(changes)!=7:
+        reasons.append("R17R9_RUNTIME_EXACT_SEVEN_PATHS_REQUIRED")
+    if set(req.get("target_scope_ids") or [])!=R17R9_11_RUNTIME_PATHS:
+        reasons.append("R17R9_RUNTIME_OWNER_SCOPE_MISMATCH")
+    if (req.get("action_kind")!="GOVERNANCE_UPGRADE" or req.get("mode")!="READ_ONLY" or
+            req.get("operations")!=["GOVERNANCE_UPGRADE","PATCH"] or
+            req.get("authorization_run_id")!=R17R9_11_RUNTIME_RUN):
+        reasons.append("R17R9_RUNTIME_CODE_ONLY_AUTH_MISMATCH")
+    if (base_lock.get("generation")!=38 or
+            base_lock.get("execution_authorized_now") is not False or
+            (base_lock.get("current_action") or {}).get("mode")!="READ_ONLY" or
+            base_lock.get("private_execution_state_sha256")!=R17R9_11_CODE_PRIVATE or
+            sha(base_root/LOCK)!=R17R9_11_CODE_PUBLIC):
+        reasons.append("R17R9_RUNTIME_GEN38_READ_ONLY_BASE_REQUIRED")
+    if (req.get("input_public_lock_sha256")!=R17R9_11_CODE_PUBLIC or
+            req.get("input_private_state_sha256")!=R17R9_11_CODE_PRIVATE):
+        reasons.append("R17R9_RUNTIME_STALE_AUTH_STATE")
+    for path,start,end in (
+        ("gate/transition_guard.py","GEN34_PINS={","GEN34_SHA_FIELDS="),
+        ("gate/publication_gate.py","def validate_gen34_admission(","def validate("),
+        ("broker/gen34_r25r7_bridge.py","def execute(","def run_r17r9_11_seven_batches("),
+    ):
+        before=(base_root/path).read_text(encoding="utf-8")
+        after=(head_root/path).read_text(encoding="utf-8")
+        if start not in before or start not in after:
+            reasons.append("R17R9_RUNTIME_HISTORIC_REGION_NOT_FOUND:"+path)
+            continue
+        if path=="broker/gen34_r25r7_bridge.py":
+            # check original execute has not been replaced, while new successor is additive
+            old=before.split(start,1)[1].split("\ndef main():",1)[0]
+            new=after.split(start,1)[1].split("\n# R17R9 full-book successor:",1)[0]
+        else:
+            if end not in before or end not in after:
+                reasons.append("R17R9_RUNTIME_HISTORIC_REGION_NOT_FOUND:"+path)
+                continue
+            old=before.split(start,1)[1].split(end,1)[0]
+            new=after.split(start,1)[1].split(end,1)[0]
+        if old.rstrip()!=new.rstrip():
+            reasons.append("R17R9_RUNTIME_HISTORICAL_EXECUTE_OR_GATE_CHANGED:"+path)
+    return reasons
+
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument("--base",required=True); ap.add_argument("--head",required=True)
     args=ap.parse_args(); base=Path(args.base); head=Path(args.head); reasons=[]
@@ -624,6 +681,19 @@ def main():
     reasons += validate_gen38_engseq_code_scope(changes,req,load_json(base/LOCK),base)
     reasons += validate_stage3_code_only_scope(changes,req,load_json(base/LOCK),base,head)
     reasons += validate_r17r9_11_code_only_scope(changes,req,load_json(base/LOCK),base,head)
+    reasons += validate_r17r9_11_runtime_code_only_scope(changes,req,load_json(base/LOCK),base,head)
+
+    if req.get("requested_action_id")==R17R9_11_RUNTIME_ACTION:
+        import subprocess
+        result=subprocess.run(
+            [sys.executable,"-I","-B","-m","unittest","discover",
+             "-s","tests","-p","test_r17r9_11_successor.py","-v"],
+            cwd=head,timeout=120,check=False)
+        if result.returncode:
+            reasons.append("R17R9_RUNTIME_NEW_SCOPED_TESTS_FAILED")
+        else:
+            print("R17R9_RUNTIME_NEW_SCOPED_TESTS: PASS")
+
 
     # Run changed-only successor negative tests in unprivileged PR CI only.
     # publication-authority pull_request_target executes trusted BASE validator,
