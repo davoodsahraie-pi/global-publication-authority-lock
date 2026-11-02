@@ -1,0 +1,40 @@
+name: gen40-independent-qualification-code-only
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'gate/gen40_independent_qualification.py'
+      - 'tests/test_gen40_independent_qualification.py'
+      - 'reports/GEN40_NORMATIVE_SCOPE_INVENTORY_V1.json'
+      - 'request/GEN40_INDEPENDENT_QA_SCOPE_V1.json'
+      - 'request/ACTION_REQUEST.json'
+      - 'scripts/ci_validate_pr.py'
+      - '.github/workflows/gen40-independent-qualification-code-only.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  code-only-negative-controls:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run exact fail-closed unit controls
+        run: python -I -B -m unittest discover -s tests -p test_gen40_independent_qualification.py -v
+      - name: Evaluate scoped inventory, not publication qualification
+        run: |
+          python -I -B gate/gen40_independent_qualification.py \
+            --inventory reports/GEN40_NORMATIVE_SCOPE_INVENTORY_V1.json \
+            --scope request/GEN40_INDEPENDENT_QA_SCOPE_V1.json \
+            --out "$RUNNER_TEMP/gen40_qa_scope.json"
+          python - "$RUNNER_TEMP/gen40_qa_scope.json" <<'PY'
+          import json,sys
+          r=json.load(open(sys.argv[1]))
+          assert r['status']=='PASS_SCOPED_INVENTORY_ONLY',r
+          assert r['qualification']=='NOT_PROVEN',r
+          PY

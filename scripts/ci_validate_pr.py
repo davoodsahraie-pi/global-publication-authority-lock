@@ -900,6 +900,49 @@ def validate_gen40_techlit_admission(changes,req,base_lock,base_root,head_root):
         reasons.append("GEN40_RECEIPT_SHA_INVALID")
     return reasons
 
+# GEN40 independent QA scoped proposal; owner run 41429004374.
+# This method is copied into trusted base validation after a separately
+# reviewed protected PR. It does not authorize production or qualification.
+GEN40_QA_CODE_ONLY_ACTION='GLOBAL_PUBLICATION_GEN40_INDEPENDENT_NORMATIVE_QA_CODE_ONLY_SCOPE_V1'
+GEN40_QA_AUTHORIZATION_RUN=41429004374
+GEN40_QA_EXPECTED_PATHS={
+    'request/ACTION_REQUEST.json',
+    'request/GEN40_INDEPENDENT_QA_SCOPE_V1.json',
+    'reports/GEN40_NORMATIVE_SCOPE_INVENTORY_V1.json',
+    'gate/gen40_independent_qualification.py',
+    'tests/test_gen40_independent_qualification.py',
+    'scripts/ci_validate_pr.py',
+    '.github/workflows/gen40-independent-qualification-code-only.yml',
+}
+
+def validate_gen40_independent_qa_scope(changes, req, lock, base, head):
+    if req.get('requested_action_id')!=GEN40_QA_CODE_ONLY_ACTION:
+        return []
+    problems=[]
+    if set(changes)!=GEN40_QA_EXPECTED_PATHS:
+        problems.append('GEN40_QA_EXACT_SEVEN_CHANGED_PATHS_REQUIRED')
+    if set(req.get('target_scope_ids') or [])!=GEN40_QA_EXPECTED_PATHS or len(req.get('target_scope_ids') or [])!=7:
+        problems.append('GEN40_QA_EXACT_SEVEN_TARGET_SCOPE_REQUIRED')
+    if (req.get('authorization_run_id')!=GEN40_QA_AUTHORIZATION_RUN or
+        req.get('action_kind')!='GOVERNANCE_UPGRADE' or
+        req.get('operations')!=['GOVERNANCE_UPGRADE','PATCH'] or
+        req.get('mode')!='READ_ONLY' or req.get('project')!='GLOBAL' or
+        req.get('user_explicit_authorization') is not True):
+        problems.append('GEN40_QA_RUN_OR_ACTION_SCOPE_MISMATCH')
+    if (req.get('input_public_lock_sha256')!='04860dce8ef7cfcd63f4bdddcc4f92ffff6493fdded8829ff4c43070a8e35e42' or
+        req.get('input_private_state_sha256')!='60f74349af42e0816d445fb198b372453060bb57663e413496169792b146c90d'):
+        problems.append('GEN40_QA_AUTHORITY_SHA_MISMATCH')
+    if (head/'authority/CURRENT.json').read_bytes()!=(base/'authority/CURRENT.json').read_bytes():
+        problems.append('GEN40_QA_MUST_NOT_EDIT_AUTHORITY')
+    for relative in ('request/GEN40_INDEPENDENT_QA_SCOPE_V1.json','reports/GEN40_NORMATIVE_SCOPE_INVENTORY_V1.json'):
+        try:
+            doc=load_json(head/relative)
+            if doc.get('authorization_run_id')!=GEN40_QA_AUTHORIZATION_RUN:
+                problems.append('GEN40_QA_INVENTORY_NOT_BOUND_TO_OWNER_RUN:'+relative)
+        except Exception:
+            problems.append('GEN40_QA_INVENTORY_UNREADABLE:'+relative)
+    return problems
+
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument("--base",required=True); ap.add_argument("--head",required=True)
     args=ap.parse_args(); base=Path(args.base); head=Path(args.head); reasons=[]
@@ -960,6 +1003,7 @@ def main():
     reasons += validate_r17r9_cli_generator_code_only(changes,req,load_json(base/LOCK),base,head)
     reasons += validate_gen39_techlit_code_only(changes,req,load_json(base/LOCK),base,head)
     reasons += validate_gen40_techlit_admission(changes,req,load_json(base/LOCK),base,head)
+    reasons += validate_gen40_independent_qa_scope(changes,req,load_json(base/LOCK),base,head)
     if req.get('requested_action_id')==GEN40_TECHLIT_ACTION:
         import subprocess
         runner='import sys,unittest;sys.path.insert(0,"tests");import test_r17r9_11_successor as t;s=unittest.defaultTestLoader.loadTestsFromTestCase(t.Gen40TechlitBoundAdmission);x=unittest.TextTestRunner(verbosity=2).run(s);sys.exit(0 if x.wasSuccessful() else 1)'
