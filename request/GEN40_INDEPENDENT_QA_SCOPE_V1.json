@@ -1,0 +1,40 @@
+{
+  "schema": "GEN40_INDEPENDENT_QA_SCOPE_CODE_ONLY/1",
+  "status": "AUTHORIZED_SCOPE_NOT_QUALIFIED",
+  "authorization_run_id": 41429004374,
+  "current_public_lock_sha256": "04860dce8ef7cfcd63f4bdddcc4f92ffff6493fdded8829ff4c43070a8e35e42",
+  "private_state_declared_sha256": "60f74349af42e0816d445fb198b372453060bb57663e413496169792b146c90d",
+  "requested_action_id": "GLOBAL_PUBLICATION_GEN40_INDEPENDENT_NORMATIVE_QA_CODE_ONLY_SCOPE_V1",
+  "mode": "READ_ONLY_CODE_ONLY",
+  "count_targets": {
+    "all_source_lines": 1397,
+    "nonempty_lines": 1064,
+    "case_ids": 114
+  },
+  "missing_proofs": [
+    "all atomized obligations and exceptions",
+    "independent semantic and rendered Word Desktop/Word Mobile/PDF evidence",
+    "official output exact bytes",
+    "PPGES original primary registry byte identity"
+  ],
+  "permitted_paths": [
+    "request/ACTION_REQUEST.json",
+    "request/GEN40_INDEPENDENT_QA_SCOPE_V1.json",
+    "reports/GEN40_NORMATIVE_SCOPE_INVENTORY_V1.json",
+    "gate/gen40_independent_qualification.py",
+    "tests/test_gen40_independent_qualification.py",
+    "scripts/ci_validate_pr.py",
+    ".github/workflows/gen40-independent-qualification-code-only.yml"
+  ],
+  "forbidden_operations": [
+    "BUILD",
+    "GENERATE_DOCX",
+    "GENERATE_PDF",
+    "PRODUCER",
+    "QUALIFY",
+    "PROMOTE",
+    "AUTHORITY_UPDATE",
+    "STATE_TRANSITION"
+  ],
+  "approval_is_not_release": true
+}
